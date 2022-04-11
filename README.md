@@ -50,14 +50,20 @@ You’ll need to update your manifest to use your application:
 ```
 
 ## Functions
-### PaymentMethod Enrollment
-To display an Activity with the payment enrollment flow call the following method:
+### Add new payment method
+To display an Activity with the flow to enroll new payment method call the following method:
 ```Java
-Yuno.startEnrollment("user_session_id", "payment_method_id")
+Yuno.addNewPaymentMethod("user_session_id", "payment_method_id")
 ```
 ```Kotlin second
-startEnrollment(sessionId: "user_session_id", paymentMethod: "payment_method_id")
+addNewPaymentMethodWithYuno(sessionId: "user_session_id", paymentMethod: "payment_method_id")
 ```
-
-
+### Start payment flow
+To start a new payment process call the following method:
+```Java
+Yuno.startPaymentProcess("user_session_id", "payment_method_id")
+```
+```Kotlin second
+startPaymentWithYuno(sessionId: "user_session_id", paymentMethod: "payment_method_id")
+```
 
