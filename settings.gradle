@@ -10,7 +10,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        
+        maven { url "https://yunopayments.jfrog.io/artifactory/snapshots-libs-release" }
     }
 }
 rootProject.name = "Yuno Payments SDK"
