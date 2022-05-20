@@ -1,69 +1,95 @@
+
 # Yuno Mobile SDKs
 ## Android SDK Requirements.
 
 - Yuno Android SDK needs your minSdkVersion to be of 21 or above.
 - Your project must have Java 8 enabled and use AndroidX instead of older support libraries.
 - android-gradle-plugin version must be 4.0.0 or above.
-- Proguard version must be 6.2.2 or above. 
+- Proguard version must be 6.2.2 or above.
 - kotlin-gradle-plugin version must be 1.4.0 or above.
 
 ## Adding the SDK to the project
 Add the repository source
-```gradle
+```Gradle
 maven { url "https://yunopayments.jfrog.io/artifactory/snapshots-libs-release" }
 ```
 
 Add the Yuno SDK dependency to the application build.gradle file:
 
-```gradle
+```Gradle 
 dependencies {
     implementation 'com.yuno:android-sdk:{last_version}'
 }
 ```
 #### Permissions
-We include the INTERNET permission by default as we need it to make network requests, 
+We include the INTERNET permission by default as we need it to make network requests,
 
-```xml
+```xml 
 <uses-permission android:name="android.permission.INTERNET"/>
 ```
 
 ### Initialize Yuno
-First, you'll need to get your Yuno app ID and Android API key, Then, initialize Yuno by calling the following in the onCreate() method of your application class:
+First, you'll need to get your Yuno API key, Then, initialize the SDK  calling the following in the onCreate() method of your application class:
 
-```Java
-Yuno.initialize(this, "your api key", "your app id");
+```Kotlin 
+Yuno.initialize(this, "your api key");
 ```
 **Note:** If you don't currently implement a custom application, you’ll need to create one. A custom application looks like this:
-```kotlin
+```kotlin 
 class CustomApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        Yuno.initialize(this, "your api key", "your app id")
+        Yuno.initialize(this, "your api key")
     }
 }
 ```
 You’ll need to update your manifest to use your application:
-```XML
+```XML 
 <application
     android:name=".CustomApplication">
 </application>
 ```
 
 ## Functions
-### Add new payment method
-To display an Activity with the flow to enroll new payment method call the following method:
-```Java
-Yuno.addNewPaymentMethod("user_session_id", "payment_method_id")
+### Enroll a new payment method
+To display an Activity with the flow to enroll new payment method call the following method from your activity:
+```Kotlin 
+enrollPaymentWithYuno(
+	customerSession: "customer_session",
+)
 ```
-```Kotlin second
-addNewPaymentMethodWithYuno(sessionId: "user_session_id", paymentMethod: "payment_method_id")
+### Payment flow
+To start a new payment process call the following method from you app:
+```Kotlin 
+startPaymentWithYuno(
+    requestCode: 12345,
+	checkoutSession: "checkout_session",
+	countryCode: "country_code_iso"
+	paymentSelected: PaymentSelected,
+	getOneTimeTokenFunction: suspend { //Method to create payment }
+)
 ```
-### Start payment flow
-To start a new payment process call the following method:
-```Java
-Yuno.startPaymentProcess("user_session_id", "payment_method_id")
+```Kotlin 
+PaymentSelected(  
+    id: "payment_vaulted_token",  
+    type: "payment_type",  
+)
 ```
-```Kotlin second
-startPaymentWithYuno(sessionId: "user_session_id", paymentMethod: "payment_method_id")
+the activity displayed could return three different state: Success, Cancelled or Error, to listen this state you have to implement the method onActivityResult fo the activity, like in the follow piece of code
+```Kotlin 
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == YUNO_PAYMENT_REQUEST_CODE) {
+            if (resultCode == PAYMENT_RESULT_SUCCESS) {
+                //TODO: Write your code
+            }
+            if (resultCode == PAYMENT_RESULT_ERROR) {
+                //TODO: Write your code
+            }
+            if (resultCode == PAYMENT_RESULT_CANCELED) {
+                //TODO: Write your code
+            }
+        }
+    }
 ```
-
+**Note:** If you need to change the request code of the flow, you can specify that on startPaymentWithYuno method
