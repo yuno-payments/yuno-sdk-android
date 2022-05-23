@@ -55,7 +55,7 @@ You’ll need to update your manifest to use your application:
 To display an Activity with the flow to enroll new payment method call the following method from your activity:
 ```Kotlin 
 enrollPaymentWithYuno(
-	customerSession: "customer_session",
+    customerSession: "customer_session",
 )
 ```
 ### Payment flow
