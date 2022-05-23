@@ -63,10 +63,10 @@ To start a new payment process call the following method from you app:
 ```Kotlin 
 startPaymentWithYuno(
     requestCode: 12345,
-	checkoutSession: "checkout_session",
-	countryCode: "country_code_iso"
-	paymentSelected: PaymentSelected,
-	getOneTimeTokenFunction: suspend { //Method to create payment }
+    checkoutSession: "checkout_session",
+    countryCode: "country_code_iso",
+    paymentSelected: PaymentSelected,
+    getOneTimeTokenFunction: suspend { //Method to create payment }
 )
 ```
 ```Kotlin 
