@@ -18,7 +18,7 @@ Add the Yuno SDK dependency to the application build.gradle file:
 
 ```Gradle 
 dependencies {
-    implementation 'com.yuno:android-sdk:{last_version}'
+    implementation 'com.yuno.payments:android-sdk:{last_version}'
 }
 ```
 #### Permissions
