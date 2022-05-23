@@ -4,15 +4,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="@dimen/spacing_xlarge"
+    android:paddingTop="@dimen/spacing_xlarge"
+    android:paddingRight="@dimen/spacing_xlarge"
     tools:context=".ui.MainActivity">
 
     <TextView
+        android:id="@+id/textView_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Welcome to Yuno Example"
+        android:textSize="@dimen/font_h1" />
+
+    <EditText
+        android:id="@+id/editText_api_key"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xlarge"
+        android:hint="Insert your Yuno api key"
+        android:maxLines="1"
+        app:layout_constraintTop_toBottomOf="@id/textView_title" />
+
+    <Button
+        android:id="@+id/button_change_api_key"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="@dimen/spacing_small"
+        android:text="Change Api Key"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_api_key" />
+
+    <View
+        android:id="@+id/view_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/spacing_xmicro"
+        android:layout_marginTop="@dimen/spacing_standard"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@id/button_change_api_key" />
+
+    <Button
+        android:id="@+id/button_start_enrollment_flow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_xlarge"
+        android:layout_marginTop="@dimen/spacing_xlarge"
+        android:layout_marginEnd="@dimen/spacing_xlarge"
+        android:text="Start enroll process"
+        app:layout_constraintTop_toBottomOf="@+id/view_divider" />
+
+    <Button
+        android:id="@+id/button_start_payment_flow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_xlarge"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:layout_marginEnd="@dimen/spacing_xlarge"
+        android:text="Star payment process"
+        app:layout_constraintTop_toBottomOf="@+id/button_start_enrollment_flow" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
