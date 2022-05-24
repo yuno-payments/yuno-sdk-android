@@ -58,6 +58,8 @@ enrollPaymentWithYuno(
     customerSession: "customer_session",
 )
 ```
+**Note:** If you need to change the request code of the flow, you can specify that on enrollPaymentWithYuno method with requestCode param
+
 ### Payment flow
 To start a new payment process call the following method from you app:
 ```Kotlin 
