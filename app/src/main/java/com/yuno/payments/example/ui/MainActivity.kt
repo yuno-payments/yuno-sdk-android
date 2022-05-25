@@ -35,6 +35,12 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
+        buttonEnrollmentFlow.setOnClickListener {
+            startActivity(
+                Intent(this, EnrollPaymentActivity::class.java)
+            )
+        }
+
         buttonPaymentFlow.setOnClickListener {
             startActivity(
                 Intent(this, PaymentFlowActivity::class.java)

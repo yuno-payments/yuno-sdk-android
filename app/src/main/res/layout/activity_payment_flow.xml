@@ -43,7 +43,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView_warning" />
 
-    <com.yuno.payments.features.payments.ui.views.PaymentMethodListView
+    <com.yuno.payments.features.payment.ui.views.PaymentMethodListView
         android:id="@+id/list_payment_methods"
         android:layout_width="match_parent"
         android:layout_height="@dimen/spacing_empty"

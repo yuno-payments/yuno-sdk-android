@@ -5,8 +5,8 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.yuno.payments.example.R
-import com.yuno.payments.features.payments.startPaymentWithYuno
-import com.yuno.payments.features.payments.ui.views.PaymentMethodListView
+import com.yuno.payments.features.payment.startPaymentWithYuno
+import com.yuno.payments.features.payment.ui.views.PaymentMethodListView
 
 class PaymentFlowActivity : AppCompatActivity() {
 
@@ -31,14 +31,15 @@ class PaymentFlowActivity : AppCompatActivity() {
     private fun initListeners() {
         findViewById<Button>(R.id.button_set_session_id)
             .setOnClickListener {
-                paymentMethodListView.setCheckoutSession("1ecef405-678b-4434-856b-eee504217a2a")
+                sessionId = editTextSessionId.text.toString()
+                paymentMethodListView.setCheckoutSession(sessionId)
             }
 
         findViewById<Button>(R.id.button_pay)
             .setOnClickListener {
                 paymentMethodListView.getPaymentSelected()?.let { paymentSelected ->
                     startPaymentWithYuno(
-                        checkoutSession = "1ecef405-678b-4434-856b-eee504217a2a",
+                        checkoutSession = sessionId,
                         countryCode = "BR",
                         paymentSelected = paymentSelected,
                         createPaymentFunction = this::createPayment,

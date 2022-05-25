@@ -6,6 +6,6 @@ import com.yuno.payments.core.Yuno
 class CustomApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        Yuno.initialize(this, "your_api_key")
+        Yuno.initialize(this, "sandbox_your_api_key")
     }
 }
