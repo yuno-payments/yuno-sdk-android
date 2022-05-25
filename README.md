@@ -58,6 +58,8 @@ enrollPaymentWithYuno(
     customerSession: "customer_session",
 )
 ```
+**Note:** If you need to change the request code of the flow, you can specify that on enrollPaymentWithYuno method with requestCode param
+
 ### Payment flow
 To start a new payment process call the following method from you app:
 ```Kotlin 
@@ -75,7 +77,7 @@ PaymentSelected(
     type: "payment_type",  
 )
 ```
-the activity displayed could return three different state: Success, Cancelled or Error, to listen this state you have to implement the method onActivityResult fo the activity, like in the follow piece of code
+the activity displayed could return three different states: Success, Cancelled or Error, to listen this state you have to implement the method onActivityResult fo the activity, like in the follow piece of code
 ```Kotlin 
 override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
