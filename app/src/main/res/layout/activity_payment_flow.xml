@@ -8,7 +8,7 @@
     android:paddingStart="@dimen/spacing_xlarge"
     android:paddingTop="@dimen/spacing_xlarge"
     android:paddingEnd="@dimen/spacing_xlarge"
-    tools:context=".ui.PaymentFlowActivity">
+    tools:context=".ui.payment.PaymentFlowActivity">
 
     <TextView
         android:id="@+id/textView_title"

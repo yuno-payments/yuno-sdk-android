@@ -21,8 +21,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_xlarge"
-        android:inputType="text"
         android:hint="Insert your Yuno api key"
+        android:inputType="text"
         android:maxLines="1"
         app:layout_constraintTop_toBottomOf="@id/textView_title" />
 
@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_small"
-        android:text="Change Api Key"
+        android:text="Change Api Config"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText_api_key" />
 
@@ -43,24 +43,47 @@
         android:background="@android:color/darker_gray"
         app:layout_constraintTop_toBottomOf="@id/button_change_api_key" />
 
-    <Button
-        android:id="@+id/button_start_enrollment_flow"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_xlarge"
-        android:layout_marginTop="@dimen/spacing_xlarge"
-        android:layout_marginEnd="@dimen/spacing_xlarge"
-        android:text="Start enroll process"
-        app:layout_constraintTop_toBottomOf="@+id/view_divider" />
+        android:orientation="vertical"
+        android:padding="@dimen/yuno_spacing_xlarge"
+        app:layout_constraintTop_toBottomOf="@+id/view_divider"
+        tools:context=".ui.MainActivity">
 
-    <Button
-        android:id="@+id/button_start_payment_flow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_xlarge"
-        android:layout_marginTop="@dimen/spacing_large"
-        android:layout_marginEnd="@dimen/spacing_xlarge"
-        android:text="Star payment process"
-        app:layout_constraintTop_toBottomOf="@+id/button_start_enrollment_flow" />
+        <TextView
+            android:id="@+id/textView_title_enrollment"
+            style="@style/TextH2.Black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enrollment" />
+
+        <Button
+            android:id="@+id/button_start_enrollment_flow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add payment" />
+
+        <TextView
+            android:id="@+id/textView_title_payment"
+            style="@style/TextH2.Black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/yuno_spacing_standard"
+            android:text="Payment" />
+
+        <Button
+            android:id="@+id/button_payment_lite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start Lite Checkout" />
+
+        <Button
+            android:id="@+id/button_payment_complete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start Complete Checkout " />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

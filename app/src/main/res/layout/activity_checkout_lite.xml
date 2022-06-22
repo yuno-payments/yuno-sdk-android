@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    tools:context=".ui.payment.CheckoutLiteActivity">
+
+    <EditText
+        android:id="@+id/editText_token"
+        android:layout_width="@dimen/yuno_spacing_empty"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/yuno_spacing_standard"
+        android:hint="Payment Token"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editText_type"
+        android:layout_width="@dimen/yuno_spacing_empty"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/yuno_spacing_standard"
+        android:hint="Payment method type"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editText_token" />
+
+    <LinearLayout
+        android:id="@+id/layout_checkout_continue"
+        android:layout_width="@dimen/yuno_spacing_empty"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/yuno_spacing_xlarge"
+        android:orientation="vertical"
+        android:padding="@dimen/yuno_spacing_xxlarge"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editText_type">
+
+        <TextView
+            android:id="@+id/textView_token"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textIsSelectable="true" />
+
+        <Button
+            android:id="@+id/button_continue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Continue" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button_pay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pagar"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.yuno.payments.example.ui
+package com.yuno.payments.example.ui.enrollment
 
 import android.os.Bundle
 import android.widget.Button

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/spacing_xxlarge"
-    tools:context=".ui.EnrollPaymentActivity">
+    tools:context=".ui.enrollment.EnrollPaymentActivity">
 
     <TextView
         android:id="@+id/textView_title"

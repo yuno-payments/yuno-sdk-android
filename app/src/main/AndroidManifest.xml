@@ -11,11 +11,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.YunoPaymentsSDK">
         <activity
-            android:name=".ui.EnrollPaymentActivity"
+            android:name=".ui.enrollment.EnrollPaymentActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.PaymentFlowActivity"
+            android:name=".ui.payment.CheckoutCompleteActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".ui.payment.CheckoutLiteActivity"
+            android:exported="false" />
+
         <activity
             android:name=".ui.MainActivity"
             android:exported="true">
