@@ -34,7 +34,7 @@ class CheckoutCompleteActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.button_continue)
             .setOnClickListener {
-                continuePaymentActivity()
+                continuePayment()
             }
     }
 
