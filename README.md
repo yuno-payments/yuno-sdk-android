@@ -60,24 +60,55 @@ enrollPaymentWithYuno(
 ```
 **Note:** If you need to change the request code of the flow, you can specify that on enrollPaymentWithYuno method with requestCode param
 
-### Payment flow
-To start a new payment process call the following method from you app:
+### Checkout
+To start a new payment process you need to call following method on the onCreate method of activity that contains your checkout view
 ```Kotlin 
-startPaymentWithYuno(
-    requestCode: 12345,
+startCheckout(
     checkoutSession: "checkout_session",
     countryCode: "country_code_iso",
-    paymentSelected: PaymentSelected,
-    getOneTimeTokenFunction: suspend { //Method to create payment }
 )
 ```
+#### Show Payment Methods
+when you implement a SDK Full you have to add the next view on your layout to show the payment methods available
+```XML 
+<com.yuno.payments.features.payment.ui.views.PaymentMethodListView
+        android:id="@+id/list_payment_methods"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+```
+
+#### Start Payment
+To start a payment process you have to call the method `startPayment` but if your are using the lite version you must to call `startPaymentLite`
+```Kotlin 
+startPayment(
+    requestCode: 12345 //Optional,
+)
+```
+
+```Kotlin 
+startPaymentLite(
+    requestCode: 12345 //Optional,
+    paymentSelected: PaymentSelected,
+)
+```
+for the Lite version you need to send an additional parameter, these consist, the vaulted token and/or payment type with which the user will pay  
+
 ```Kotlin 
 PaymentSelected(  
     id: "payment_vaulted_token",  
     type: "payment_type",  
 )
 ```
-the activity displayed could return three different states: Success, Cancelled or Error, to listen this state you have to implement the method onActivityResult fo the activity, like in the follow piece of code
+At the end of this process you will obtain the One Time Token to create back-back the payment, this data you can obtain from the onActivityResult explain in the callback section
+
+#### Complete Payment
+If the payment required an start an action to complete the payment you can call the following method to execute the payment and get its state from your activity
+```Kotlin 
+continuePayment()
+```
+
+#### Callback
+All activity displayed could return three different states: Success, Cancelled or Error, to listen this state you have to implement the method `onActivityResult` fo the activity, like in the follow piece of code
 ```Kotlin 
 override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -94,4 +125,17 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
         }
     }
 ```
-**Note:** If you need to change the request code of the flow, you can specify that on startPaymentWithYuno method
+you can get some information like OTT with the key PAYMENT_RESULT_DATA_TOKEN after call a `startPayment` or `startPaymentLite` method, how is showing in the next code
+
+```Kotlin 
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == YUNO_PAYMENT_REQUEST_CODE) {
+            if (resultCode == PAYMENT_RESULT_SUCCESS) {
+                val token = data?.getStringExtra(PAYMENT_RESULT_DATA_TOKEN)
+            }
+        }
+    }
+```
+
+**Note:** If you need to change the request code of the flow, you in each method
