@@ -91,7 +91,7 @@ startPaymentLite(
     paymentSelected: PaymentSelected,
 )
 ```
-for the Lite version you need to send an additional parameter, these consist, the vaulted token and/or payment type with which the user will pay  
+for the Lite version you need to send an additional parameter, these consist, the vaulted token and/or payment type with which the user will pay
 
 ```Kotlin 
 PaymentSelected(  
@@ -104,10 +104,31 @@ At the end of this process you will obtain the One Time Token to create back-bac
 #### Complete Payment
 If the payment required an start an action to complete the payment you can call the following method to execute the payment and get its state from your activity
 ```Kotlin 
-continuePayment()
+continuePayment(
+    requestCode: Int, //Optional
+    showPaymentStatus: Boolean, //Default true
+)
+```
+To show your own payment status screens, you should send in false the `showPaymentStatus` parameter. and then get the state in the activity from result callback, possible state are:
+```Kotlin 
+const val PAYMENT_STATE_SUCCESS : String
+const val PAYMENT_STATE_FAIL : String
+const val PAYMENT_STATE_PROCESSING : String
+const val PAYMENT_STATE_REJECT : String
+```
+**Note:** These information is under the `PAYMENT_RESULT_DATA_STATE` key. the following code is an example to how retrieve the data
+
+```Kotlin 
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    if (requestCode == YUNO_CONTINUE_PAYMENT_REQUEST_CODE) {
+        val paymentState: String? = data?.getStringExtra(PAYMENT_RESULT_DATA_STATE)
+        paymentState?.let { Log.e("Payment State", it) }
+    }
+}
 ```
 
-#### Callback
+#### Callbacks
 All activity displayed could return three different states: Success, Cancelled or Error, to listen this state you have to implement the method `onActivityResult` fo the activity, like in the follow piece of code
 ```Kotlin 
 override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -138,4 +159,4 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
     }
 ```
 
-**Note:** If you need to change the request code of the flow, you in each method
+**Note:** If you need to change the request code of the flow, you can do it in each method that start a flow.
