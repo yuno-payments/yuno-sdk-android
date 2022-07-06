@@ -54,8 +54,10 @@ You’ll need to update your manifest to use your application:
 ### Enroll a new payment method
 To display an Activity with the flow to enroll new payment method call the following method from your activity:
 ```Kotlin 
-enrollPaymentWithYuno(
-    customerSession: "customer_session",
+startEnrollment(
+    requestCode: Int, //Optional
+    customerSession: String,
+    showEnrollmentStatus: Boolean, //Optional - Default true
 )
 ```
 **Note:** If you need to change the request code of the flow, you can specify that on enrollPaymentWithYuno method with requestCode param
@@ -106,7 +108,7 @@ If the payment required an start an action to complete the payment you can call 
 ```Kotlin 
 continuePayment(
     requestCode: Int, //Optional
-    showPaymentStatus: Boolean, //Default true
+    showPaymentStatus: Boolean, //Optional - Deault true
 )
 ```
 To show your own payment status screens, you should send in false the `showPaymentStatus` parameter. and then get the state in the activity from result callback, possible state are:

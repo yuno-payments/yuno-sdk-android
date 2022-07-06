@@ -53,9 +53,14 @@ class CheckoutCompleteActivity : AppCompatActivity() {
                 Log.e("payment", "cancelled")
             }
         }
+        if (requestCode == YUNO_CONTINUE_PAYMENT_REQUEST_CODE){
+            finish()
+        }
     }
 
     private fun updateView(token: String?) {
+        paymentMethodListView.visibility = View.GONE
+        findViewById<Button>(R.id.button_pay).visibility = View.GONE
         findViewById<TextView>(R.id.textView_token).text = "Token: ${token.orEmpty()}"
         findViewById<LinearLayout>(R.id.layout_checkout_continue).visibility = View.VISIBLE
     }
