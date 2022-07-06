@@ -5,7 +5,7 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.yuno.payments.example.R
-import com.yuno.payments.features.enrollment.enrollPaymentWithYuno
+import com.yuno.payments.features.enrollment.startEnrollment
 
 class EnrollPaymentActivity : AppCompatActivity() {
 
@@ -23,7 +23,7 @@ class EnrollPaymentActivity : AppCompatActivity() {
         buttonSetCustomerSession = findViewById(R.id.button_set_customer_session)
         editTextCustomerSession = findViewById(R.id.editText_customer_session)
         buttonSetCustomerSession.setOnClickListener {
-            enrollPaymentWithYuno(
+            startEnrollment(
                 customerSession = editTextCustomerSession.text.toString()
             )
         }
