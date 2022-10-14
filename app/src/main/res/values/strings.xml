@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Yuno Payments SDK</string>
+    <string name="secure_payment">Secure payments with</string>
 </resources>
