@@ -4,25 +4,74 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.payment.CheckoutCompleteActivity">
+    android:padding="@dimen/yuno_spacing_xlarge" >
 
-    <com.yuno.payments.features.payment.ui.views.PaymentMethodListView
-        android:id="@+id/list_payment_methods"
+    <TextView
+        android:id="@+id/textView_paymentFullTitle"
+        style="@style/TextH2.Black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Payment Full"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <com.yuno.payments.example.ui.views.CustomEditText
+        android:id="@+id/editText_checkoutSession"
+        android:layout_width="@dimen/yuno_spacing_empty"
+        android:layout_height="wrap_content"
+        android:hint="Checkout Session"
+        android:layout_marginTop="@dimen/yuno_spacing_large"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:inputType="text"
+        app:layout_constraintEnd_toStartOf="@id/editText_countryCode"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_paymentFullTitle"
+        app:regexValidator="." />
+
+    <com.yuno.payments.example.ui.views.CustomEditText
+        android:id="@+id/editText_countryCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Country Code"
+        android:layout_marginTop="@dimen/yuno_spacing_large"
+        android:maxLength="2"
+        android:layout_marginStart="@dimen/yuno_spacing_xsmall"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/editText_checkoutSession"
+        app:layout_constraintTop_toBottomOf="@id/textView_paymentFullTitle"
+        app:regexValidator="." />
+
+    <Button
+        android:id="@+id/button_setCheckoutSession"
+        style="@style/Button.Normal.Purple"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="@dimen/yuno_spacing_large"
+        android:text="Set CheckoutModel"
+        app:layout_constraintTop_toBottomOf="@id/editText_checkoutSession" />
+
+    <ScrollView
+        android:id="@+id/scrollView_paymentListContainer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/yuno_spacing_empty"
+        android:layout_marginTop="@dimen/yuno_spacing_large"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/button_pay"
+        app:layout_constraintTop_toBottomOf="@id/button_setCheckoutSession">
+
+    </ScrollView>
+
 
     <LinearLayout
         android:id="@+id/layout_checkout_continue"
         android:layout_width="@dimen/yuno_spacing_empty"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/yuno_spacing_xlarge"
         android:orientation="vertical"
-        android:padding="@dimen/yuno_spacing_xxlarge"
         android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/list_payment_methods">
+        app:layout_constraintTop_toBottomOf="@id/button_setCheckoutSession">
 
         <TextView
             android:id="@+id/textView_token"
@@ -32,19 +81,20 @@
 
         <Button
             android:id="@+id/button_continue"
+            style="@style/Button.Normal.Purple"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/yuno_spacing_large"
             android:text="Continue" />
 
     </LinearLayout>
 
     <Button
         android:id="@+id/button_pay"
+        style="@style/Button.Normal.Purple"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/yuno_spacing_standard"
         android:text="Pagar"
         app:layout_constraintBottom_toBottomOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
