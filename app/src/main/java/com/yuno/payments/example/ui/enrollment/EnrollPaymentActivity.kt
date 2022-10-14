@@ -4,14 +4,16 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import com.yuno.payments.example.BuildConfig
 import com.yuno.payments.example.R
+import com.yuno.payments.example.ui.views.CustomEditText
 import com.yuno.payments.features.enrollment.startEnrollment
 
 class EnrollPaymentActivity : AppCompatActivity() {
 
-    private lateinit var buttonSetCustomerSession: Button
-
-    private lateinit var editTextCustomerSession: EditText
+    private lateinit var editTextCustomerSession: CustomEditText
+    private lateinit var editTextCountryCode: CustomEditText
+    private lateinit var button: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,11 +22,20 @@ class EnrollPaymentActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        buttonSetCustomerSession = findViewById(R.id.button_set_customer_session)
-        editTextCustomerSession = findViewById(R.id.editText_customer_session)
-        buttonSetCustomerSession.setOnClickListener {
+        editTextCustomerSession = findViewById(R.id.editText_customer)
+        editTextCountryCode = findViewById(R.id.editText_code)
+        button = findViewById(R.id.button_add_payment)
+        initListeners()
+    }
+
+    private fun initListeners() {
+        button.setOnClickListener { startEnrollment() }
+    }
+
+    private fun startEnrollment() {
+        if (editTextCustomerSession.isValid) {
             startEnrollment(
-                customerSession = editTextCustomerSession.text.toString()
+                customerSession = editTextCustomerSession.text.toString(),
             )
         }
     }
