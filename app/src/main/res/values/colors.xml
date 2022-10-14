@@ -7,4 +7,16 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="white_transparent">#DBE1EC</color>
+    <color name="background_gray">#F9FAFC</color>
+    <color name="background_black">#282A30</color>
+    <color name="yuno_purple">#FF3700B3</color>
+    <color name="yuno_purple_light">#6400FF</color>
+    <color name="yuno_error">#F1405E</color>
+    <color name="yuno_gray">#B4BABD</color>
+    <color name="yuno_low_text_grey">#92959B</color>
+    <color name="yuno_font_gray">#6C6F75</color>
+    <color name="yuno_font_black">#000000</color>
+    <color name="yuno_font_black_light">#282A30</color>
+    <color name="yuno_font_semi_black">#6C6F75</color>
 </resources>
