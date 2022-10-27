@@ -1,6 +1,16 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## New Version [1.1.0]
+- Important Changes: In the startEnrollment method now need to send country code ex: "CO"
+- New: Add Enrollment flow for Credit cards.
+- New: Add new design for Credit Card form.
+- New: Add title to separate enrolled payment methods from unEnrolled payment methods.
+- New: Add new view to show only enrolled payment methods ```EnrollmentPaymentMethodListView()```
+- New: Add new view to show only unEnrolled payment methods ```UnEnrolledPaymentMethodListView()```
+- New: Label added to identify current env
+- Fix: Improve validation of expiration date in Credit Card Form
+
 ## New Version [1.0.11]
 - Fix: Improved user experience on enrollment flow after open an external app. 
 

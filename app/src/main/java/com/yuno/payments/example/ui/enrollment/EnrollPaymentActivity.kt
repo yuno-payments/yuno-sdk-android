@@ -29,13 +29,14 @@ class EnrollPaymentActivity : AppCompatActivity() {
     }
 
     private fun initListeners() {
-        button.setOnClickListener { startEnrollment() }
+        button.setOnClickListener { initEnrollment() }
     }
 
-    private fun startEnrollment() {
+    private fun initEnrollment() {
         if (editTextCustomerSession.isValid) {
             startEnrollment(
                 customerSession = editTextCustomerSession.text.toString(),
+                countryCode = editTextCountryCode.text.toString()
             )
         }
     }
