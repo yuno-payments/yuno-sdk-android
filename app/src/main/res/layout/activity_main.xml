@@ -4,52 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/spacing_xlarge"
-    android:paddingTop="@dimen/spacing_xlarge"
-    android:paddingRight="@dimen/spacing_xlarge"
+    android:padding="@dimen/yuno_spacing_xlarge"
     tools:context=".ui.MainActivity">
 
-    <TextView
-        android:id="@+id/textView_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Welcome to Yuno Example"
-        android:textSize="@dimen/font_h1" />
-
-    <EditText
-        android:id="@+id/editText_api_key"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_xlarge"
-        android:hint="Insert your Yuno api key"
-        android:inputType="text"
-        android:maxLines="1"
-        app:layout_constraintTop_toBottomOf="@id/textView_title" />
-
-    <Button
-        android:id="@+id/button_change_api_key"
+    <ImageView
+        android:id="@+id/imageView_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_small"
-        android:text="Change Api Config"
+        android:src="@drawable/ic_logo_yuno_morado"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_api_key" />
-
-    <View
-        android:id="@+id/view_divider"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/spacing_xmicro"
-        android:layout_marginTop="@dimen/spacing_standard"
-        android:background="@android:color/darker_gray"
-        app:layout_constraintTop_toBottomOf="@id/button_change_api_key" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/linearLayout_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/yuno_spacing_large"
         android:orientation="vertical"
-        android:padding="@dimen/yuno_spacing_xlarge"
-        app:layout_constraintTop_toBottomOf="@+id/view_divider"
-        tools:context=".ui.MainActivity">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageView_logo">
 
         <TextView
             android:id="@+id/textView_title_enrollment"
@@ -59,10 +32,13 @@
             android:text="Enrollment" />
 
         <Button
-            android:id="@+id/button_start_enrollment_flow"
+            android:id="@+id/button_add_payment"
+            style="@style/Button.Normal.Purple"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add payment" />
+            android:layout_marginTop="@dimen/yuno_spacing_standard"
+            android:text="Enrollment"
+            android:textAllCaps="false" />
 
         <TextView
             android:id="@+id/textView_title_payment"
@@ -74,16 +50,35 @@
 
         <Button
             android:id="@+id/button_payment_lite"
+            style="@style/Button.Normal.Purple"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Start Lite Checkout" />
+            android:layout_marginTop="@dimen/yuno_spacing_standard"
+            android:text="Start Payment Lite"
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/button_payment_complete"
+            style="@style/Button.Normal.Purple"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Start Complete Checkout " />
+            android:layout_marginTop="@dimen/yuno_spacing_standard"
+            android:text="Start Payment"
+            android:textAllCaps="false" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView_secure_payment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        android:layout_marginVertical="@dimen/yuno_spacing_xlarge"
+        android:drawablePadding="@dimen/yuno_spacing_large"
+        app:drawableStartCompat="@drawable/ic_secure_payment"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Pagos seguros con YUNO" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
