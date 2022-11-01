@@ -15,7 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Payment Flow"
-        android:textSize="@dimen/font_h1" />
+        android:textSize="@dimen/font_h1"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <EditText
         android:id="@+id/editText_session_id"
