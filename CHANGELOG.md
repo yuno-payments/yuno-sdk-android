@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## Version [1.1.1]
+- Fix: Hide environment tag for production keys
+
 ## New Version [1.1.0]
 - Important Changes: In the startEnrollment method now need to send country code ex: "CO"
 - New: Add Enrollment flow for Credit cards.
