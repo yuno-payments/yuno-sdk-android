@@ -1,6 +1,5 @@
 package com.yuno.payments.example.ui.payment
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -11,28 +10,27 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.yuno.payments.example.R
 import com.yuno.payments.example.ui.views.CustomEditText
-import com.yuno.payments.features.payment.PAYMENT_RESULT_CANCELED
-import com.yuno.payments.features.payment.PAYMENT_RESULT_DATA_STATE
-import com.yuno.payments.features.payment.PAYMENT_RESULT_DATA_TOKEN
-import com.yuno.payments.features.payment.PAYMENT_RESULT_ERROR
-import com.yuno.payments.features.payment.PAYMENT_RESULT_SUCCESS
-import com.yuno.payments.features.payment.YUNO_CONTINUE_PAYMENT_REQUEST_CODE
-import com.yuno.payments.features.payment.YUNO_START_PAYMENT_REQUEST_CODE
 import com.yuno.payments.features.payment.continuePayment
 import com.yuno.payments.features.payment.startCheckout
 import com.yuno.payments.features.payment.startPayment
 import com.yuno.payments.features.payment.ui.views.PaymentMethodListView
+import com.yuno.payments.features.payment.updateCheckoutSession
 
 class CheckoutCompleteActivity : AppCompatActivity() {
 
-    private lateinit var checkoutSessionEditText : CustomEditText
-    private lateinit var countryCodeEditText : CustomEditText
-    private lateinit var paymentMethodListContainer : ScrollView
+    private lateinit var checkoutSessionEditText: CustomEditText
+    private lateinit var countryCodeEditText: CustomEditText
+    private lateinit var paymentMethodListContainer: ScrollView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_checkout_complete)
-        startCheckout(checkoutSession = "", countryCode = "")
+        startCheckout(
+            checkoutSession = "",
+            countryCode = "",
+            callbackOTT = ::onTokenUpdated,
+            callbackPaymentState = ::onPaymentStateChange,
+        )
         initViews()
         initListeners()
     }
@@ -54,8 +52,11 @@ class CheckoutCompleteActivity : AppCompatActivity() {
             .setOnClickListener { updateYunoList() }
     }
 
-    private fun updateYunoList(){
-        startCheckout(checkoutSessionEditText.text.toString(),countryCodeEditText.text.toString())
+    private fun updateYunoList() {
+        updateCheckoutSession(
+            checkoutSession = checkoutSessionEditText.text.toString(),
+            countryCode = countryCodeEditText.text.toString(),
+        )
         val paymentMethodListView = PaymentMethodListView(this)
         paymentMethodListContainer.removeAllViews()
         paymentMethodListContainer.addView(
@@ -64,33 +65,17 @@ class CheckoutCompleteActivity : AppCompatActivity() {
         paymentMethodListContainer.visibility = View.VISIBLE
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == YUNO_START_PAYMENT_REQUEST_CODE) {
-            if (resultCode == PAYMENT_RESULT_SUCCESS) {
-                val token = data?.getStringExtra(PAYMENT_RESULT_DATA_TOKEN)
-                updateView(token)
-                Log.e("Payment flow", "success ---> token: $token")
-            }
-            if (resultCode == PAYMENT_RESULT_ERROR) {
-                Log.e("Payment Flow", "fail")
-            }
-            if (resultCode == PAYMENT_RESULT_CANCELED) {
-                Log.e("Payment flow", "cancelled")
-            }
+    private fun onTokenUpdated(token: String?) {
+        token?.let {
+            updateView(token)
+            Log.e("Payment flow", "success ---> token: $token")
         }
-        if (requestCode == YUNO_CONTINUE_PAYMENT_REQUEST_CODE) {
-            val paymentState: String? = data?.getStringExtra(PAYMENT_RESULT_DATA_STATE)
-            paymentState?.let { Log.e("Payment State", it) }
+    }
 
-            if (resultCode == PAYMENT_RESULT_SUCCESS) {
-                restartView()
-            }
-        }
-        if (requestCode == YUNO_CONTINUE_PAYMENT_REQUEST_CODE) {
-            if (resultCode == PAYMENT_RESULT_SUCCESS) {
-                restartView()
-            }
+    private fun onPaymentStateChange(paymentState: String?) {
+        paymentState?.let {
+            restartView()
+            Log.e("Payment State", it)
         }
     }
 

@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## New Version [1.2.0]
+- Important Changes: Add callback in ```startPayment``` method to avoid  ```onActivityResult```
+- Important Changes: Add ```initEnrollment``` method to  configure the callback and avoid  ```onActivityResult```
+
 ## Version [1.1.1]
 - Fix: Hide environment tag for production keys
 

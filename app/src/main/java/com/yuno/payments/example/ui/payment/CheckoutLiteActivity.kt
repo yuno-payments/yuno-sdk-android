@@ -50,6 +50,12 @@ class CheckoutLiteActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_checkout_lite)
+        startCheckout(
+            checkoutSession = "",
+            countryCode = "",
+            callbackOTT = this::onTokenUpdated,
+            callbackPaymentState = this::onPaymentStateChange,
+        )
         initViews()
     }
 
@@ -84,9 +90,9 @@ class CheckoutLiteActivity : AppCompatActivity() {
 
     private fun setCheckoutSession() {
         if (editTextCheckoutSession.isValid && editTextCountryCode.isValid) {
-            startCheckout(
+            updateCheckoutSession(
                 checkoutSession = editTextCheckoutSession.text.toString(),
-                countryCode = editTextCountryCode.text.toString().uppercase()
+                countryCode = editTextCountryCode.text.toString().uppercase(),
             )
             updateEditTextPayments()
         }
@@ -109,20 +115,16 @@ class CheckoutLiteActivity : AppCompatActivity() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == YUNO_START_PAYMENT_REQUEST_CODE) {
-            if (resultCode == PAYMENT_RESULT_SUCCESS) {
-                val token = data?.getStringExtra(PAYMENT_RESULT_DATA_TOKEN)
-                updateView(token)
-                Log.e("payment", "success ---> token: $token")
-            }
-            if (resultCode == PAYMENT_RESULT_ERROR) {
-                Log.e("payment", "fail")
-            }
-            if (resultCode == PAYMENT_RESULT_CANCELED) {
-                Log.e("payment", "cancelled")
-            }
+    private fun onTokenUpdated(token: String?) {
+        token?.let {
+            updateView(token)
+            Log.e("Payment flow", "success ---> token: $token")
+        }
+    }
+
+    private fun onPaymentStateChange(paymentState: String?) {
+        paymentState?.let {
+            updateView(paymentState)
         }
     }
 
