@@ -60,17 +60,34 @@ startEnrollment(
     showEnrollmentStatus: Boolean, //Optional - Default true
 )
 ```
-**Note:** If you need to change the request code of the flow, you can specify that on the “StartEnrollment” method with the new requestCode as a parameter.
+#### Callback Enrollment State
+To register a callback to get the final enrollment state, is necessary call ```initEnrollment``` method on the onCreate method of activity.
 
 ### Checkout
-To start a new payment process you need to call the following method on the onCreate method of activity containing your checkout view:
+To start a new payment process you need to call the following method on the onCreate method of activity that call the SDK:
 
 ```Kotlin 
 startCheckout(
     checkoutSession: "checkout_session",
     countryCode: "country_code_iso",
+    callbackOTT: (String?) -> Unit,
+    callbackPaymentState: ((String?) -> Unit)?,
 )
 ```
+#### Callback One Time Token
+The ```callbackOTT``` parameter is a function that return a token(OTT) needed to complete the payment back to back, this function is mandatory
+
+#### Callback Payment State
+The ```callbackPaymentState``` parameter is a function that return of current payment process, the function could be not sent if you doesn't need the result. The possible states are:
+```Kotlin 
+const val PAYMENT_STATE_SUCCEEDED = "SUCCEEDED"
+const val PAYMENT_STATE_FAIL = "FAIL"
+const val PAYMENT_STATE_PROCESSING = "PROCESSING"
+const val PAYMENT_STATE_REJECT = "REJECT"
+const val PAYMENT_STATE_INTERNAL_ERROR = "INTERNAL_ERROR"
+const val PAYMENT_STATE_STATE_CANCELED_BY_USER = "CANCELED"
+```
+
 #### Show Payment Methods
 When implementing the Full  SDK version you need to add the next view on your layout to show the available payment methods:
 
@@ -115,48 +132,4 @@ continuePayment(
     showPaymentStatus: Boolean, //Optional - Deault true
 )
 ```
-To show your own payment status screens, you should send `false` in the `showPaymentStatus` parameter and then get the payment state in the activity result callback.
-
-The possible states are:
-```Kotlin 
-const val PAYMENT_STATE_SUCCESS : String
-const val PAYMENT_STATE_FAIL : String
-const val PAYMENT_STATE_PROCESSING : String
-const val PAYMENT_STATE_REJECT : String
-```
-
-#### Callbacks
-All activities displayed could return three different states: Success, Canceled or Error. To get those states you have to implement the method `onActivityResult` of your activity, like shown in the following code snippet:
-
-```Kotlin 
-override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == YUNO_PAYMENT_REQUEST_CODE) {
-            if (resultCode == PAYMENT_RESULT_SUCCESS) {
-                //TODO: Write your code
-            }
-            if (resultCode == PAYMENT_RESULT_ERROR) {
-                //TODO: Write your code
-            }
-            if (resultCode == PAYMENT_RESULT_CANCELED) {
-                //TODO: Write your code
-            }
-        }
-    }
-```
-You can get some information about the payment or enrollment, such as the OTT, with the key `PAYMENT_RESULT_DATA_TOKEN` after calling a `startPayment` or `startPaymentLite` method.
-The following code snippet shows an example of how to get information about the OTT:
-
-
-```Kotlin 
-override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == YUNO_PAYMENT_REQUEST_CODE) {
-            if (resultCode == PAYMENT_RESULT_SUCCESS) {
-                val token = data?.getStringExtra(PAYMENT_RESULT_DATA_TOKEN)
-            }
-        }
-    }
-```
-
-**Note:** If you need to change the request code of the flow, you can do it in each method that start a flow.
+To show your own payment status screens, you should send `false` in the `showPaymentStatus` parameter and then get the payment state by callback.
