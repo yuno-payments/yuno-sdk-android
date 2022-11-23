@@ -1,7 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## New Version [1.2.0]
+## Version [1.2.1]
+- Fix: Typo "Paga con tajeta" in spanish language.
+- Fix: Error message on document number field.
+
+## Version [1.2.0]
 - Important Changes: Add callback in ```startPayment``` method to avoid  ```onActivityResult```
 - Important Changes: Add ```initEnrollment``` method to  configure the callback and avoid  ```onActivityResult```
 
