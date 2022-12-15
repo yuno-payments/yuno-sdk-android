@@ -58,6 +58,7 @@ startEnrollment(
     customerSession: String,
     countryCode: String,
     showEnrollmentStatus: Boolean, //Optional - Default true
+    callbackEnrollmentState: ((String?) -> Unit)?, //Optional - Default null | To register this callback is a must to call ```initEnrollment``` method on the onCreate method of activity.
 )
 ```
 #### Callback Enrollment State
@@ -104,14 +105,14 @@ To start a payment process you have to call the method `startPayment`. However, 
 ###### Full SDK Version
 ```Kotlin 
 startPayment(
-    requestCode: 12345 //Optional,
+callbackOTT: (String?) -> Unit, //Optional - Default null
 )
 ```
 ###### Lite SDK Version
 ```Kotlin 
 startPaymentLite(
-    requestCode: 12345 //Optional,
     paymentSelected: PaymentSelected,
+    callbackOTT: (String?) -> Unit, //Optional - Default null
 )
 ```
 For the Lite version you need to send an additional parameter,  which is the vaulted token and/or the payment type that the user selected to make the payment.
@@ -128,8 +129,23 @@ At the end of this process you will obtain the One Time Token (OTT) which is a r
 If in the create_payment response the sdk_action_required parameter is true you need to call the following method:
 ```Kotlin 
 continuePayment(
-    requestCode: Int, //Optional
     showPaymentStatus: Boolean, //Optional - Deault true
+    callbackPaymentState: ((String?) -> Unit)?, //Optional - Deault null
 )
 ```
 To show your own payment status screens, you should send `false` in the `showPaymentStatus` parameter and then get the payment state by callback.
+
+## Styles
+### Button Styles
+If you want to use your own button's styles you can override our styles, ex:
+```XML 
+<style name="Button.Normal.Purple">
+        <item name="android:background">your color</item>
+    </style>
+```
+
+These are our button styles you can override:
+-Button.Normal.White
+-Button.Normal.Green
+-Button.Normal.Purple
+-Button.Normal.Purple.Big

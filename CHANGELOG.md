@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## Version [1.2.2]
+- New: Allow to initialize the enrollment state callback in ```startEnrollment``` method
+- New: Allow to initialize the payment state callback in ```continuePayment``` method
+- New: Allow to initialize the OTT callback in ```startPayment``` method
+
 ## Version [1.2.1]
 - Fix: Typo "Paga con tajeta" in spanish language.
 - Fix: Error message on document number field.
