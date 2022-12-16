@@ -38,7 +38,11 @@ The following code includes an example of a custom application:
 class CustomApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        Yuno.initialize(this, "your api key")
+        Yuno.initialize(
+        this, 
+        "your api key",
+        cardFormType : CardFormType // This is optional, CardFormType.ONE_STEP by default, this is to choose Payment and Enrollment Card flow. 
+        )
     }
 }
 ```

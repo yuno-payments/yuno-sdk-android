@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## Version [1.2.4]
+- New: Allow **SPEI** payment method
+- New: Enrollment and Payment Card flow by steps.
+
 ## Version [1.2.2]
 - New: Allow to initialize the enrollment state callback in ```startEnrollment``` method
 - New: Allow to initialize the payment state callback in ```continuePayment``` method
