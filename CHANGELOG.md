@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## Version [1.2.5]
+- Fix: Payment and Enrollment state when user cancel.
+
 ## Version [1.2.4]
 - New: Allow **SPEI** payment method
 - New: Enrollment and Payment Card flow by steps.
