@@ -41,11 +41,21 @@ class CustomApplication : Application() {
         Yuno.initialize(
         this, 
         "your api key",
-        cardFormType : CardFormType // This is optional, CardFormType.ONE_STEP by default, this is to choose Payment and Enrollment Card flow. 
+        config: YunoConfig, // This is a data class to use custom configs in the SDK.
         )
     }
 }
 ```
+
+YunoConfig data class:
+
+```kotlin 
+data class YunoConfig(
+    val cardFlow: CardFormType = CardFormType.ONE_STEP, // This is optional, CardFormType.ONE_STEP by default, this is to choose Payment and Enrollment Card flow.
+    val saveCardEnabled: Boolean = false, // This is to choose if show save card checkbox on cards flows.
+)
+```
+
 You’ll need to update your manifest to use your application:
 ```XML 
 <application

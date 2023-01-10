@@ -1,6 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## Version [1.3.0]
+- New: Allow **Arcus Cash** payment method
+- New: Allow **Daviplata** payment method
+- New: Allow **CoDi** payment method
+- New: Allow **PayValida** payment method
+- New: Enable/Disable "Save card" checkbox in card forms by YunoConfig in ```initialize``` method
+- Important Changes: YunoConfig data class for customize parameters in ```initialize``` method
+
 ## Version [1.2.5]
 - Fix: Payment and Enrollment state when user cancel.
 
