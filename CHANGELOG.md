@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## Version [1.3.1]
+- Fix: Remove document fields in Enrollment form.
+
 ## Version [1.3.0]
 - New: Allow **Arcus Cash** payment method
 - New: Allow **Daviplata** payment method
