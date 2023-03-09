@@ -1,6 +1,24 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## Version [1.3.2]
+
+- New: Allow **Tarjeta Clave** payment method
+- New: Allow **Kushki** payment method
+- New: Allow **Khipu** payment method
+- New: Request CVV code in enrolled Cards by flag at init Yuno SDK method
+- New: Timer in OTP Screen to expire payment
+- New: Add new view to show only enrollment available payment
+  methods ```EnrollmentMethodsListView()```
+- Important Changes: New field in YunoConfig data class for request CVV code in cards flow:
+```
+data class YunoConfig(
+  val cardFlow: CardFormType = CardFormType.ONE_STEP,
+  val saveCardEnabled: Boolean = false,
+  val requestSecurityCode: Boolean = false, //NEW FIELD
+  )
+```
+
 ## Version [1.3.1]
 - Fix: Remove document fields in Enrollment form.
 
