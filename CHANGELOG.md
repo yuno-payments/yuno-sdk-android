@@ -1,6 +1,32 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## Version [1.3.8]
+
+- Fix: Customer with null document
+
+## Version [1.3.7]
+
+- Improve: Cards flows improved
+
+## Version [1.3.6]
+
+- New: Allow **CASH** payment method
+- New: Allow **BANK_TRANSFER** payment method
+- New: Allow **UNLIMINT** payment method
+- New: Allow **PagSeguro** payment method
+- Important Changes: Remove the flag to require the cvv on rolled cards, now it's dynamic.
+```
+data class YunoConfig(
+  val cardFlow: CardFormType = CardFormType.ONE_STEP,
+  val saveCardEnabled: Boolean = false
+  )
+```
+
+## Version [1.3.3]
+
+- Fix: Design in Card's step by step form.
+
 ## Version [1.3.2]
 
 - New: Allow **Tarjeta Clave** payment method
