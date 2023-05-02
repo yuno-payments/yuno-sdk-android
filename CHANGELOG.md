@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## Version [1.3.9]
+
+- Fix: Card flow step by step
+- New: Design of loading screen
+- New: Payment method Mercado Pago Checkout Pro don't need form anymore
+
 ## Version [1.3.8]
 
 - Fix: Customer with null document
