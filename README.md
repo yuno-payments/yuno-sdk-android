@@ -46,14 +46,14 @@ The following code snippet includes an example of a custom application:
 
 ```kotlin
 class CustomApplication : Application() {
-    override fun onCreate() {
-        super.onCreate()
-        Yuno.initialize(
-            this,
-            "your api key",
-            config: YunoConfig, // This is a data class to use custom configs in the SDK.
-        )
-    }
+  override fun onCreate() {
+    super.onCreate()
+    Yuno.initialize(
+      this,
+      "your api key",
+      config: YunoConfig, // This is a data class to use custom configs in the SDK.
+    )
+  }
 }
 ```
 
@@ -61,10 +61,13 @@ Please use the YunoConfig data class presented as follows:
 
 ```kotlin
 data class YunoConfig(
-    val cardFlow: CardFormType = CardFormType.ONE_STEP, // This is optional, CardFormType.ONE_STEP by default, this is to choose Payment and Enrollment Card flow.
-    val saveCardEnabled: Boolean = false, // This is to choose if show save card checkbox on cards flows.
+  val cardFlow: CardFormType = CardFormType.ONE_STEP, // This is optional, CardFormType.ONE_STEP by default, this is to choose Payment and Enrollment Card flow.
+  val saveCardEnabled: Boolean = false, // This is to choose if show save card checkbox on cards flows.
+  val keepLoader: Boolean = false // This is to choose if keep Yuno loading screen until you create and continue with payment, this need an additional step that is shown below.
 )
 ```
+
+To keep Yuno loading screen until you create and continue with payment you also have to use the function startCompletePaymentFlow() that is explained on the next session.
 
 In addition, you need to update your manifest to use your application:
 
@@ -102,9 +105,10 @@ activity that calls the SDK:
 ```Kotlin
 startCheckout(
     checkoutSession: "checkout_session",
-countryCode: "country_code_iso",
-callbackOTT: (String?) -> Unit,
-callbackPaymentState: ((String?) -> Unit)?,
+    countryCode: "country_code_iso",
+    callbackOTT: (String?) -> Unit,
+    callbackPaymentState: ((String?) -> Unit)?,
+    merchantSessionId: String? = null //Optional - Default null 
 )
 ```
 
@@ -190,6 +194,26 @@ continuePayment(
 To show your own payment status screens, you should send `false` in the `showPaymentStatus`
 parameter and then get the payment state by callback.
 
+
+###### Complete Flow To Keep Yuno Loader
+
+if you want to keep Yuno loading screen, you have to send in YunoConfig parameter in Yuno.initialize() function the parameter
+keepLoader in TRUE and also when you decide to start the payment you have to use the following function:
+
+```kotlin
+startCompletePaymentFlow(
+    paymentSelected: PaymentSelected? = null,
+    showPaymentStatus: Boolean = true,
+    createPaymentFun: (suspend (ott: String) -> Unit)? = null,
+    callbackPaymentState: ((String?) -> Unit)? = null,
+    callbackOTT: ((String?) -> Unit)? = null,
+)
+```
+
+the "createPaymentFun" parameter is a suspend function where Yuno wait until you create the payment back to back, once the payment its created
+you complete the suspend function and Yuno will continue with the payment, if you decide to use this flow you don't need to call continuePayment()
+anymore.
+
 ## Styles
 
 ### Font Family
@@ -200,7 +224,7 @@ code snippet below:
 ```XML
 
 <style name="YunoRegularFont">
-    <item name="android:fontFamily">YOUR REGULAR FONT FILE ( EX: @font/inter_regular.ttf)</item>
+  <item name="android:fontFamily">YOUR REGULAR FONT FILE ( EX: @font/inter_regular.ttf)</item>
 </style>
 
 <style name="YunoMediumFont">
@@ -225,9 +249,9 @@ the code snippet below:
 ```XML
 
 <style name="Button.Normal.Purple">
-    <item name="android:background">YOUR OWN COLOR ( EX: HEXCODE OR RESOURCE )</item>
-    <item name="android:textColor">YOUR OWN COLOR ( EX: HEXCODE OR RESOURCE )</item>
-    <item name="android:fontFamily">YOUR FONT FILE ( EX: @font/inter_regular.ttf)</item>
+  <item name="android:background">YOUR OWN COLOR ( EX: HEXCODE OR RESOURCE )</item>
+  <item name="android:textColor">YOUR OWN COLOR ( EX: HEXCODE OR RESOURCE )</item>
+  <item name="android:fontFamily">YOUR FONT FILE ( EX: @font/inter_regular.ttf)</item>
 </style>
 ```
 
