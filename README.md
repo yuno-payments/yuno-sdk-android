@@ -61,13 +61,29 @@ Please use the YunoConfig data class presented as follows:
 
 ```kotlin
 data class YunoConfig(
-  val cardFlow: CardFormType = CardFormType.ONE_STEP, // This is optional, CardFormType.ONE_STEP by default, this is to choose Payment and Enrollment Card flow.
-  val saveCardEnabled: Boolean = false, // This is to choose if show save card checkbox on cards flows.
-  val keepLoader: Boolean = false // This is to choose if keep Yuno loading screen until you create and continue with payment, this need an additional step that is shown below.
+    val cardFlow: CardFormType = CardFormType.ONE_STEP, // This is optional, CardFormType.ONE_STEP by default, this is to choose Payment and Enrollment Card flow.
+    val saveCardEnabled: Boolean = false, // This is to choose if show save card checkbox on cards flows.
+    val keepLoader: Boolean = false // This is to choose if keep Yuno loading screen until you create and continue with payment, this need an additional step that is shown below.
+    val cardFormDeployed: Boolean = false, // This is only for SDK FULL, This is to choose if show card form deployed on payment methods list (TRUE) or if show normal card form in another screen (FALSE)
+    val language: YunoLanguage? = null, //This is to choose the language of the SDK, if you send null or don't send it, Yuno SDK will take device language.
+    val isDynamicViewEnabled: Boolean = false, //This is to choose if you want to use dynamic view or not, if you send false or don't send it, Yuno SDK will take false.
 )
 ```
 
-To keep Yuno loading screen until you create and continue with payment you also have to use the function startCompletePaymentFlow() that is explained on the next session.
+Available Languages
+
+```kotlin
+enum class YunoLanguage {
+    SPANISH,
+    ENGLISH,
+    PORTUGUESE,
+    INDONESIAN,
+    MALAYSIAN
+}
+```
+
+To keep Yuno loading screen until you create and continue with payment you also have to use the
+function startCompletePaymentFlow() that is explained on the next session.
 
 In addition, you need to update your manifest to use your application:
 
@@ -80,15 +96,23 @@ In addition, you need to update your manifest to use your application:
 
 ### Enroll a new payment method
 
+To start an enrollment flow is a must to call initEnrollment method on the onCreate method of your
+activity, this because we use it to register the contract to give you the final enrollment state.
+
+````Kotlin
+fun ComponentActivity.initEnrollment(
+    callbackEnrollmentState: ((String?) -> Unit)? = null, //Default null | To register this callback is a must to call ```initEnrollment``` method on the onCreate method of activity.
+)
+````
+
 Call the following method from your activity to start an enrollment flow of a new payment method.
 
 ````Kotlin
-startEnrollment(
-    requestCode: Int, //Optional
+fun Activity.startEnrollment(
     customerSession: String,
     countryCode: String,
-    showEnrollmentStatus: Boolean, //Optional - Default true
-    callbackEnrollmentState:((String?) -> Unit)?, //Optional - Default null | To register this callback is a must to call ```initEnrollment``` method on the onCreate method of activity.
+    showEnrollmentStatus: Boolean = true, //Optional - Default true
+    callbackEnrollmentState: ((String?) -> Unit)? = null, // Default null | To register this callback is a must to call ```initEnrollment``` method on the onCreate method of activity.
 )
 ````
 
@@ -105,10 +129,10 @@ activity that calls the SDK:
 ```Kotlin
 startCheckout(
     checkoutSession: "checkout_session",
-    countryCode: "country_code_iso",
-    callbackOTT: (String?) -> Unit,
-    callbackPaymentState: ((String?) -> Unit)?,
-    merchantSessionId: String? = null //Optional - Default null 
+countryCode: "country_code_iso",
+callbackOTT: (String?) -> Unit,
+callbackPaymentState: ((String?) -> Unit)?,
+merchantSessionId: String? = null //Optional - Default null 
 )
 ```
 
@@ -170,8 +194,8 @@ the payment type that the user selected to make the payment.
 
 ```Kotlin
 PaymentSelected(
-    id: "payment_vaulted_token",
-type: "payment_type",
+    id : String "payment_vaulted_token",
+    type : String "payment_type",
 )
 ```
 
@@ -194,24 +218,25 @@ continuePayment(
 To show your own payment status screens, you should send `false` in the `showPaymentStatus`
 parameter and then get the payment state by callback.
 
-
 ###### Complete Flow To Keep Yuno Loader
 
-if you want to keep Yuno loading screen, you have to send in YunoConfig parameter in Yuno.initialize() function the parameter
-keepLoader in TRUE and also when you decide to start the payment you have to use the following function:
+if you want to keep Yuno loading screen, you have to send in YunoConfig parameter in
+Yuno.initialize() function the parameter keepLoader in TRUE and also when you decide to start the
+payment you have to use the following function:
 
 ```kotlin
 startCompletePaymentFlow(
     paymentSelected: PaymentSelected? = null,
-    showPaymentStatus: Boolean = true,
-    createPaymentFun: (suspend (ott: String) -> Unit)? = null,
-    callbackPaymentState: ((String?) -> Unit)? = null,
-    callbackOTT: ((String?) -> Unit)? = null,
+showPaymentStatus: Boolean = true,
+createPaymentFun: (suspend(ott: String) -> Unit)? = null,
+callbackPaymentState: ((String?) -> Unit)? = null,
+callbackOTT: ((String?) -> Unit)? = null,
 )
 ```
 
-the "createPaymentFun" parameter is a suspend function where Yuno wait until you create the payment back to back, once the payment its created
-you complete the suspend function and Yuno will continue with the payment, if you decide to use this flow you don't need to call continuePayment()
+the "createPaymentFun" parameter is a suspend function where Yuno wait until you create the payment
+back to back, once the payment its created you complete the suspend function and Yuno will continue
+with the payment, if you decide to use this flow you don't need to call continuePayment()
 anymore.
 
 ## Styles
@@ -224,7 +249,7 @@ code snippet below:
 ```XML
 
 <style name="YunoRegularFont">
-  <item name="android:fontFamily">YOUR REGULAR FONT FILE ( EX: @font/inter_regular.ttf)</item>
+    <item name="android:fontFamily">YOUR REGULAR FONT FILE ( EX: @font/inter_regular.ttf)</item>
 </style>
 
 <style name="YunoMediumFont">
@@ -249,9 +274,9 @@ the code snippet below:
 ```XML
 
 <style name="Button.Normal.Purple">
-  <item name="android:background">YOUR OWN COLOR ( EX: HEXCODE OR RESOURCE )</item>
-  <item name="android:textColor">YOUR OWN COLOR ( EX: HEXCODE OR RESOURCE )</item>
-  <item name="android:fontFamily">YOUR FONT FILE ( EX: @font/inter_regular.ttf)</item>
+    <item name="android:background">YOUR OWN COLOR ( EX: HEXCODE OR RESOURCE )</item>
+    <item name="android:textColor">YOUR OWN COLOR ( EX: HEXCODE OR RESOURCE )</item>
+    <item name="android:fontFamily">YOUR FONT FILE ( EX: @font/inter_regular.ttf)</item>
 </style>
 ```
 
@@ -291,6 +316,14 @@ information.
 
 #### The following are the components you should use:
 
+* CloseButton:
+  This is the button to close the form. You must use it with its defined android id:
+
+```XML 
+<ImageView
+        android:id="@+id/imageView_close" />
+```
+
 * CardNumberEditText:
   This is where the user can enter the credit card number. You must use it with its defined android
   id:
@@ -300,22 +333,23 @@ information.
     android:id="@+id/textField_number" />
 ```
 
-* CardExpiryDateEditText:
-  This is where the user can enter the credit card's expiration date. You must use it with its
+* CardDataStackView:
+  This is where the user can enter the credit card's expiration date and can enter the credit card's verification code (CVV/CVC). You must use it with its
   defined android id:
 
 ```XML 
-<com.yuno.payments.features.base.ui.views.CardExpiryDateEditText
-    android:id="@+id/textField_expiration_date" />
+<com.yuno.payments.features.base.ui.views.CardDataStackView
+    android:id="@+id/cardDataStackView" />
 ```
 
-* TextFieldItemView for CVV code:
-  This is where the user can enter the credit card's verification code (CVV). You must use it with
-  its defined android id:
+* TextView for Voucher Card Type:
+  This is a copy we show when the card is VOUCHER type, you must set it below CVV field. You must
+  use it with its defined android id:
 
 ```XML 
-<com.yuno.payments.features.base.ui.views.TextFieldItemView
-android:id="@+id/textField_verification_code" />
+<TextView
+    android:id="@+id/textView_voucher_copy"
+    android:visibility="gone" />
 ```
 
 * TextFieldItemView for card holder's name:
@@ -343,6 +377,76 @@ android:id="@+id/textField_verification_code" />
 ```XML 
 <com.yuno.payments.features.base.ui.views.TextFieldItemView
     android:id="@+id/textField_user_document" />
+```
+
+* PhoneInformationView for customer's phone number:
+  This is where the user can enter his phone number if needed. You must use it with its defined
+  android id and it have to have GONE visibility:
+
+```XML 
+<com.yuno.payments.features.base.ui.views.TextFieldItemView
+      android:id="@+id/textField_user_document"
+      android:visibility="gone" />
+```
+
+* Installments:
+  This is the component to show the spinner of card installments. You must use it with its defined
+  android id, it must have GONE visibility and you must add ShimmerFrameLayout dependency: "
+  implementation 'com.facebook.shimmer:shimmer:0.5.0'"
+
+```XML 
+<LinearLayout
+                android:id="@+id/container_installments"
+                android:orientation="vertical">
+
+                <com.yuno.payments.features.base.ui.views.SpinnerFieldItemView
+                    android:id="@+id/spinner_installments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:spinner_title="@string/payment.form_installments" />
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmer_installments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:foregroundGravity="center"
+                    android:visibility="gone">
+
+                    <include layout="@layout/shimmer_component_field" />
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+            </LinearLayout>
+```
+
+* Yuno's TextView:
+  This is a text to show that the form is verifed by Yuno. You must use it with its defined android
+  id:
+
+```XML 
+<TextView
+        android:id="@+id/textView_secure_payment" />
+```
+
+* CustomYunoSwitch:
+  This is a switch component to let the user choose if the card is gonna be used as credit or debit.
+  You must use it with its defined android id and it must have GONE visibility:
+
+```XML 
+<com.yuno.payments.features.base.ui.views.CustomYunoSwitch
+                android:id="@+id/switch_cardType"
+                android:visibility="gone" />
+```
+
+* CustomYunoSwitch tooltip:
+  This is a tooltip to show how the switch works. You must use it with its defined android id and it
+  must have GONE visibility, as a recommendation this component should be placed next to the switch:
+
+```XML 
+<ImageView
+                android:id="@+id/switch_tooltip"
+                android:src="@drawable/ic_thin_info"
+                android:visibility="gone"/>
 ```
 
 * AppCompatCheckBox for save card:

@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file.
 
+## Version [1.5.12]
+- Improve: Cards Payments flow.
+- Important Changes: Change the CardExpiryDate component EditText and TextField ItemView (CVV) into a single CardDataStackView component, This is important if you are using SecureFields feature
+```XML 
+<com.yuno.payments.features.base.ui.views.CardDataStackView
+android:id="@+id/cardDataStackView" />
+```
+
+## Version [1.5.11]
+- Fix: Discover card validation.
+
+## Version [1.5.0]
+- New: Antifraud engines in Cards flow.
+- New: Click 2 Pay payment method.
+- New: Supported language methods.
+- New: SDK Design.
+- Improve: Cards Payments flow.
+- Improve: Performance.
+
+## Version [1.4.12]
+- Improve: Cards Payments flow.
+
+## Version [1.4.11]
+- Improve: Cards Enrollment flow.
+
+## Version [1.4.10]
+- Improve: Google pay flow.
+- Fix: Restore SDK status when app is killed or destroyed by Android Os.
+
 ## Version [1.4.8]
 - Improve: Google pay flow.
 
