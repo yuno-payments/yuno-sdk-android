@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/view_container_state"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@android:color/white">
+
+    <ImageView
+        android:id="@+id/imageView_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/yuno_spacing_xlarge"
+        app:layout_constraintBottom_toTopOf="@+id/view_separator"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_thin_close" />
+
+    <TextView
+        android:id="@+id/imageView_otp_toolbar_title"
+        style="@style/TextBody.Black.Bold"
+        android:layout_width="@dimen/yuno_spacing_empty"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/yuno_spacing_xlarge"
+        android:layout_marginTop="@dimen/yuno_spacing_large"
+        android:drawableStart="@drawable/ic_card_title"
+        android:drawablePadding="@dimen/yuno_spacing_small"
+        android:gravity="center"
+        android:text="@string/card_form_title_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view_separator"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/yuno_spacing_xxmicro"
+        android:layout_marginTop="@dimen/yuno_spacing_large"
+        android:background="@color/yuno_gray_light"
+        app:layout_constraintTop_toBottomOf="@id/imageView_otp_toolbar_title" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/yuno_spacing_empty"
+        app:layout_constraintBottom_toTopOf="@id/button_complete_form"
+        app:layout_constraintTop_toBottomOf="@id/view_separator"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="-31dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout_card_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/yuno_spacing_xlarge"
+            android:paddingBottom="@dimen/yuno_spacing_large"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_separator">
+
+            <com.yuno.payments.features.base.ui.views.CardNumberEditText
+                android:id="@+id/textField_number"
+                android:layout_width="@dimen/yuno_spacing_empty"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/yuno_spacing_huge"
+                android:inputType="number"
+                app:errorText="@string/card_error_number"
+                app:hint="@string/card_number_label"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:title="@string/card_number_label" />
+
+            <com.yuno.payments.features.payment.ui.views.CardDataStackView
+                android:id="@+id/cardDataStackView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/yuno_spacing_xxlarge"
+                app:layout_constraintTop_toBottomOf="@id/textField_number" />
+
+            <TextView
+                android:id="@+id/textView_voucher_copy"
+                style="@style/TextSmall.Grey"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/yuno_spacing_standard"
+                android:text="@string/payment_card_form_voucher_copy"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/cardDataStackView" />
+
+            <com.yuno.payments.features.base.ui.views.TextFieldItemView
+                android:id="@+id/textField_name"
+                android:layout_width="@dimen/yuno_spacing_empty"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/yuno_spacing_xxlarge"
+                android:inputType="textPersonName"
+                app:errorText="@string/cardholder_error_name"
+                app:hint="@string/cardholder_name_placeholder"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textView_voucher_copy"
+                app:regexValidator="^[^0-9]{2,}$"
+                app:title="@string/payment.form_name" />
+
+            <com.yuno.payments.features.base.ui.views.CustomYunoSwitch
+                android:id="@+id/switch_cardType"
+                android:layout_width="@dimen/yuno_spacing_empty"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/yuno_spacing_xxlarge"
+                android:layout_marginEnd="@dimen/yuno_spacing_large"
+                android:visibility="gone"
+                app:layout_constraintEnd_toStartOf="@id/switch_tooltip"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textField_name" />
+
+            <ImageView
+                android:id="@+id/switch_tooltip"
+                android:layout_width="@dimen/yuno_spacing_xxlarge"
+                android:layout_height="@dimen/yuno_spacing_xxlarge"
+                android:layout_marginEnd="@dimen/yuno_spacing_xmassive"
+                android:src="@drawable/ic_thin_info"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/switch_cardType"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/switch_cardType" />
+
+            <LinearLayout
+                android:id="@+id/container_installments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/yuno_spacing_xxlarge"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/switch_cardType">
+
+                <com.yuno.payments.features.base.ui.views.SpinnerFieldItemView
+                    android:id="@+id/spinner_installments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:spinner_title="@string/payment.form_installments" />
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmer_installments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:foregroundGravity="center"
+                    android:visibility="gone">
+
+                    <include layout="@layout/shimmer_component_field" />
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+            </LinearLayout>
+
+            <com.yuno.payments.features.base.ui.views.SpinnerFieldItemView
+                android:id="@+id/spinner_document_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/yuno_spacing_xxlarge"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/container_installments"
+                app:spinner_title="@string/document_type_label" />
+
+            <com.yuno.payments.features.base.ui.views.TextFieldItemView
+                android:id="@+id/textField_user_document"
+                android:layout_width="@dimen/yuno_spacing_empty"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/yuno_spacing_xxlarge"
+                android:inputType="textWebEmailAddress"
+                app:errorText="@string/document_error_number"
+                app:hint="@string/document_number_placeholder"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spinner_document_type"
+                app:title="@string/document_number_label" />
+
+            <com.yuno.payments.features.payment.ui.views.PhoneInformationView
+                android:id="@+id/layout_phone_information"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/yuno_spacing_xlarge"
+                android:visibility="gone"
+                app:errorText="@string/payment.form_phone_error"
+                app:hintEditText="@string/payment.form_phone_hint"
+                app:hintSpinner="@string/payment.form_country"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textField_user_document" />
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/checkBox_save_card"
+                style="@style/Yuno.CheckBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/yuno_spacing_xxlarge"
+                android:background="@android:color/white"
+                android:checked="true"
+                android:paddingLeft="@dimen/yuno_spacing_medium"
+                android:paddingRight="@dimen/yuno_spacing_medium"
+                android:text="@string/card_save_checkbox_label"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/layout_phone_information" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <Button
+        android:id="@+id/button_complete_form"
+        style="@style/Button.Normal.Purple"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="@dimen/yuno_spacing_large"
+        android:layout_marginTop="@dimen/yuno_spacing_xhuge"
+        android:layout_marginBottom="@dimen/yuno_spacing_xlarge"
+        android:enabled="false"
+        app:layout_constraintBottom_toTopOf="@id/textView_secure_payment"
+        app:layout_constraintTop_toBottomOf="@id/scrollView" />
+
+    <TextView
+        android:id="@+id/textView_secure_payment"
+        style="@style/TextSmall.LowTextGrey"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/yuno_spacing_xhuge"
+        android:drawableStart="@drawable/ic_secure_payment_gray"
+        android:drawablePadding="@dimen/yuno_spacing_medium"
+        android:text="@string/card_secure_payment_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

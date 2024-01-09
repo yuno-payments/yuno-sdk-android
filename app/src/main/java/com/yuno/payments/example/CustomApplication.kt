@@ -11,8 +11,7 @@ class CustomApplication : Application() {
         Yuno.initialize(this, "API_KEY", config = YunoConfig(
             cardFlow = CardFormType.MULTI_STEP,
             saveCardEnabled = true,
-            keepLoader = true,
-            dynamicSdk = false
+            keepLoader = true
         ))
     }
 }
