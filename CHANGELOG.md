@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## Version [1.5.13]
+- New: Change Mercado Pago Wallet enrollment flow from webview to deeplink and custom tab.
+- New: Fraud engines 3DS and Cybersource.
+
 ## Version [1.5.12]
 - Improve: Cards Payments flow.
 - Important Changes: Change the CardExpiryDate component EditText and TextField ItemView (CVV) into a single CardDataStackView component, This is important if you are using SecureFields feature
