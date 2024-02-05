@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="8dp"
-    tools:context=".ui.payment.CheckoutLiteActivity">
+    tools:context=".features.payment.activities.CheckoutLiteActivity">
 
     <TextView
         android:id="@+id/textView_paymentLite"
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/yuno_spacing_large"
             android:ellipsize="end"
-            android:hint="Checkout Session"
+            android:hint="@string/checkout_session_hint"
             android:inputType="text"
             android:maxLines="1"
             app:layout_constraintEnd_toStartOf="@id/editText_countryCode"
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/yuno_spacing_xsmall"
             android:layout_marginTop="@dimen/yuno_spacing_large"
-            android:hint="Country Code"
+            android:hint="@string/country_code_hint"
             android:maxLength="2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/editText_checkoutSession"
@@ -92,66 +92,68 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_checkoutContinue"
-        android:layout_width="@dimen/yuno_spacing_empty"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/yuno_spacing_xlarge"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="@dimen/yuno_spacing_xsmall"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
+            android:id="@+id/textView_tokenTitle"
             style="@style/TextSmall.Grey"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:text="One Time Token"
-            app:layout_constraintBottom_toTopOf="@id/textView_token"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView_token"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             style="@style/TextSmall.Grey"
-            android:layout_marginBottom="@dimen/yuno_spacing_large"
-            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textIsSelectable="true"
-            app:layout_constraintBottom_toTopOf="@id/button_continue" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_tokenTitle"
+            tools:text="asdas-dasdasdas-dasdas-d" />
 
         <Button
             android:id="@+id/button_continue"
-            android:layout_width="115dp"
+            android:layout_width="@dimen/yuno_spacing_empty"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/yuno_spacing_micro"
+            android:layout_marginStart="@dimen/yuno_spacing_standard"
+            android:layout_marginTop="@dimen/yuno_spacing_large"
             android:text="Continue"
-            app:layout_constraintTop_toBottomOf="@id/textView_token"
             app:layout_constraintEnd_toStartOf="@+id/button_copy"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_token" />
 
         <Button
             android:id="@+id/button_copy"
-            android:layout_width="130dp"
+            android:layout_width="@dimen/yuno_spacing_empty"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/yuno_spacing_micro"
-            android:text="Copy token"
-            app:layout_constraintTop_toBottomOf="@id/textView_token"
+            android:layout_marginHorizontal="@dimen/yuno_spacing_standard"
+            android:layout_marginTop="@dimen/yuno_spacing_large"
+            android:text="Copy"
             app:layout_constraintEnd_toStartOf="@+id/button_reset"
-            app:layout_constraintStart_toEndOf="@+id/button_continue" />
+            app:layout_constraintStart_toEndOf="@+id/button_continue"
+            app:layout_constraintTop_toBottomOf="@id/textView_token" />
 
         <Button
             android:id="@+id/button_reset"
-            android:layout_width="110dp"
+            android:layout_width="@dimen/yuno_spacing_empty"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/yuno_spacing_micro"
+            android:layout_marginTop="@dimen/yuno_spacing_large"
+            android:layout_marginEnd="@dimen/yuno_spacing_standard"
             android:text="Reset"
-            app:layout_constraintTop_toBottomOf="@id/textView_token"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/button_copy" />
+            app:layout_constraintStart_toEndOf="@+id/button_copy"
+            app:layout_constraintTop_toBottomOf="@id/textView_token" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -161,7 +163,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:enabled="false"
-        android:text="Pagar"
+        android:text="Pay"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

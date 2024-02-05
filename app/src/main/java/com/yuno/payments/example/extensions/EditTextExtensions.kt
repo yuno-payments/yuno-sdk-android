@@ -8,6 +8,7 @@ import android.os.Build
 import android.widget.EditText
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.yuno.payments.base.extensions.dpToPixels
 import java.lang.reflect.Field
 
 fun EditText.setCursorColor(context: Context, color: Int) {
