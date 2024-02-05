@@ -4,11 +4,9 @@ import android.content.Context
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.View.OnFocusChangeListener
-import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.view.isVisible
 import androidx.core.widget.TextViewCompat
-import com.yuno.payments.example.R
 import com.yuno.payments.example.extensions.setCursorColor
 
 class CustomEditText @JvmOverloads constructor(
@@ -30,12 +28,20 @@ class CustomEditText @JvmOverloads constructor(
     private fun setStyleEditText() {
         ellipsize = TextUtils.TruncateAt.END
         maxLines = 1
-        TextViewCompat.setTextAppearance(this, R.style.TextBody_Black)
+        TextViewCompat.setTextAppearance(this, com.yuno.payments.R.style.TextBody_Black)
         this.setPadding(
-            context.resources.getDimensionPixelOffset(com.yuno.payments.R.dimen.yuno_spacing_large),
-            context.resources.getDimensionPixelOffset(com.yuno.payments.R.dimen.yuno_spacing_medium),
-            context.resources.getDimensionPixelOffset(com.yuno.payments.R.dimen.yuno_spacing_large),
-            context.resources.getDimensionPixelOffset(com.yuno.payments.R.dimen.yuno_spacing_medium)
+            context.resources.getDimensionPixelOffset(
+                com.yuno.payments.R.dimen.yuno_spacing_large
+            ),
+            context.resources.getDimensionPixelOffset(
+                com.yuno.payments.R.dimen.yuno_spacing_medium
+            ),
+            context.resources.getDimensionPixelOffset(
+                com.yuno.payments.R.dimen.yuno_spacing_large
+            ),
+            context.resources.getDimensionPixelOffset(
+                com.yuno.payments.R.dimen.yuno_spacing_medium
+            )
         )
         setEditTextState(EditTextState.NORMAL)
     }
@@ -51,16 +57,16 @@ class CustomEditText @JvmOverloads constructor(
     private fun setEditTextState(state: EditTextState) {
         when (state) {
             EditTextState.ERROR -> {
-                setBackgroundResource(R.drawable.bg_error_edit_text)
-                setCursorColor(this.context, R.color.yuno_font_black_light)
+                setBackgroundResource(com.yuno.payments.R.drawable.bg_error_edit_text)
+                setCursorColor(this.context, com.yuno.payments.R.color.yuno_font_black_light)
             }
             EditTextState.FOCUS -> {
-                setBackgroundResource(R.drawable.bg_focus_edit_text)
-                setCursorColor(this.context, R.color.yuno_purple_light)
+                setBackgroundResource(com.yuno.payments.R.drawable.bg_focus_edit_text)
+                setCursorColor(this.context, com.yuno.payments.R.color.yuno_purple_light)
             }
             EditTextState.NORMAL -> {
-                setBackgroundResource(R.drawable.bg_edit_text)
-                setCursorColor(this.context, R.color.yuno_font_black_light)
+                setBackgroundResource(com.yuno.payments.R.drawable.bg_edit_text)
+                setCursorColor(this.context, com.yuno.payments.R.color.yuno_font_black_light)
             }
         }
     }

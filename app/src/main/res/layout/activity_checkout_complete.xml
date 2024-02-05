@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/yuno_spacing_xlarge" >
+    android:padding="@dimen/yuno_spacing_xlarge"
+    android:background="@android:color/white"
+    tools:context=".features.payment.activities.CheckoutCompleteActivity">
 
     <TextView
         android:id="@+id/textView_paymentFullTitle"
@@ -12,18 +14,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Payment Full"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.yuno.payments.example.ui.views.CustomEditText
         android:id="@+id/editText_checkoutSession"
         android:layout_width="@dimen/yuno_spacing_empty"
         android:layout_height="wrap_content"
-        android:hint="Checkout Session"
         android:layout_marginTop="@dimen/yuno_spacing_large"
-        android:maxLines="1"
         android:ellipsize="end"
+        android:hint="@string/checkout_session_hint"
         android:inputType="text"
+        android:maxLines="1"
         app:layout_constraintEnd_toStartOf="@id/editText_countryCode"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView_paymentFullTitle"
@@ -33,10 +35,10 @@
         android:id="@+id/editText_countryCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Country Code"
-        android:layout_marginTop="@dimen/yuno_spacing_large"
-        android:maxLength="2"
         android:layout_marginStart="@dimen/yuno_spacing_xsmall"
+        android:layout_marginTop="@dimen/yuno_spacing_large"
+        android:hint="@string/country_code_hint"
+        android:maxLength="2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/editText_checkoutSession"
         app:layout_constraintTop_toBottomOf="@id/textView_paymentFullTitle"
@@ -63,38 +65,72 @@
     </ScrollView>
 
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_checkout_continue"
         android:layout_width="@dimen/yuno_spacing_empty"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_setCheckoutSession">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible">
+
+        <TextView
+            android:id="@+id/textView_tokenTitle"
+            style="@style/TextSmall.Grey"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="One Time Token"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView_token"
+            style="@style/TextSmall.Grey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textIsSelectable="true" />
+            android:textIsSelectable="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_tokenTitle"
+            tools:text="asdas-dasdasdas-dasdas-d" />
 
         <Button
             android:id="@+id/button_continue"
             style="@style/Button.Normal.Purple"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/yuno_spacing_empty"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/yuno_spacing_standard"
             android:layout_marginTop="@dimen/yuno_spacing_large"
-            android:text="Continue" />
+            android:text="Continue"
+            app:layout_constraintEnd_toStartOf="@id/button_copy"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_token" />
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/button_copy"
+            style="@style/Button.Normal.Purple"
+            android:layout_width="@dimen/yuno_spacing_empty"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/yuno_spacing_standard"
+            android:layout_marginTop="@dimen/yuno_spacing_large"
+            android:text="Copy"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/button_continue"
+            app:layout_constraintTop_toBottomOf="@id/textView_token" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/button_pay"
         style="@style/Button.Normal.Purple"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Pagar"
+        android:enabled="false"
+        android:text="Pay"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
