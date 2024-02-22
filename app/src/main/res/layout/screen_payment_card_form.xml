@@ -230,7 +230,7 @@
         android:layout_marginBottom="@dimen/yuno_spacing_xhuge"
         android:drawableStart="@drawable/ic_secure_payment_gray"
         android:drawablePadding="@dimen/yuno_spacing_medium"
-        android:text="@string/card_secure_payment_text"
+        android:text="Secure payment with Yuno"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -46,14 +46,14 @@ The following code snippet includes an example of a custom application:
 
 ```kotlin
 class CustomApplication : Application() {
-  override fun onCreate() {
-    super.onCreate()
-    Yuno.initialize(
-      this,
-      "your api key",
-      config: YunoConfig, // This is a data class to use custom configs in the SDK.
-    )
-  }
+    override fun onCreate() {
+        super.onCreate()
+        Yuno.initialize(
+            this,
+            "your api key",
+            config: YunoConfig, // This is a data class to use custom configs in the SDK.
+        )
+    }
 }
 ```
 
@@ -112,14 +112,31 @@ fun Activity.startEnrollment(
     customerSession: String,
     countryCode: String,
     showEnrollmentStatus: Boolean = true, //Optional - Default true
-    callbackEnrollmentState: ((String?) -> Unit)? = null, // Default null | To register this callback is a must to call ```initEnrollment``` method on the onCreate method of activity.
+    callbackEnrollmentState: ((String?) -> Unit)? = null, //Optional - You can send again another callback that is gonna override the one you sent on initEnrollment function.
 )
 ````
 
-#### Callback Enrollment State
+### Callback Enrollment State
 
 To register a callback to get the final enrollment state, it is necessary call the `initEnrollment`
 method on the onCreate method of activity.
+
+### Get Enrollment State
+
+To only get the final enrollment state, it is necessary call the `initEnrollment`
+method on the onCreate method of activity, in that method you register a callback function
+called `callbackEnrollmentState`, we are gonna give you the status in that callback.
+
+# IMPORTANT: This function is not gonna start the enrollment process, is only to check a previous enrollment state this based on customer session.
+
+````Kotlin
+fun AppCompatActivity.enrollmentStatus(
+    customerSession: String,
+    countryCode: String,
+    showEnrollmentStatus: Boolean = false, //Optional - Default false
+    callbackEnrollmentState: ((String?) -> Unit)? = null, //Optional - You can send again another callback that is gonna override the one you sent on initEnrollment function.
+)
+````
 
 ### Checkout
 
@@ -320,8 +337,8 @@ information.
   This is the button to close the form. You must use it with its defined android id:
 
 ```XML 
-<ImageView
-        android:id="@+id/imageView_close" />
+
+<ImageView android:id="@+id/imageView_close" />
 ```
 
 * CardNumberEditText:
@@ -329,17 +346,18 @@ information.
   id:
 
 ```XML 
-<com.yuno.payments.features.base.ui.views.CardNumberEditText
-    android:id="@+id/textField_number" />
+
+<com.yuno.payments.features.base.ui.views.CardNumberEditText android:id="@+id/textField_number" />
 ```
 
 * CardDataStackView:
-  This is where the user can enter the credit card's expiration date and can enter the credit card's verification code (CVV/CVC). You must use it with its
+  This is where the user can enter the credit card's expiration date and can enter the credit card's
+  verification code (CVV/CVC). You must use it with its
   defined android id:
 
 ```XML 
-<com.yuno.payments.features.base.ui.views.CardDataStackView
-    android:id="@+id/cardDataStackView" />
+
+<com.yuno.payments.features.base.ui.views.CardDataStackView android:id="@+id/cardDataStackView" />
 ```
 
 * TextView for Voucher Card Type:
@@ -347,9 +365,8 @@ information.
   use it with its defined android id:
 
 ```XML 
-<TextView
-    android:id="@+id/textView_voucher_copy"
-    android:visibility="gone" />
+
+<TextView android:id="@+id/textView_voucher_copy" android:visibility="gone" />
 ```
 
 * TextFieldItemView for card holder's name:
@@ -357,8 +374,8 @@ information.
   android id:
 
 ```XML 
-<com.yuno.payments.features.base.ui.views.TextFieldItemView
-    android:id="@+id/textField_name" />
+
+<com.yuno.payments.features.base.ui.views.TextFieldItemView android:id="@+id/textField_name" />
 ```
 
 * SpinnerFieldItemView for identification document type:
@@ -366,6 +383,7 @@ information.
   holds. You must use it with its defined android id:
 
 ```XML 
+
 <com.yuno.payments.features.base.ui.views.SpinnerFieldItemView
     android:id="@+id/spinner_document_type" />
 ```
@@ -375,6 +393,7 @@ information.
   use it with its defined android id:
 
 ```XML 
+
 <com.yuno.payments.features.base.ui.views.TextFieldItemView
     android:id="@+id/textField_user_document" />
 ```
@@ -384,9 +403,9 @@ information.
   android id and it have to have GONE visibility:
 
 ```XML 
-<com.yuno.payments.features.base.ui.views.TextFieldItemView
-      android:id="@+id/textField_user_document"
-      android:visibility="gone" />
+
+<com.yuno.payments.features.base.ui.views.PhoneInformationView
+    android:id="@+id/layout_phone_information" android:visibility="gone" />
 ```
 
 * Installments:
@@ -395,28 +414,22 @@ information.
   implementation 'com.facebook.shimmer:shimmer:0.5.0'"
 
 ```XML 
-<LinearLayout
-                android:id="@+id/container_installments"
-                android:orientation="vertical">
 
-                <com.yuno.payments.features.base.ui.views.SpinnerFieldItemView
-                    android:id="@+id/spinner_installments"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    app:spinner_title="@string/payment.form_installments" />
+<LinearLayout android:id="@+id/container_installments" android:orientation="vertical">
 
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/shimmer_installments"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:foregroundGravity="center"
-                    android:visibility="gone">
+    <com.yuno.payments.features.base.ui.views.SpinnerFieldItemView
+        android:id="@+id/spinner_installments" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:visibility="gone"
+        app:spinner_title="@string/payment.form_installments" />
 
-                    <include layout="@layout/shimmer_component_field" />
-                </com.facebook.shimmer.ShimmerFrameLayout>
+    <com.facebook.shimmer.ShimmerFrameLayout android:id="@+id/shimmer_installments"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:foregroundGravity="center" android:visibility="gone">
 
-            </LinearLayout>
+        <include layout="@layout/shimmer_component_field" />
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+</LinearLayout>
 ```
 
 * Yuno's TextView:
@@ -424,8 +437,8 @@ information.
   id:
 
 ```XML 
-<TextView
-        android:id="@+id/textView_secure_payment" />
+
+<TextView android:id="@+id/textView_secure_payment" />
 ```
 
 * CustomYunoSwitch:
@@ -433,9 +446,9 @@ information.
   You must use it with its defined android id and it must have GONE visibility:
 
 ```XML 
-<com.yuno.payments.features.base.ui.views.CustomYunoSwitch
-                android:id="@+id/switch_cardType"
-                android:visibility="gone" />
+
+<com.yuno.payments.features.base.ui.views.CustomYunoSwitch android:id="@+id/switch_cardType"
+    android:visibility="gone" />
 ```
 
 * CustomYunoSwitch tooltip:
@@ -443,10 +456,9 @@ information.
   must have GONE visibility, as a recommendation this component should be placed next to the switch:
 
 ```XML 
-<ImageView
-                android:id="@+id/switch_tooltip"
-                android:src="@drawable/ic_thin_info"
-                android:visibility="gone"/>
+
+<ImageView android:id="@+id/switch_tooltip" android:src="@drawable/ic_thin_info"
+    android:visibility="gone" />
 ```
 
 * AppCompatCheckBox for save card:
@@ -454,8 +466,8 @@ information.
   use it with its defined android id:
 
 ```XML 
-<androidx.appcompat.widget.AppCompatCheckBox
-android:id="@+id/checkBox_save_card" />
+
+<androidx.appcompat.widget.AppCompatCheckBox android:id="@+id/checkBox_save_card" />
 ```
 
 * Button for validate card form and continue with the payment process:
@@ -463,6 +475,6 @@ android:id="@+id/checkBox_save_card" />
   must use it with its defined android id:
 
 ```XML 
-<Button
-    android:id="@+id/button_complete_form" />
+
+<Button android:id="@+id/button_complete_form" />
 ```

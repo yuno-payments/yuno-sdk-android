@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+## Version [1.5.14]
+- Improve: Cards step by step Payments flow and One step.
+
 ## Version [1.5.13]
 - New: Change Mercado Pago Wallet enrollment flow from webview to deeplink and custom tab.
 - New: Fraud engines 3DS and Cybersource.
