@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 
+## Version [1.7.0]
+
+- New: Headless flow to generateOtt and get3DsChallenge.
+
+
+## Version [1.6.1]
+
+- Fix: Antifraud was blocking generate OTT flow.
+- IMPORTANT CHANGES: Now we receive argument ```showPaymentStatus``` on
+  functions ```startPaymentLite``` and ```startPayment``` this is to decide if show Yuno's error
+  screen when an api request failed. Default value is true so by default the SDK will show Yuno's
+  error screen.
+
+## Version [1.6.0]
+
+- New: Mercado Pago antifraud.
+- Improve: Click to pay flow.
+- Fix: Some bugs.
+
+## Version [1.5.14-HF]
+- New: Function to create One Time Token with card information in Enrollment and Payment flow.
+- FIX: Crash with location permissions.
+
 ## Version [1.5.14]
 - Improve: Cards step by step Payments flow and One step.
 
