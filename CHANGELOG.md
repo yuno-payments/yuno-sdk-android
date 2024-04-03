@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## Version [1.8.0]
+
+- New: Headless flow to get 3Ds challenge Url.
+
 ## Version [1.7.0]
 
 - New: Headless flow to generateOtt and get3DsChallenge.
