@@ -18,7 +18,6 @@ import com.yuno.payments.example.ui.views.CustomEditText
 import com.yuno.payments.features.payment.continuePayment
 import com.yuno.payments.features.payment.startCheckout
 import com.yuno.payments.features.payment.startPayment
-import com.yuno.payments.features.payment.ui.views.DynamicPaymentMethodListView
 import com.yuno.payments.features.payment.ui.views.PaymentMethodListView
 import com.yuno.payments.features.payment.updateCheckoutSession
 
@@ -84,17 +83,8 @@ class CheckoutCompleteActivity : AppCompatActivity() {
             checkoutSessionEditText.text.toString(),
             countryCodeEditText.text.toString(),
         )
-        val paymentMethodListView = if (dynamicPaymentMethods) DynamicPaymentMethodListView(
-            this,
-            lifecycle
-        ) else PaymentMethodListView(this)
-
-        if (paymentMethodListView is DynamicPaymentMethodListView) {
-
-            paymentMethodListView.setOnSelectedEvent {
-                findViewById<Button>(R.id.button_pay).isEnabled = it
-            }
-        } else if (paymentMethodListView is PaymentMethodListView) {
+        val paymentMethodListView =  PaymentMethodListView(this)
+        if (paymentMethodListView is PaymentMethodListView) {
 
             paymentMethodListView.setOnSelectedEvent {
                 findViewById<Button>(R.id.button_pay).isEnabled = it
