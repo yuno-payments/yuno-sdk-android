@@ -1,10 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <public name="public_colors_in_lib" type="color" />
+    <color name="neutral_b">#282A30</color>
+    <color name="neutral_b_60_alpha">#99282A30</color>
+    <color name="neutral_w">#FFFFFF</color>
+    <color name="neutral_w_30_alpha">#4DFFFFFF</color>
+
+    <color name="grey_0">#FCFCFF</color>
+    <color name="grey_1">#F6F7FA</color>
+    <color name="grey_2">#ECEFF2</color>
+    <color name="grey_3">#BFC2C7</color>
+    <color name="grey_4">#92959B</color>
+    <color name="grey_5">#6C6F75</color>
+
+    <color name="primary_1">#513CE1</color>
+    <color name="primary_2">#29D99A</color>
+    <color name="primary_3">#FDB600</color>
+    <color name="primary_4">#F13F5E</color>
+    <color name="primary_5">#086BFF</color>
+
+    <color name="secondary_1">#E9E8FF</color>
+    <color name="secondary_2">#DEFFF3</color>
+    <color name="secondary_3">#FFF6DB</color>
+    <color name="secondary_4">#FFDFE3</color>
+    <color name="secondary_5">#E3EEFF</color>
+    <color name="secondary_6">#FEEBE1</color>
+
+    <color name="tertiary_1">#12823B</color>
+    <color name="tertiary_2">#E5A424</color>
+    <color name="tertiary_3">#E02E4D</color>
+    <color name="tertiary_4">#F6610C</color>
 </resources>

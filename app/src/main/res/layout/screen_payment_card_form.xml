@@ -16,18 +16,18 @@
         app:layout_constraintBottom_toTopOf="@+id/view_separator"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_thin_close" />
+        app:srcCompat="@drawable/ic_light_x" />
 
     <TextView
         android:id="@+id/imageView_otp_toolbar_title"
-        style="@style/TextBody.Black.Bold"
+        style="@style/TextBody.NeutralB.Bold"
         android:layout_width="@dimen/yuno_spacing_empty"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/yuno_spacing_xlarge"
         android:layout_marginTop="@dimen/yuno_spacing_large"
         android:drawableStart="@drawable/ic_card_title"
         android:drawablePadding="@dimen/yuno_spacing_small"
-        android:gravity="center"
+        android:gravity="center_vertical"
         android:text="@string/card_form_title_image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -37,7 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/yuno_spacing_xxmicro"
         android:layout_marginTop="@dimen/yuno_spacing_large"
-        android:background="@color/yuno_gray_light"
+        android:background="@color/grey_2"
         app:layout_constraintTop_toBottomOf="@id/imageView_otp_toolbar_title" />
 
     <androidx.core.widget.NestedScrollView
@@ -81,7 +81,7 @@
 
             <TextView
                 android:id="@+id/textView_voucher_copy"
-                style="@style/TextSmall.Grey"
+                style="@style/TextSmall.Grey5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/yuno_spacing_standard"
@@ -129,7 +129,6 @@
                 android:id="@+id/container_installments"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/yuno_spacing_xxlarge"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -139,6 +138,7 @@
                     android:id="@+id/spinner_installments"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/yuno_spacing_xxlarge"
                     android:visibility="gone"
                     app:spinner_title="@string/payment.form_installments" />
 
@@ -146,6 +146,7 @@
                     android:id="@+id/shimmer_installments"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/yuno_spacing_xxlarge"
                     android:foregroundGravity="center"
                     android:visibility="gone">
 
@@ -177,6 +178,83 @@
                 app:layout_constraintTop_toBottomOf="@id/spinner_document_type"
                 app:title="@string/document_number_label" />
 
+            <com.yuno.payments.features.base.ui.views.TextFieldItemView
+                android:id="@+id/textField_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/yuno_spacing_xlarge"
+                android:inputType="textWebEmailAddress"
+                android:visibility="gone"
+                app:errorText="@string/payment.form_address_error"
+                app:hint="@string/payment.form_address_hint"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textField_user_document"
+                app:regexValidator=".+"
+                app:title="@string/payment.form_address"
+                tools:visibility="visible" />
+
+            <com.yuno.payments.features.base.ui.views.SpinnerFieldItemView
+                android:id="@+id/spinner_country"
+                android:layout_width="@dimen/yuno_spacing_empty"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/yuno_spacing_xlarge"
+                android:inputType="textWebEmailAddress"
+                android:visibility="gone"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textField_address"
+                app:spinner_title="@string/payment.form_country"
+                tools:visibility="visible" />
+
+            <com.yuno.payments.features.base.ui.views.TextFieldItemView
+                android:id="@+id/textField_state"
+                android:layout_width="@dimen/yuno_spacing_empty"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/yuno_spacing_xlarge"
+                android:inputType="textWebEmailAddress"
+                android:visibility="gone"
+                app:errorText="@string/payment.form_state_error"
+                app:hint="@string/payment.form_state_hint"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spinner_country"
+                app:regexValidator=".+"
+                tools:visibility="visible" />
+
+
+            <com.yuno.payments.features.base.ui.views.TextFieldItemView
+                android:id="@+id/textField_city"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/yuno_spacing_xlarge"
+                android:inputType="textWebEmailAddress"
+                android:visibility="gone"
+                app:errorText="@string/payment.form_city_error"
+                app:hint="@string/payment.form_city_hint"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textField_state"
+                app:regexValidator=".+"
+                app:title="@string/payment.form_city"
+                tools:visibility="visible" />
+
+            <com.yuno.payments.features.base.ui.views.TextFieldItemView
+                android:id="@+id/textField_zip_code"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/yuno_spacing_xlarge"
+                android:inputType="phone"
+                android:visibility="gone"
+                app:errorText="@string/payment.form_zip_code_error"
+                app:hint="@string/payment.form_zip_code_hint"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textField_city"
+                app:regexValidator=".+"
+                tools:visibility="visible" />
+
+
             <com.yuno.payments.features.payment.ui.views.PhoneInformationView
                 android:id="@+id/layout_phone_information"
                 android:layout_width="match_parent"
@@ -188,7 +266,36 @@
                 app:hintSpinner="@string/payment.form_country"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textField_user_document" />
+                app:layout_constraintTop_toBottomOf="@id/textField_zip_code"
+                tools:visibility="visible" />
+
+            <com.yuno.payments.features.base.ui.views.TextFieldItemView
+                android:id="@+id/textField_email"
+                android:layout_width="@dimen/yuno_spacing_empty"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/yuno_spacing_xlarge"
+                android:inputType="textWebEmailAddress"
+                android:visibility="gone"
+                app:errorText="@string/payment.error_form_email_format"
+                app:hint="@string/payment.form_email_hint"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_phone_information"
+                app:regexValidator="[a-zA-Z0-9\\+\\.\\_\\%\\-]{1,256}\\@[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}(\\.[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25})+"
+                app:title="@string/payment.form_name_email"
+                tools:visibility="visible" />
+
+            <com.yuno.payments.features.base.ui.views.SpinnerFieldItemView
+                android:id="@+id/spinner_gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/yuno_spacing_xlarge"
+                android:visibility="gone"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textField_email"
+                app:spinner_title="@string/payment.form_spinner_gender"
+                tools:visibility="visible" />
 
             <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/checkBox_save_card"
@@ -203,7 +310,7 @@
                 android:paddingRight="@dimen/yuno_spacing_medium"
                 android:text="@string/card_save_checkbox_label"
                 android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@+id/layout_phone_information" />
+                app:layout_constraintTop_toBottomOf="@+id/spinner_gender" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -211,7 +318,7 @@
 
     <Button
         android:id="@+id/button_complete_form"
-        style="@style/Button.Normal.Purple"
+        style="@style/Button.Normal.NeutralB"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -224,13 +331,12 @@
 
     <TextView
         android:id="@+id/textView_secure_payment"
-        style="@style/TextSmall.LowTextGrey"
+        style="@style/TextSmall.Grey4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/yuno_spacing_xhuge"
         android:drawableStart="@drawable/ic_secure_payment_gray"
         android:drawablePadding="@dimen/yuno_spacing_medium"
-        android:text="Secure payment with Yuno"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

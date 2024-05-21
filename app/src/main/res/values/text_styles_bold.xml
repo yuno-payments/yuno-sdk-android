@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="YunoBoldFont">
+        <item name="android:fontFamily">@font/inter_bold</item>
+    </style>
+
+    <!--font sizes -->
+
+    <style name="TextSmallBold" parent="YunoBoldFont">
+        <item name="android:textSize">@dimen/yuno_font_caption1</item>
+    </style>
+
+    <style name="TextBodyBold" parent="YunoBoldFont">
+        <item name="android:textSize">@dimen/yuno_font_body</item>
+    </style>
+
+    <style name="TextSubTitleBold" parent="YunoBoldFont">
+        <item name="android:textSize">@dimen/yuno_font_subtitle</item>
+    </style>
+
+    <style name="TextH4Bold" parent="YunoBoldFont">
+        <item name="android:textSize">@dimen/yuno_font_h4</item>
+    </style>
+
+    <style name="TextH3Bold" parent="YunoBoldFont">
+        <item name="android:textSize">@dimen/yuno_font_h3</item>
+    </style>
+
+    <style name="TextH2Bold" parent="YunoBoldFont">
+        <item name="android:textSize">@dimen/yuno_font_h2</item>
+    </style>
+
+    <style name="TextH1Bold" parent="YunoBoldFont">
+        <item name="android:textSize">@dimen/yuno_font_h1</item>
+    </style>
+
+    <!--Neutral B-->
+
+    <style name="TextSmall.NeutralB.Bold" parent="TextSmallBold">
+        <item name="android:textColor">@color/neutral_b</item>
+        <item name="android:textColorHint">@color/grey_5</item>
+    </style>
+
+    <style name="TextBody.NeutralB.Bold" parent="TextBodyBold">
+        <item name="android:textColor">@color/neutral_b</item>
+        <item name="android:textColorHint">@color/grey_5</item>
+    </style>
+
+    <style name="TextSubTitle.NeutralB.Bold" parent="TextSubTitleBold">
+        <item name="android:textColor">@color/neutral_b</item>
+        <item name="android:textColorHint">@color/grey_5</item>
+    </style>
+
+    <style name="TextH4.NeutralB.Bold" parent="TextH4Bold">
+        <item name="android:textColor">@color/neutral_b</item>
+        <item name="android:textColorHint">@color/grey_5</item>
+    </style>
+
+    <style name="TextH3.NeutralB.Bold" parent="TextH3Bold">
+        <item name="android:textColor">@color/neutral_b</item>
+        <item name="android:textColorHint">@color/grey_5</item>
+    </style>
+
+    <style name="TextH2.NeutralB.Bold" parent="TextH2Bold">
+        <item name="android:textColor">@color/neutral_b</item>
+        <item name="android:textColorHint">@color/grey_5</item>
+    </style>
+
+    <style name="TextH1.NeutralB.Bold" parent="TextH1Bold">
+        <item name="android:textColor">@color/neutral_b</item>
+        <item name="android:textColorHint">@color/grey_5</item>
+    </style>
+
+    <!--Neutral W -->
+
+    <style name="TextBody.NeutralW.Bold" parent="TextBodyBold">
+        <item name="android:textColor">@color/neutral_w</item>
+    </style>
+
+    <style name="TextSubTitle.NeutralW.Bold" parent="TextSubTitleBold">
+        <item name="android:textColor">@color/neutral_w</item>
+    </style>
+
+    <!--Primary 1 -->
+
+    <style name="TextSmall.Primary1.Bold" parent="TextSmallBold">
+        <item name="android:textColor">@color/primary_1</item>
+    </style>
+
+    <style name="TextSubTitle.Primary1.Bold" parent="TextSubTitleBold">
+        <item name="android:textColor">@color/primary_1</item>
+    </style>
+
+    <!--Primary 4 -->
+    <style name="TextH1.Primary4.Bold" parent="TextH1Bold">
+        <item name="android:textColor">@color/primary_4</item>
+        <item name="android:textColorHint">@color/grey_5</item>
+    </style>
+
+    <!--NuPay -->
+    <style name="TextSmall.NuPay.Bold" parent="TextSmallBold">
+        <item name="android:textColor">#3A1866</item>
+        <item name="android:textColorHint">@color/grey_5</item>
+    </style>
+
+    <!--Grey 4-->
+
+    <style name="TextSmall.Grey4.Bold" parent="TextSmallBold">
+        <item name="android:textColor">@color/grey_4</item>
+    </style>
+
+
+    <!--Grey 5-->
+
+    <style name="TextSubTitle.Grey5.Bold" parent="TextSubTitleBold">
+        <item name="android:textColor">@color/grey_5</item>
+    </style>
+
+</resources>

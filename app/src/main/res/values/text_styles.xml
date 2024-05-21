@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="YunoRegularFont">
+        <item name="android:fontFamily">@font/inter_regular</item>
+    </style>
+
+    <!--font sizes -->
+
+    <style name="TextMicro" parent="YunoRegularFont">
+        <item name="android:textSize">@dimen/yuno_font_caption2</item>
+    </style>
+
+    <style name="TextSmall" parent="YunoRegularFont">
+        <item name="android:textSize">@dimen/yuno_font_caption1</item>
+    </style>
+
+    <style name="TextBody" parent="YunoRegularFont">
+        <item name="android:textSize">@dimen/yuno_font_body</item>
+    </style>
+
+    <style name="TextSubTitle" parent="YunoRegularFont">
+        <item name="android:textSize">@dimen/yuno_font_subtitle</item>
+    </style>
+
+    <style name="TextH4" parent="YunoRegularFont">
+        <item name="android:textSize">@dimen/yuno_font_h4</item>
+    </style>
+
+    <style name="TextH3" parent="YunoRegularFont">
+        <item name="android:textSize">@dimen/yuno_font_h3</item>
+    </style>
+
+    <style name="TextH2" parent="YunoRegularFont">
+        <item name="android:textSize">@dimen/yuno_font_h2</item>
+    </style>
+
+    <style name="TextH1" parent="YunoRegularFont">
+        <item name="android:textSize">@dimen/yuno_font_h1</item>
+    </style>
+
+    <style name="TextH1Super" parent="YunoRegularFont">
+        <item name="android:textSize">@dimen/yuno_font_h1_super</item>
+    </style>
+
+    <!--Neutral B -->
+
+    <style name="TextMicro.NeutralB" parent="TextMicro">
+        <item name="android:textColor">@color/neutral_b</item>
+        <item name="android:textColorHint">@color/grey_5</item>
+    </style>
+
+    <style name="TextSmall.NeutralB" parent="TextSmall">
+        <item name="android:textColor">@color/neutral_b</item>
+        <item name="android:textColorHint">@color/grey_5</item>
+    </style>
+
+    <style name="TextBody.NeutralB" parent="TextBody">
+        <item name="android:textColor">@color/neutral_b</item>
+        <item name="android:textColorHint">@color/grey_5</item>
+    </style>
+
+    <style name="TextSubTitle.NeutralB" parent="TextSubTitle">
+        <item name="android:textColor">@color/neutral_b</item>
+        <item name="android:textColorHint">@color/grey_5</item>
+    </style>
+
+    <style name="TextH4.NeutralB" parent="TextH4">
+        <item name="android:textColor">@color/neutral_b</item>
+        <item name="android:textColorHint">@color/grey_5</item>
+    </style>
+
+    <style name="TextH3.NeutralB" parent="TextH3">
+        <item name="android:textColor">@color/neutral_b</item>
+        <item name="android:textColorHint">@color/grey_5</item>
+    </style>
+
+    <style name="TextH2.NeutralB" parent="TextH2">
+        <item name="android:textColor">@color/neutral_b</item>
+        <item name="android:textColorHint">@color/grey_5</item>
+    </style>
+
+    <style name="TextH1.NeutralB" parent="TextH1">
+        <item name="android:textColor">@color/neutral_b</item>
+        <item name="android:textColorHint">@color/grey_5</item>
+    </style>
+
+    <style name="TextH1Super.NeutralB" parent="TextH1Super">
+        <item name="android:textColor">@color/neutral_b</item>
+        <item name="android:textColorHint">@color/grey_5</item>
+    </style>
+
+    <!--Grey 5 -->
+
+    <style name="TextMicro.Grey5" parent="TextMicro">
+        <item name="android:textColor">@color/grey_5</item>
+    </style>
+
+    <style name="TextSmall.Grey5" parent="TextSmall">
+        <item name="android:textColor">@color/grey_5</item>
+    </style>
+
+    <style name="TextBody.Grey5" parent="TextBody">
+        <item name="android:textColor">@color/grey_5</item>
+        <item name="android:textColorHint">@color/grey_5</item>
+    </style>
+
+    <style name="TextSubTitle.Grey5" parent="TextSubTitle">
+        <item name="android:textColor">@color/grey_5</item>
+    </style>
+
+    <style name="TextH4.Grey5" parent="TextH4">
+        <item name="android:textColor">@color/grey_5</item>
+    </style>
+
+    <style name="TextH3.Grey5" parent="TextH3">
+        <item name="android:textColor">@color/grey_5</item>
+    </style>
+
+    <style name="TextH2.Grey5" parent="TextH2">
+        <item name="android:textColor">@color/grey_5</item>
+    </style>
+
+    <style name="TextH1.Grey5" parent="TextH1">
+        <item name="android:textColor">@color/grey_5</item>
+    </style>
+
+    <style name="TextH1Super.Grey5" parent="TextH1Super">
+        <item name="android:textColor">@color/grey_5</item>
+    </style>
+
+    <!--Neutral W -->
+
+    <style name="TextMicro.NeutralW" parent="TextMicro">
+        <item name="android:textColor">@color/neutral_w</item>
+    </style>
+
+    <style name="TextSmall.NeutralW" parent="TextSmall">
+        <item name="android:textColor">@color/neutral_w</item>
+    </style>
+
+    <style name="TextBody.NeutralW" parent="TextBody">
+        <item name="android:textColor">@color/neutral_w</item>
+    </style>
+
+    <style name="TextSubTitle.NeutralW" parent="TextSubTitle">
+        <item name="android:textColor">@color/neutral_w</item>
+    </style>
+
+    <style name="TextH4.NeutralW" parent="TextH4">
+        <item name="android:textColor">@color/neutral_w</item>
+    </style>
+
+    <style name="TextH3.NeutralW" parent="TextH3">
+        <item name="android:textColor">@color/neutral_w</item>
+    </style>
+
+    <style name="TextH2.NeutralW" parent="TextH2">
+        <item name="android:textColor">@color/neutral_w</item>
+    </style>
+
+    <style name="TextH1.NeutralW" parent="TextH1">
+        <item name="android:textColor">@color/neutral_w</item>
+    </style>
+
+    <style name="TextH1Super.NeutralW" parent="TextH1Super">
+        <item name="android:textColor">@color/neutral_w</item>
+    </style>
+
+    <!--Primary 4 -->
+
+    <style name="TextSmall.Primary4" parent="TextSmall">
+        <item name="android:textColor">@color/primary_4</item>
+    </style>
+
+    <style name="TextH1.Primary4">
+        <item name="android:textColor">@color/primary_4</item>
+    </style>
+
+    <!--Primary 1 -->
+
+    <style name="TextBody.Primary1" parent="TextBody">
+        <item name="android:textColor">@color/primary_1</item>
+        <item name="android:textColorHint">@color/grey_5</item>
+    </style>
+
+    <style name="TextSmall.Primary1" parent="TextSmall">
+        <item name="android:textColor">@color/primary_1</item>
+    </style>
+
+    <style name="TextSubTitle.Primary1" parent="TextSubTitle">
+        <item name="android:textColor">@color/primary_1</item>
+    </style>
+
+    <!--Grey 4-->
+
+    <style name="TextSmall.Grey4" parent="TextSmall">
+        <item name="android:textColor">@color/grey_4</item>
+    </style>
+
+    <style name="TextSubTitle.Grey4" parent="TextSubTitle">
+        <item name="android:textColor">@color/grey_4</item>
+    </style>
+
+    <!--NuPay -->
+    <style name="TextSmall.NuPay" parent="TextSmall">
+        <item name="android:textColor">#3A1866</item>
+        <item name="android:textColorHint">@color/grey_5</item>
+    </style>
+
+</resources>

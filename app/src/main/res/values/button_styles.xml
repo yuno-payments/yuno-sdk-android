@@ -1,0 +1,46 @@
+<resources>
+
+    <style name="Button.Normal" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:padding">@dimen/yuno_spacing_large</item>
+        <item name="android:radius">@dimen/yuno_radius_small</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/yuno_font_subtitle</item>
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+    </style>
+
+    <style name="Button.Small" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:padding">@dimen/yuno_spacing_standard</item>
+        <item name="android:radius">@dimen/yuno_radius_xsmall</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/yuno_font_caption1</item>
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+    </style>
+
+    <style name="Button.Normal.NeutralW">
+        <item name="android:background">@drawable/button_neutralw</item>
+        <item name="android:textColor">@color/grey_5</item>
+    </style>
+
+    <style name="Button.Normal.NeutralW.TextGrey4">
+        <item name="android:background">@drawable/button_neutralw</item>
+        <item name="android:textColor">@color/grey_4</item>
+    </style>
+
+    <style name="Button.Normal.Green">
+        <item name="android:background">@drawable/button_green</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="Button.Normal.NeutralB">
+        <item name="android:background">@drawable/button_neutralb_style</item>
+        <item name="android:textColor">@color/button_text_color</item>
+    </style>
+
+    <style name="Button.Small.NeutralB" parent="Button.Small">
+        <item name="android:background">@drawable/button_neutralb_style</item>
+        <item name="android:textColor">@color/button_text_color</item>
+    </style>
+
+</resources>
