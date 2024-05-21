@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## Version [1.10.0]
+
+- New: Pluxe payment method.
+- Improve: Google pay flow.
+- Improve: SDK performance and design.
+
+
 ## Version [1.8.0]
 
 - New: Headless flow to get 3Ds challenge Url.

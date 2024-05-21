@@ -46,14 +46,14 @@ The following code snippet includes an example of a custom application:
 
 ```kotlin
 class CustomApplication : Application() {
-  override fun onCreate() {
-    super.onCreate()
-    Yuno.initialize(
-      this,
-      "your api key",
-      config: YunoConfig, // This is a data class to use custom configs in the SDK.
-    )
-  }
+    override fun onCreate() {
+        super.onCreate()
+        Yuno.initialize(
+            this,
+            "your api key",
+            config: YunoConfig, // This is a data class to use custom configs in the SDK.
+        )
+    }
 }
 ```
 
@@ -61,12 +61,12 @@ Please use the YunoConfig data class presented as follows:
 
 ```kotlin
 data class YunoConfig(
-  val cardFlow: CardFormType = CardFormType.ONE_STEP, // This is optional, CardFormType.ONE_STEP by default, this is to choose Payment and Enrollment Card flow.
-  val saveCardEnabled: Boolean = false, // This is to choose if show save card checkbox on cards flows.
-  val keepLoader: Boolean = false // This is to choose if keep Yuno loading screen until you create and continue with payment, this need an additional step that is shown below.
-  val cardFormDeployed: Boolean = false, // This is only for SDK FULL, This is to choose if show card form deployed on payment methods list (TRUE) or if show normal card form in another screen (FALSE)
-  val language: YunoLanguage? = null, //This is to choose the language of the SDK, if you send null or don't send it, Yuno SDK will take device language.
-  val isDynamicViewEnabled: Boolean = false, //This is to choose if you want to use dynamic view or not, if you send false or don't send it, Yuno SDK will take false.
+    val cardFlow: CardFormType = CardFormType.ONE_STEP, // This is optional, CardFormType.ONE_STEP by default, this is to choose Payment and Enrollment Card flow.
+    val saveCardEnabled: Boolean = false, // This is to choose if show save card checkbox on cards flows.
+    val keepLoader: Boolean = false // This is to choose if keep Yuno loading screen until you create and continue with payment, this need an additional step that is shown below.
+    val cardFormDeployed: Boolean = false, // This is only for SDK FULL, This is to choose if show card form deployed on payment methods list (TRUE) or if show normal card form in another screen (FALSE)
+    val language: YunoLanguage? = null, //This is to choose the language of the SDK, if you send null or don't send it, Yuno SDK will take device language.
+    val isDynamicViewEnabled: Boolean = false, //This is to choose if you want to use dynamic view or not, if you send false or don't send it, Yuno SDK will take false.
 )
 ```
 
@@ -74,11 +74,11 @@ Available Languages
 
 ```kotlin
 enum class YunoLanguage {
-  SPANISH,
-  ENGLISH,
-  PORTUGUESE,
-  INDONESIAN,
-  MALAYSIAN
+    SPANISH,
+    ENGLISH,
+    PORTUGUESE,
+    INDONESIAN,
+    MALAYSIAN
 }
 ```
 
@@ -101,7 +101,7 @@ activity, this because we use it to register the contract to give you the final 
 
 ````Kotlin
 fun ComponentActivity.initEnrollment(
-  callbackEnrollmentState: ((String?) -> Unit)? = null, //Default null | To register this callback is a must to call ```initEnrollment``` method on the onCreate method of activity.
+    callbackEnrollmentState: ((String?) -> Unit)? = null, //Default null | To register this callback is a must to call ```initEnrollment``` method on the onCreate method of activity.
 )
 ````
 
@@ -109,10 +109,10 @@ Call the following method from your activity to start an enrollment flow of a ne
 
 ````Kotlin
 fun Activity.startEnrollment(
-  customerSession: String,
-  countryCode: String,
-  showEnrollmentStatus: Boolean = true, //Optional - Default true
-  callbackEnrollmentState: ((String?) -> Unit)? = null, //Optional - You can send again another callback that is gonna override the one you sent on initEnrollment function.
+    customerSession: String,
+    countryCode: String,
+    showEnrollmentStatus: Boolean = true, //Optional - Default true
+    callbackEnrollmentState: ((String?) -> Unit)? = null, //Optional - You can send again another callback that is gonna override the one you sent on initEnrollment function.
 )
 ````
 
@@ -131,10 +131,10 @@ called `callbackEnrollmentState`, we are gonna give you the status in that callb
 
 ````Kotlin
 fun AppCompatActivity.enrollmentStatus(
-  customerSession: String,
-  countryCode: String,
-  showEnrollmentStatus: Boolean = false, //Optional - Default false
-  callbackEnrollmentState: ((String?) -> Unit)? = null, //Optional - You can send again another callback that is gonna override the one you sent on initEnrollment function.
+    customerSession: String,
+    countryCode: String,
+    showEnrollmentStatus: Boolean = false, //Optional - Default false
+    callbackEnrollmentState: ((String?) -> Unit)? = null, //Optional - You can send again another callback that is gonna override the one you sent on initEnrollment function.
 )
 ````
 
@@ -145,7 +145,7 @@ activity that calls the SDK:
 
 ```Kotlin
 startCheckout(
-  checkoutSession: "checkout_session",
+    checkoutSession: "checkout_session",
 countryCode: "country_code_iso",
 callbackOTT: (String?) -> Unit,
 callbackPaymentState: ((String?) -> Unit)?,
@@ -180,8 +180,8 @@ the available payment methods:
 ```XML
 
 <com.yuno.payments.features.payment.ui.views.PaymentMethodListView
-        android:id="@+id/list_payment_methods" android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    android:id="@+id/list_payment_methods" android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
 ```
 
 #### Start Payment
@@ -193,7 +193,7 @@ the lite version of the SDK, you must call the method `startPaymentLite`.
 
 ```Kotlin
 startPayment(
-  callbackOTT:(String?) -> Unit, //Optional - Default null,
+    callbackOTT:(String?) -> Unit, //Optional - Default null,
 showPaymentStatus: Boolean, //Optional - Default true
 )
 ```
@@ -204,7 +204,7 @@ showPaymentStatus: Boolean, //Optional - Default true
 startPaymentLite(
     paymentSelected: PaymentSelected,
     callbackOTT:(String?) -> Unit, //Optional - Default null,
-    showPaymentStatus: Boolean, //Optional - Default true
+showPaymentStatus: Boolean, //Optional - Default true
 )
 ```
 
@@ -292,18 +292,30 @@ the code snippet below:
 
 ```XML
 
-<style name="Button.Normal.Purple">
+<style name="Button.Normal.NeutralB">
     <item name="android:background">YOUR OWN COLOR ( EX: HEXCODE OR RESOURCE )</item>
     <item name="android:textColor">YOUR OWN COLOR ( EX: HEXCODE OR RESOURCE )</item>
     <item name="android:fontFamily">YOUR FONT FILE ( EX: @font/inter_regular.ttf)</item>
 </style>
 ```
 
-> These are our button styles you can override:  
-> -Button.Normal.White  
+> These are our button styles you can override:
+
+- Before
+
+> -Button.Normal.White
 > -Button.Normal.Green  
 > -Button.Normal.Purple  
 > -Button.Normal.White.TextPurple
+
+- After
+> -Button.Small.NeutralB
+> -Button.Normal.NeutralB
+> -Button.Normal.Green
+> -Button.Normal.NeutralW.TextGrey4
+> -Button.Normal.NeutralW
+> -Button.Small
+> -Button.Normal
 
 ### Color Styles
 
@@ -312,11 +324,39 @@ the code snippet below:
 
 ```XML
 
-<color name="yuno_purple_light">YOUR OWN COLOR ( EX: HEXCODE OR RESOURCE )</color>
+<color name="neutral_b">YOUR OWN COLOR ( EX: HEXCODE OR RESOURCE )</color>
 ```
 
-> These are our color styles you can override:  
-> -yuno_purple_light
+> These are our color styles you can override:
+
+- Before
+>  -yuno_purple_light
+- After
+> -neutral_b
+> -neutral_b_60_alpha
+> -neutral_w
+> -neutral_w_30_alpha
+> -grey_0
+> -grey_1
+> -grey_2
+> -grey_3
+> -grey_4
+> -grey_5
+> -primary_1
+> -primary_2
+> -primary_3
+> -primary_4
+> -primary_5
+> -secondary_1
+> -secondary_2
+> -secondary_3
+> -secondary_4
+> -secondary_5
+> -secondary_6
+> -tertiary_1
+> -tertiary_2
+> -tertiary_3
+> -tertiary_4
 
 ## Create your own card form flow
 
@@ -407,7 +447,7 @@ information.
 ```XML 
 
 <com.yuno.payments.features.base.ui.views.PhoneInformationView
-        android:id="@+id/layout_phone_information" android:visibility="gone" />
+    android:id="@+id/layout_phone_information" android:visibility="gone" />
 ```
 
 * Installments:
@@ -419,19 +459,79 @@ information.
 
 <LinearLayout android:id="@+id/container_installments" android:orientation="vertical">
 
-  <com.yuno.payments.features.base.ui.views.SpinnerFieldItemView
-          android:id="@+id/spinner_installments" android:layout_width="match_parent"
-          android:layout_height="wrap_content" android:visibility="gone"
-          app:spinner_title="@string/payment.form_installments" />
+    <com.yuno.payments.features.base.ui.views.SpinnerFieldItemView
+        android:id="@+id/spinner_installments" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:visibility="gone"
+        app:spinner_title="@string/payment.form_installments" />
 
-  <com.facebook.shimmer.ShimmerFrameLayout android:id="@+id/shimmer_installments"
-          android:layout_width="match_parent" android:layout_height="wrap_content"
-          android:foregroundGravity="center" android:visibility="gone">
+    <com.facebook.shimmer.ShimmerFrameLayout android:id="@+id/shimmer_installments"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:foregroundGravity="center" android:visibility="gone">
 
-    <include layout="@layout/shimmer_component_field" />
-  </com.facebook.shimmer.ShimmerFrameLayout>
+        <include layout="@layout/shimmer_component_field" />
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
 </LinearLayout>
+```
+
+* TextFieldItemView for customer's address :
+  This is where the user can enter his address if needed. You must use it with its defined
+  android id and it have to have GONE visibility:
+
+```XML 
+
+<com.yuno.payments.features.base.ui.views.TextFieldItemView
+    android:id="@+id/textField_address" android:visibility="gone" />
+```
+
+* TextFieldItemView for customer's state :
+  This is where the user can enter his state if needed. You must use it with its defined
+  android id and it have to have GONE visibility:
+
+```XML 
+
+<com.yuno.payments.features.base.ui.views.TextFieldItemView
+    android:id="@+id/textField_state" android:visibility="gone"/>
+```
+
+* TextFieldItemView for customer's city :
+  This is where the user can enter his city if needed. You must use it with its defined
+  android id and it have to have GONE visibility:
+
+```XML 
+
+<com.yuno.payments.features.base.ui.views.TextFieldItemView
+    android:id="@+id/textField_city" android:visibility="gone"/>
+```
+
+* TextFieldItemView for customer's zip code :
+  This is where the user can enter his zip code if needed. You must use it with its defined
+  android id and it have to have GONE visibility:
+
+```XML 
+
+<com.yuno.payments.features.base.ui.views.TextFieldItemView
+    android:id="@+id/textField_zip_code" android:visibility="gone"/>
+```
+
+* SpinnerFieldItemView for customer's country :
+  This is where the user can enter his country if needed. You must use it with its defined
+  android id and it have to have GONE visibility:
+
+```XML 
+
+<com.yuno.payments.features.base.ui.views.SpinnerFieldItemView
+    android:id="@+id/spinner_country" android:visibility="gone"/>
+```
+
+* SpinnerFieldItemView for customer's gender:
+  This is where the user can enter his gender if needed. You must use it with its defined
+  android id and it have to have GONE visibility:
+
+```XML 
+
+<com.yuno.payments.features.base.ui.views.SpinnerFieldItemView
+    android:id="@+id/spinner_gender" android:visibility="gone"/>
 ```
 
 * Yuno's TextView:
@@ -450,7 +550,7 @@ information.
 ```XML 
 
 <com.yuno.payments.features.base.ui.views.CustomYunoSwitch android:id="@+id/switch_cardType"
-        android:visibility="gone" />
+    android:visibility="gone" />
 ```
 
 * CustomYunoSwitch tooltip:
@@ -460,7 +560,7 @@ information.
 ```XML 
 
 <ImageView android:id="@+id/switch_tooltip" android:src="@drawable/ic_thin_info"
-        android:visibility="gone" />
+    android:visibility="gone" />
 ```
 
 * AppCompatCheckBox for save card:
