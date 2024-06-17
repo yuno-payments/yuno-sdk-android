@@ -2,9 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## Version [1.11.1]
+
+- Improve: Card flow.
+
 ## Version [1.11.0]
 
 - New: DeUna payment method.
+
+## Version [1.10.1]
+
+- Improve: SDK performance and Card flow.
 
 ## Version [1.10.0]
 
