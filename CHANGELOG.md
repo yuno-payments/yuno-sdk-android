@@ -1,6 +1,9 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
+## Version [1.12.0]
+
+- New: Add new payment method **PIX - SANTANDER**.
 
 ## Version [1.11.1]
 
@@ -20,7 +23,6 @@ All notable changes to this project will be documented in this file.
 - Improve: Google pay flow.
 - Improve: SDK performance and design.
 
-
 ## Version [1.8.0]
 
 - New: Headless flow to get 3Ds challenge Url.
@@ -28,7 +30,6 @@ All notable changes to this project will be documented in this file.
 ## Version [1.7.0]
 
 - New: Headless flow to generateOtt and get3DsChallenge.
-
 
 ## Version [1.6.1]
 
@@ -45,28 +46,36 @@ All notable changes to this project will be documented in this file.
 - Fix: Some bugs.
 
 ## Version [1.5.14-HF]
+
 - New: Function to create One Time Token with card information in Enrollment and Payment flow.
 - FIX: Crash with location permissions.
 
 ## Version [1.5.14]
+
 - Improve: Cards step by step Payments flow and One step.
 
 ## Version [1.5.13]
+
 - New: Change Mercado Pago Wallet enrollment flow from webview to deeplink and custom tab.
 - New: Fraud engines 3DS and Cybersource.
 
 ## Version [1.5.12]
+
 - Improve: Cards Payments flow.
-- Important Changes: Change the CardExpiryDate component EditText and TextField ItemView (CVV) into a single CardDataStackView component, This is important if you are using SecureFields feature
+- Important Changes: Change the CardExpiryDate component EditText and TextField ItemView (CVV) into
+  a single CardDataStackView component, This is important if you are using SecureFields feature
+
 ```XML 
-<com.yuno.payments.features.base.ui.views.CardDataStackView
-android:id="@+id/cardDataStackView" />
+
+<com.yuno.payments.features.base.ui.views.CardDataStackView android:id="@+id/cardDataStackView" />
 ```
 
 ## Version [1.5.11]
+
 - Fix: Discover card validation.
 
 ## Version [1.5.0]
+
 - New: Antifraud engines in Cards flow.
 - New: Click 2 Pay payment method.
 - New: Supported language methods.
@@ -75,35 +84,45 @@ android:id="@+id/cardDataStackView" />
 - Improve: Performance.
 
 ## Version [1.4.12]
+
 - Improve: Cards Payments flow.
 
 ## Version [1.4.11]
+
 - Improve: Cards Enrollment flow.
 
 ## Version [1.4.10]
+
 - Improve: Google pay flow.
 - Fix: Restore SDK status when app is killed or destroyed by Android Os.
 
 ## Version [1.4.8]
+
 - Improve: Google pay flow.
 
 ## Version [1.4.7]
+
 - Fix: Enrollment card flow step by step don't show cvv and expiration date fields.
 
 ## Version [1.4.6]
+
 - New: Allow **VOUCHER** card payment method.
 - Improve: Google pay flow.
 
 ## Version [1.4.5]
+
 - Improve: Card step by step flow design and Pix flow.
 
 ## Version [1.4.4]
+
 - Improve: 3ds flow for card payment method.
 
 ## Version [1.4.3]
+
 - Improve: Card step by step flow field jump with the next button when it is empty.
 
 ## Version [1.4.2]
+
 - Improve: Card step by step flow design.
 
 ## Version [1.4.1]
@@ -138,6 +157,7 @@ android:id="@+id/cardDataStackView" />
 ## Version [1.3.6]
 
 - Important Changes: Remove the flag to require the cvv on rolled cards, now it's dynamic.
+
 ```
 data class YunoConfig(
   val cardFlow: CardFormType = CardFormType.ONE_STEP,
@@ -169,6 +189,7 @@ data class YunoConfig(
 - New: Add new view to show only enrollment available payment
   methods ```EnrollmentMethodsListView()```
 - Important Changes: New field in YunoConfig data class for request CVV code in cards flow:
+
 ```
 data class YunoConfig(
   val cardFlow: CardFormType = CardFormType.ONE_STEP,
