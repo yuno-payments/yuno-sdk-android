@@ -2,11 +2,9 @@ package com.yuno.payments.example.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.SpannableStringBuilder
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.yuno.payments.base.extensions.style
 import com.yuno.payments.example.R
 import com.yuno.payments.example.features.enrollment.activities.EnrollmentLiteActivity
 import com.yuno.payments.example.features.payment.activities.CheckoutCompleteActivity

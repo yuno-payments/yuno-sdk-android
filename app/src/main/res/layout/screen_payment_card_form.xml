@@ -133,13 +133,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/switch_cardType">
 
-                <com.yuno.payments.features.base.ui.views.SpinnerFieldItemView
-                    android:id="@+id/spinner_installments"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    app:spinner_title="@string/payment.form_installments" />
-
                 <com.facebook.shimmer.ShimmerFrameLayout
                     android:id="@+id/shimmer_installments"
                     android:layout_width="match_parent"
@@ -152,16 +145,6 @@
 
             </LinearLayout>
 
-            <com.yuno.payments.features.base.ui.views.SpinnerFieldItemView
-                android:id="@+id/spinner_document_type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/yuno_spacing_xxlarge"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/container_installments"
-                app:spinner_title="@string/document_type_label" />
-
             <com.yuno.payments.features.base.ui.views.TextFieldItemView
                 android:id="@+id/textField_user_document"
                 android:layout_width="@dimen/yuno_spacing_empty"
@@ -172,7 +155,7 @@
                 app:hint="@string/document_number_placeholder"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/spinner_document_type"
+                app:layout_constraintTop_toBottomOf="@+id/container_installments"
                 app:title="@string/document_number_label" />
 
             <com.yuno.payments.features.payment.ui.views.PhoneInformationView
@@ -181,9 +164,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/yuno_spacing_xlarge"
                 android:visibility="gone"
-                app:errorText="@string/payment.form_phone_error"
-                app:hintEditText="@string/payment.form_phone_hint"
-                app:hintSpinner="@string/payment.form_country"
+                app:errorText="@string/androidx_startup"
+                app:hintEditText="@string/androidx_startup"
+                app:hintSpinner="@string/androidx_startup"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textField_user_document" />
@@ -208,6 +191,7 @@
     </androidx.core.widget.NestedScrollView>
 
     <Button
+        android:text="@string/androidx_startup"
         android:id="@+id/button_complete_form"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
