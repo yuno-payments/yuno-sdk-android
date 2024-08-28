@@ -18,11 +18,8 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
         initListeners()
         findViewById<TextView>(com.yuno.payments.R.id.textView_secure_payment).text =
-            SpannableStringBuilder().style(this, com.yuno.payments.R.style.TextSmall_LowTextGrey) {
-                append(getString(com.yuno.payments.R.string.secure_payment))
-            }.style(this, com.yuno.payments.R.style.TextSmall_PurpleLight_Bold) {
-                append(" YUNO")
-            }
+            getString(com.yuno.payments.R.string.secure_payment) + " YUNO"
+
     }
 
     private fun initListeners() {

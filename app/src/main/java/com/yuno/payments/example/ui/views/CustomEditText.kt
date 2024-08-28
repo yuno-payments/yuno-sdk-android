@@ -28,7 +28,6 @@ class CustomEditText @JvmOverloads constructor(
     private fun setStyleEditText() {
         ellipsize = TextUtils.TruncateAt.END
         maxLines = 1
-        TextViewCompat.setTextAppearance(this, com.yuno.payments.R.style.TextBody_Black)
         this.setPadding(
             context.resources.getDimensionPixelOffset(
                 com.yuno.payments.R.dimen.yuno_spacing_large
@@ -58,15 +57,12 @@ class CustomEditText @JvmOverloads constructor(
         when (state) {
             EditTextState.ERROR -> {
                 setBackgroundResource(com.yuno.payments.R.drawable.bg_error_edit_text)
-                setCursorColor(this.context, com.yuno.payments.R.color.yuno_font_black_light)
             }
             EditTextState.FOCUS -> {
                 setBackgroundResource(com.yuno.payments.R.drawable.bg_focus_edit_text)
-                setCursorColor(this.context, com.yuno.payments.R.color.yuno_purple_light)
             }
             EditTextState.NORMAL -> {
                 setBackgroundResource(com.yuno.payments.R.drawable.bg_edit_text)
-                setCursorColor(this.context, com.yuno.payments.R.color.yuno_font_black_light)
             }
         }
     }

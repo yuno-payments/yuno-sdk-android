@@ -10,7 +10,6 @@
 
     <TextView
         android:id="@+id/textView_paymentFullTitle"
-        style="@style/TextH2.Black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Payment Full"
@@ -46,7 +45,6 @@
 
     <Button
         android:id="@+id/button_setCheckoutSession"
-        style="@style/Button.Normal.Purple"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/yuno_spacing_large"
@@ -79,7 +77,6 @@
 
         <TextView
             android:id="@+id/textView_tokenTitle"
-            style="@style/TextSmall.Grey"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="One Time Token"
@@ -89,7 +86,6 @@
 
         <TextView
             android:id="@+id/textView_token"
-            style="@style/TextSmall.Grey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textIsSelectable="true"
@@ -100,7 +96,6 @@
 
         <Button
             android:id="@+id/button_continue"
-            style="@style/Button.Normal.Purple"
             android:layout_width="@dimen/yuno_spacing_empty"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/yuno_spacing_standard"
@@ -112,7 +107,6 @@
 
         <Button
             android:id="@+id/button_copy"
-            style="@style/Button.Normal.Purple"
             android:layout_width="@dimen/yuno_spacing_empty"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/yuno_spacing_standard"
@@ -126,7 +120,6 @@
 
     <Button
         android:id="@+id/button_pay"
-        style="@style/Button.Normal.Purple"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:enabled="false"

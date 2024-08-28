@@ -20,7 +20,6 @@
 
     <TextView
         android:id="@+id/imageView_otp_toolbar_title"
-        style="@style/TextBody.Black.Bold"
         android:layout_width="@dimen/yuno_spacing_empty"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/yuno_spacing_xlarge"
@@ -37,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/yuno_spacing_xxmicro"
         android:layout_marginTop="@dimen/yuno_spacing_large"
-        android:background="@color/yuno_gray_light"
+        android:background="@color/purple_200"
         app:layout_constraintTop_toBottomOf="@id/imageView_otp_toolbar_title" />
 
     <androidx.core.widget.NestedScrollView
@@ -81,7 +80,6 @@
 
             <TextView
                 android:id="@+id/textView_voucher_copy"
-                style="@style/TextSmall.Grey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/yuno_spacing_standard"
@@ -211,7 +209,6 @@
 
     <Button
         android:id="@+id/button_complete_form"
-        style="@style/Button.Normal.Purple"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -224,7 +221,6 @@
 
     <TextView
         android:id="@+id/textView_secure_payment"
-        style="@style/TextSmall.LowTextGrey"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/yuno_spacing_xhuge"

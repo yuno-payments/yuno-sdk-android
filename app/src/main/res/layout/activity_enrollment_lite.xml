@@ -9,7 +9,6 @@
 
     <TextView
         android:id="@+id/textView_title_enrollmentEnrollment"
-        style="@style/TextH2.Black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Enrollment"
@@ -43,7 +42,6 @@
 
     <Button
         android:id="@+id/button_add_payment"
-        style="@style/Button.Normal.Purple"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Add payment"

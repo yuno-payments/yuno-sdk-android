@@ -5,5 +5,5 @@
     <size android:height="@dimen/yuno_spacing_xxxlarge" />
     <stroke
         android:width="2dp"
-        android:color="@color/yuno_purple_light" />
+        android:color="@color/purple_200" />
 </shape>

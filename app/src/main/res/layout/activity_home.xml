@@ -26,14 +26,12 @@
 
         <TextView
             android:id="@+id/textView_title_enrollment"
-            style="@style/TextH2.Black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Enrollment" />
 
         <Button
             android:id="@+id/button_add_payment"
-            style="@style/Button.Normal.Purple"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/yuno_spacing_standard"
@@ -42,7 +40,6 @@
 
         <TextView
             android:id="@+id/textView_title_payment"
-            style="@style/TextH2.Black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/yuno_spacing_standard"
@@ -50,7 +47,6 @@
 
         <Button
             android:id="@+id/button_payment_lite"
-            style="@style/Button.Normal.Purple"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/yuno_spacing_standard"
@@ -59,7 +55,6 @@
 
         <Button
             android:id="@+id/button_payment_complete"
-            style="@style/Button.Normal.Purple"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/yuno_spacing_standard"
