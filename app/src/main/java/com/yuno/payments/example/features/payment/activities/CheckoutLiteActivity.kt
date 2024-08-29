@@ -65,8 +65,8 @@ class CheckoutLiteActivity : AppCompatActivity() {
     private fun initViews() {
         editTextCheckoutSession = findViewById(R.id.editText_checkoutSession)
         editTextCountryCode = findViewById(R.id.editText_countryCode)
-        editTextCheckoutSession.setText(BuildConfig.YUNO_TEST_CHECKOUT_SESSION)
-        editTextCountryCode.setText(BuildConfig.YUNO_TEST_COUNTRY_CODE)
+      //  editTextCheckoutSession.setText(BuildConfig.YUNO_TEST_CHECKOUT_SESSION)
+      //  editTextCountryCode.setText(BuildConfig.YUNO_TEST_COUNTRY_CODE)
         editTextVaultedToken = findViewById(R.id.editText_paymentToken)
         paymentMethodType = findViewById(R.id.editText_methodType)
 

@@ -151,7 +151,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/yuno_spacing_xxlarge"
                 android:inputType="textWebEmailAddress"
-                app:errorText="@string/document_error_number"
+                app:errorText="@string/androidx_startup"
                 app:hint="@string/document_number_placeholder"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"

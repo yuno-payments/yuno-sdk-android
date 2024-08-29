@@ -50,8 +50,8 @@ class CheckoutCompleteActivity : AppCompatActivity() {
         countryCodeEditText = findViewById(R.id.editText_countryCode)
         paymentMethodListContainer = findViewById(R.id.scrollView_paymentListContainer)
         textViewToken = findViewById(R.id.textView_token)
-        checkoutSessionEditText.setText(BuildConfig.YUNO_TEST_CHECKOUT_SESSION)
-        countryCodeEditText.setText(BuildConfig.YUNO_TEST_COUNTRY_CODE)
+     //   checkoutSessionEditText.setText(BuildConfig.YUNO_TEST_CHECKOUT_SESSION)
+      //  countryCodeEditText.setText(BuildConfig.YUNO_TEST_COUNTRY_CODE)
     }
 
     private fun initListeners() {

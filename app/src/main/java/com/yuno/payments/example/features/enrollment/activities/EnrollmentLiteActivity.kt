@@ -38,8 +38,8 @@ class EnrollmentLiteActivity : AppCompatActivity() {
     private fun initViews() {
         editTextCustomerSession = findViewById(R.id.editText_customer)
         editTextCountryCode = findViewById(R.id.editText_code)
-        editTextCustomerSession.setText(BuildConfig.YUNO_TEST_CUSTOMER_SESSION)
-        editTextCountryCode.setText(BuildConfig.YUNO_TEST_COUNTRY_CODE)
+       // editTextCustomerSession.setText(BuildConfig.YUNO_TEST_CUSTOMER_SESSION)
+        //editTextCountryCode.setText(BuildConfig.YUNO_TEST_COUNTRY_CODE)
         button = findViewById(R.id.button_add_payment)
         initListeners()
     }
