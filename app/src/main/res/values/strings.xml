@@ -4,4 +4,6 @@
     <string name="country_code_hint">Country Code</string>
     <string name="customer_session_hint">Customer Session</string>
 
+    <string name="custom_card_name">Custom Card</string>
+
 </resources>

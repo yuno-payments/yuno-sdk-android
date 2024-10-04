@@ -68,17 +68,4 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView_secure_payment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center|bottom"
-        android:layout_marginVertical="@dimen/yuno_spacing_xlarge"
-        android:drawablePadding="@dimen/yuno_spacing_large"
-        app:drawableStartCompat="@drawable/ic_secure_payment"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="Pagos seguros con YUNO" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
