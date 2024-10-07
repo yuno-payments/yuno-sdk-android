@@ -1,6 +1,50 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
+## Version [1.16.0]
+
+- New: Fraud engines 3DS FAC.
+
+## Version [1.15.1]
+
+- Fix: Compiled java version issue.
+
+## Version [1.15.0]
+
+- Improve: Cards and Nubank UI/UX.
+- Improve: RUT Validation CL.
+
+## Version [1.14.0]
+
+- Improve: CNPJ removed from Nubank flow.
+
+## Version [1.13.0]
+
+- Improve: Update card forms design and UX.
+
+## Version [1.12.2]
+
+- New: Fraud engines 3DS Netcetera.
+
+## Version [1.12.1]
+
+- Improve: MercadoPago sdk performance.
+
+## Version [1.12.0]
+
+- New: Add new payment method **PIX - SANTANDER**.
+
+## Version [1.11.4]
+
+- Improve: MercadoPago sdk performance.
+
+## Version [1.11.3]
+
+- Fix: Override styles.
+
+## Version [1.11.2]
+
+- Improve: Card flow: expiration date experience.
 
 ## Version [1.11.1]
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <public name="public_colors_in_lib" type="color" />
+    <color name="on_focus_outlined_text_view">#7ff1ff</color>
     <color name="neutral_b">#282A30</color>
     <color name="neutral_b_60_alpha">#99282A30</color>
     <color name="neutral_w">#FFFFFF</color>
