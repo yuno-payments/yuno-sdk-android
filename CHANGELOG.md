@@ -1,6 +1,10 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
+## Version [1.17.0]
+
+- Improve: Nubank flow
+
 ## Version [1.16.0]
 
 - New: Fraud engines 3DS FAC.
