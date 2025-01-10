@@ -83,7 +83,7 @@ class CheckoutCompleteActivity : AppCompatActivity() {
             checkoutSessionEditText.text.toString(),
             countryCodeEditText.text.toString(),
         )
-        val paymentMethodListView =  PaymentMethodListView(this)
+        val paymentMethodListView =  PaymentMethodListView(this, lifecycleOwner = this)
         if (paymentMethodListView is PaymentMethodListView) {
 
             paymentMethodListView.setOnSelectedEvent {
