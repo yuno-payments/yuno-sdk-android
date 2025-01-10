@@ -57,7 +57,6 @@ class CheckoutLiteActivity : AppCompatActivity() {
         startCheckout(
             checkoutSession = editTextCheckoutSession.text.toString(),
             countryCode = editTextCountryCode.text.toString().uppercase(),
-            callbackOTT = this::onTokenUpdated,
             callbackPaymentState = this::onPaymentStateChange,
         )
     }
@@ -114,8 +113,12 @@ class CheckoutLiteActivity : AppCompatActivity() {
             startPaymentLite(
                 paymentSelected = PaymentSelected(
                     paymentMethodType = paymentMethodType.text.toString(),
-                    vaultedToken = editTextVaultedToken.text.toString()
+                    vaultedToken = editTextVaultedToken.text.toString(),
                 ),
+                callBackTokenWithInformation = { ottModel ->
+                    Log.i("ott information", ottModel.toString())
+                },
+                callbackOTT = this::onTokenUpdated,
             )
         }
     }
