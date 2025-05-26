@@ -11,6 +11,11 @@ if (file.exists()){
 
 android {
     compileSdk 32
+    namespace "com.yuno.payments.example"
+
+    buildFeatures {
+        buildConfig true
+    }
 
     defaultConfig {
         applicationId "com.yuno.payments.example"
@@ -55,6 +60,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
-    implementation 'com.yuno.payments:android-sdk:1.20.2'
+    implementation 'com.yuno.payments:android-sdk:1.24.0'
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
 }
