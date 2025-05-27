@@ -53,16 +53,14 @@
         android:text="Set CheckoutModel"
         app:layout_constraintTop_toBottomOf="@id/editText_checkoutSession" />
 
-    <ScrollView
-        android:id="@+id/scrollView_paymentListContainer"
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/compose_paymentListContainer"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/yuno_spacing_empty"
-        android:layout_marginTop="@dimen/yuno_spacing_large"
+        android:layout_height="wrap_content"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/button_pay"
-        app:layout_constraintTop_toBottomOf="@id/button_setCheckoutSession">
+        app:layout_constraintTop_toBottomOf="@id/button_setCheckoutSession"
+        app:layout_constraintBottom_toTopOf="@id/button_pay"/>
 
-    </ScrollView>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout

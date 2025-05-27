@@ -11,6 +11,7 @@ import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.platform.ComposeView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.yuno.payments.example.BuildConfig
 import com.yuno.payments.example.R
@@ -18,8 +19,8 @@ import com.yuno.payments.example.ui.views.CustomEditText
 import com.yuno.payments.features.payment.continuePayment
 import com.yuno.payments.features.payment.startCheckout
 import com.yuno.payments.features.payment.startPayment
-import com.yuno.payments.features.payment.ui.views.PaymentMethodListView
 import com.yuno.payments.features.payment.updateCheckoutSession
+import com.yuno.presentation.core.components.PaymentMethodListViewComponent
 
 class CheckoutCompleteActivity : AppCompatActivity() {
 
@@ -48,7 +49,6 @@ class CheckoutCompleteActivity : AppCompatActivity() {
     private fun initViews() {
         checkoutSessionEditText = findViewById(R.id.editText_checkoutSession)
         countryCodeEditText = findViewById(R.id.editText_countryCode)
-        paymentMethodListContainer = findViewById(R.id.scrollView_paymentListContainer)
         textViewToken = findViewById(R.id.textView_token)
         checkoutSessionEditText.setText(BuildConfig.YUNO_TEST_CHECKOUT_SESSION)
         countryCodeEditText.setText(BuildConfig.YUNO_TEST_COUNTRY_CODE)
@@ -83,19 +83,20 @@ class CheckoutCompleteActivity : AppCompatActivity() {
             checkoutSessionEditText.text.toString(),
             countryCodeEditText.text.toString(),
         )
-        val paymentMethodListView =  PaymentMethodListView(this, lifecycleOwner = this)
-        if (paymentMethodListView is PaymentMethodListView) {
 
-            paymentMethodListView.setOnSelectedEvent {
-                findViewById<Button>(R.id.button_pay).isEnabled = it
-            }
+        val composeView = findViewById<ComposeView>(R.id.compose_paymentListContainer)
+
+        composeView.setContent {
+
+            PaymentMethodListViewComponent(
+                onPaymentSelected = {
+                    findViewById<Button>(R.id.button_pay).isEnabled = it
+                },
+
+                )
         }
-        paymentMethodListContainer.removeAllViews()
-        paymentMethodListContainer.addView(
-            paymentMethodListView
-        )
-        paymentMethodListContainer.visibility = View.VISIBLE
     }
+
 
     private fun onTokenUpdated(token: String?) {
         token?.let {
