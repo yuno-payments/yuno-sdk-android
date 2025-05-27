@@ -17,8 +17,8 @@ import com.yuno.payments.example.ui.views.CustomEditText
 import com.yuno.payments.features.payment.continuePayment
 import com.yuno.payments.features.payment.startCheckout
 import com.yuno.payments.features.payment.startPaymentLite
-import com.yuno.payments.features.payment.ui.views.PaymentSelected
 import com.yuno.payments.features.payment.updateCheckoutSession
+import com.yuno.presentation.core.components.PaymentSelected
 
 class CheckoutLiteActivity : AppCompatActivity() {
 
