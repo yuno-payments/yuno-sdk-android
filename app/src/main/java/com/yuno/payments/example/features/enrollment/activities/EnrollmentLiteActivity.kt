@@ -7,8 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.yuno.payments.example.BuildConfig
 import com.yuno.payments.example.R
 import com.yuno.payments.example.ui.views.CustomEditText
-import com.yuno.payments.features.enrollment.initEnrollment
-import com.yuno.payments.features.enrollment.startEnrollment
+import com.yuno.sdk.enrollment.initEnrollment
+import com.yuno.sdk.enrollment.startEnrollment
+
 
 class EnrollmentLiteActivity : AppCompatActivity() {
 

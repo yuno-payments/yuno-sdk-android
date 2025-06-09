@@ -16,11 +16,11 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.yuno.payments.example.BuildConfig
 import com.yuno.payments.example.R
 import com.yuno.payments.example.ui.views.CustomEditText
-import com.yuno.payments.features.payment.continuePayment
-import com.yuno.payments.features.payment.startCheckout
-import com.yuno.payments.features.payment.startPayment
-import com.yuno.payments.features.payment.updateCheckoutSession
 import com.yuno.presentation.core.components.PaymentMethodListViewComponent
+import com.yuno.sdk.payments.continuePayment
+import com.yuno.sdk.payments.startCheckout
+import com.yuno.sdk.payments.startPayment
+import com.yuno.sdk.payments.updateCheckoutSession
 
 class CheckoutCompleteActivity : AppCompatActivity() {
 
