@@ -1,8 +1,8 @@
 package com.yuno.payments.example
 
 import android.app.Application
-import com.yuno.payments.core.Yuno
-import com.yuno.payments.core.YunoConfig
+import com.yuno.sdk.Yuno
+import com.yuno.sdk.YunoConfig
 
 class CustomApplication : Application() {
     override fun onCreate() {
