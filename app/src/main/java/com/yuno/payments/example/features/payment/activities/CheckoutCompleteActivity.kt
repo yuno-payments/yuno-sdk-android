@@ -89,6 +89,7 @@ class CheckoutCompleteActivity : AppCompatActivity() {
         composeView.setContent {
 
             PaymentMethodListViewComponent(
+                this,
                 onPaymentSelected = {
                     findViewById<Button>(R.id.button_pay).isEnabled = it
                 },
