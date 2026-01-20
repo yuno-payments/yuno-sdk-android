@@ -61,29 +61,97 @@ Please use the YunoConfig data class presented as follows:
 
 ```kotlin
 data class YunoConfig(
-    val cardFlow: CardFormType = CardFormType.ONE_STEP, // This is optional, CardFormType.ONE_STEP by default, this is to choose Payment and Enrollment Card flow.
-    val saveCardEnabled: Boolean = false, // This is to choose if show save card checkbox on cards flows.
-    val keepLoader: Boolean = false // This is to choose if keep Yuno loading screen until you create and continue with payment, this need an additional step that is shown below.
-    val cardFormDeployed: Boolean = false, // This is only for SDK FULL, This is to choose if show card form deployed on payment methods list (TRUE) or if show normal card form in another screen (FALSE)
-    val language: YunoLanguage? = null, //This is to choose the language of the SDK, if you send null or don't send it, Yuno SDK will take device language.
-    val isDynamicViewEnabled: Boolean = false, //This is to choose if you want to use dynamic view or not, if you send false or don't send it, Yuno SDK will take false.
+    val cardFlow: CardFormType = CardFormType.ONE_STEP,
+    val saveCardEnabled: Boolean = false,
+    val cardFormDeployed: Boolean = false,
+    val language: YunoLanguage? = null,
+    val styles: YunoStyles? = null,
 )
 ```
 
-Available Languages
+The following table describes each customization option:
+
+| Customization option | Description |
+|---------------------|-------------|
+| `cardFlow` | This optional configuration defines Payment and Enrollment Card flow. By default, the `CardFormType.ONE_STEP` option is used. See Card Form Types below for more information. |
+| `saveCardEnabled` | Enables the Save card checkbox on card flows. |
+| `cardFormDeployed` | This is only for SDK FULL. Choose if show card form deployed on payment methods list (TRUE) or if show normal card form in another screen (FALSE). |
+| `language` | Defines the language to be used in the payment forms. You can set it to one of the available language options (see Available Languages below). If you send null or don't send it, Yuno SDK will take device language. |
+| `styles` | Enables SDK-wide UI customization. Use it to define global visual styles like font family and button appearance (color, padding, radius, typography) through a `YunoStyles` object. For more information, see the Styles section below. |
+
+### Card Form Types
+
+The `cardFlow` parameter accepts the following `CardFormType` values:
 
 ```kotlin
-enum class YunoLanguage {
-    SPANISH,
-    ENGLISH,
-    PORTUGUESE,
-    INDONESIAN,
-    MALAYSIAN
+enum class CardFormType {
+    ONE_STEP,      // Single-page card form with all fields visible at once
+    STEP_BY_STEP   // Multi-step card form with fields shown progressively
 }
 ```
 
-To keep Yuno loading screen until you create and continue with payment you also have to use the
-function startCompletePaymentFlow() that is explained on the next session.
+| Card Form Type | Description |
+|----------------|-------------|
+| `ONE_STEP` | Displays all card input fields (card number, expiry date, CVV, cardholder name, etc.) on a single screen. This is the default option and provides a traditional form experience. |
+| `STEP_BY_STEP` | Presents the card input fields in a progressive, step-by-step manner. Each field or group of related fields is shown sequentially, providing a more guided user experience. |
+
+Available Languages
+
+The following languages are supported:
+
+```kotlin
+enum class YunoLanguage {
+    SPANISH,                // es - Spanish
+    ENGLISH,                // en - English
+    PORTUGUESE,             // pt - Portuguese
+    INDONESIAN,             // id - Indonesian
+    MALAYSIAN,              // ms - Malay
+    FRENCH,                 // fr - French
+    POLISH,                 // pl - Polish
+    ITALIAN,                // it - Italian
+    GERMAN,                 // de - German
+    RUSSIAN,                // ru - Russian
+    TURKISH,                // tr - Turkish
+    DUTCH,                  // nl - Dutch
+    SWEDISH,                // sv - Swedish
+    THAI,                   // th - Thai
+    FILIPINO,               // fil - Filipino
+    VIETNAMESE,             // vi - Vietnamese
+    CHINESE_SIMPLIFIED,     // zh-CN - Chinese (Simplified, China)
+    CHINESE_TRADITIONAL     // zh-TW - Chinese (Traditional, Taiwan)
+}
+```
+
+### Styles
+
+With the `styles` customization option, you can define global visual styles through a `YunoStyles` object. It lets you apply consistent branding across the SDK by customizing button appearance and typography.
+
+```kotlin
+data class YunoStyles(
+    val buttonStyles: YunoButtonStyles? = null,
+    val fontFamily: FontFamily? = null
+)
+```
+
+| Parameter | Description |
+|-----------|-------------|
+| `buttonStyles` | Customizes the primary buttons displayed in the SDK. |
+| `fontFamily` | Sets the font family used across all SDK text elements. |
+
+The `YunoButtonStyles` object lets you define specific settings for button appearance:
+
+```kotlin
+data class YunoButtonStyles(
+    val backgroundColor: Color? = null,
+    val contentColor: Color? = null,
+    val cornerRadius: Dp? = null,
+    val elevation: Dp? = null,
+    val padding: Dp? = null,
+    val fontFamily: FontFamily? = null,
+    val fontSize: TextUnit? = null,
+    val fontStyle: FontStyle? = null
+)
+```
 
 In addition, you need to update your manifest to use your application:
 
@@ -148,7 +216,7 @@ startCheckout(
     checkoutSession: "checkout_session",
 countryCode: "country_code_iso",
 callbackOTT: (String?) -> Unit,
-callbackPaymentState: ((String?) -> Unit)?,
+callbackPaymentState: ((String?, String?) -> Unit)?,
 merchantSessionId: String? = null //Optional - Default null 
 )
 ```
@@ -160,8 +228,14 @@ back. This function is mandatory.
 
 #### Callback Payment State
 
-The `callbackPaymentState` parameter is a function that returns the current payment process. Sending
-this function is not mandatory if you do not need the result. The possible states are:
+The `callbackPaymentState` parameter is a function that returns the current payment process state and sub-state. Sending
+this function is not mandatory if you do not need the result. 
+
+The callback receives two parameters:
+- **paymentState** (String?): The main payment state
+- **paymentSubState** (String?): Additional sub-state information providing more details about the payment status
+
+The possible payment states are:
 
 ```Kotlin
 const val PAYMENT_STATE_SUCCEEDED = "SUCCEEDED"
@@ -193,34 +267,130 @@ the lite version of the SDK, you must call the method `startPaymentLite`.
 
 ```Kotlin
 startPayment(
-    callbackOTT:(String?) -> Unit, //Optional - Default null,
-showPaymentStatus: Boolean, //Optional - Default true
+    showStatusYuno: Boolean = true, //Optional - Default true
+    callbackOTT: (String?) -> Unit, //Optional - Default null
+    callBackTokenWithInformation: (OneTimeTokenModel?) -> Unit //Optional - Default null
 )
 ```
+
+Configure the payment with the following options:
+
+| Parameter | Description |
+|-----------|-------------|
+| `showStatusYuno` | A boolean that specifies whether the payment status should be displayed within the Yuno interface. Default is `true`. |
+| `callbackOTT` | A function that returns the updated one-time token (OTT) needed to complete the payment process. This token is required to complete the payment. |
+| `callBackTokenWithInformation` | A function that supplies detailed information about the one-time token, wrapped in a `OneTimeTokenModel` object, allowing for comprehensive handling of token details. |
 
 ###### Lite SDK Version
 
 ```Kotlin
 startPaymentLite(
     paymentSelected: PaymentSelected,
-    callbackOTT:(String?) -> Unit, //Optional - Default null,
-showPaymentStatus: Boolean, //Optional - Default true
+    showPaymentStatus: Boolean = true, //Optional - Default true
+    callbackOTT: (String?) -> Unit, //Optional - Default null
+    callBackTokenWithInformation: (OneTimeTokenModel?) -> Unit //Optional - Default null
 )
 ```
+
+The following table describes the required parameters to start the payment:
+
+| Parameter | Description |
+|-----------|-------------|
+| `paymentSelected` | Inform the payment method selected by the buyer. |
+| `showPaymentStatus` | A boolean that specifies whether the payment status should be displayed within the Yuno interface. Default is `true`. |
+| `callbackOTT` | A function that returns the updated one-time token needed to complete the payment process. |
+| `callBackTokenWithInformation` | A function that supplies detailed information about the one-time token, wrapped in a `OneTimeTokenModel` object, allowing for comprehensive handling of token details. |
 
 For the Lite version, you need to send an additional parameter, which is the vaulted token and/or
 the payment type that the user selected to make the payment.
 
 ```Kotlin
 PaymentSelected(
-    id : String "payment_vaulted_token",
-    type : String "payment_type",
+    vaultedToken: String? = null, //Optional - The vaulted token for saved payment methods
+    paymentMethodType: String //Required - The payment method type (e.g., "CARD", "NEQUI", etc.)
 )
 ```
 
 At the end of this process, you will obtain the OTT, which is a required parameter to create a
-payment via the Payments API POST/payments. You can obtain this data from to `onActivityResult`
-explained in the callback section.
+payment via the Payments API POST/payments.
+
+##### OneTimeTokenModel
+
+The `callBackTokenWithInformation` callback provides detailed information about the one-time token through the `OneTimeTokenModel` object:
+
+```kotlin
+@Parcelize
+data class OneTimeTokenModel(
+    val token: String? = null,
+    val vaultedToken: String? = null,
+    val vaultOnSuccess: Boolean? = null,
+    val type: String? = null,
+    val cardData: CardInformationModel? = null,
+    val customer: CustomerPayerInformationModel? = null,
+) : Parcelable
+```
+
+**Card Information Model:**
+
+```kotlin
+@Parcelize
+data class CardInformationModel(
+    val holderName: String? = null,
+    val iin: String? = null,
+    val lfd: String? = null,
+    val numberLength: Int? = null,
+    val securityCodeLength: Int? = null,
+    val brand: String? = null,
+    val type: String? = null,
+    val category: String? = null,
+    val issuerName: String? = null,
+    val issuerCode: String? = null,
+    val countryCode: String? = null,
+) : Parcelable
+```
+
+**Customer Payer Information Model:**
+
+```kotlin
+@Parcelize
+data class CustomerPayerInformationModel(
+    val name: String? = null,
+    val lastName: String? = null,
+    val email: String? = null,
+    val document: Document? = null,
+    val phone: Phone? = null,
+    val address: Address? = null,
+    val deviceFingerPrint: String? = null,
+    val thirdPartySessionId: String? = null,
+) : Parcelable
+```
+
+**Supporting Models:**
+
+```kotlin
+@Parcelize
+data class Document(
+    val documentNumber: String? = null,
+    val documentType: String? = null,
+) : Parcelable
+
+@Parcelize
+data class Phone(
+    val number: String,
+    val countryCode: String,
+) : Parcelable
+
+@Parcelize
+data class Address(
+    val addressLine1: String? = null,
+    val addressLine2: String? = null,
+    val country: String? = null,
+    val city: String? = null,
+    val state: String? = null,
+    val zipCode: String? = null,
+    val neighborhood: String? = null,
+) : Parcelable
+```
 
 #### Complete Payment
 
@@ -230,253 +400,9 @@ following method:
 ```Kotlin
 continuePayment(
     showPaymentStatus: Boolean, //Optional - Default true
-    callbackPaymentState:((String?) -> Unit)?, //Optional - Default null
+    callbackPaymentState:((String?, String?) -> Unit)?, //Optional - Default null
 )
 ```
 
 To show your own payment status screens, you should send `false` in the `showPaymentStatus`
 parameter and then get the payment state by callback.
-
-###### Complete Flow To Keep Yuno Loader
-
-if you want to keep Yuno loading screen, you have to send in YunoConfig parameter in
-Yuno.initialize() function the parameter keepLoader in TRUE and also when you decide to start the
-payment you have to use the following function:
-
-```kotlin
-startCompletePaymentFlow(
-    paymentSelected: PaymentSelected? = null,
-showPaymentStatus: Boolean = true,
-createPaymentFun: (suspend(ott: String) -> Unit)? = null,
-callbackPaymentState: ((String?) -> Unit)? = null,
-callbackOTT: ((String?) -> Unit)? = null,
-)
-```
-
-the "createPaymentFun" parameter is a suspend function where Yuno wait until you create the payment
-back to back, once the payment its created you complete the suspend function and Yuno will continue
-with the payment, if you decide to use this flow you don't need to call continuePayment()
-anymore.
-
-## Create your own card form flow
-
-For this you must follow the following steps:
-
-### First Step
-
-Create a new layout resource file called ```screen_payment_card_form.xml``` to override the current
-xml and implement your own design.
-
-### Second Step
-
-After creating ```screen_payment_card_form.xml```, you can use your own design while ensuring the
-use of Yuno Secure Fields components. This is so that the Yuno SDK can retrieve credit card
-information.
-
-#### The following are the components you should use:
-
-* CloseButton:
-  This is the button to close the form. You must use it with its defined android id:
-
-```XML 
-
-<ImageView android:id="@+id/imageView_close" />
-```
-
-* CardNumberEditText:
-  This is where the user can enter the credit card number. You must use it with its defined android
-  id:
-
-```XML 
-
-<com.yuno.payments.features.base.ui.views.CardNumberEditText android:id="@+id/textField_number" />
-```
-
-* CardDataStackView:
-  This is where the user can enter the credit card's expiration date and can enter the credit card's
-  verification code (CVV/CVC). You must use it with its
-  defined android id:
-
-```XML 
-
-<com.yuno.payments.features.base.ui.views.CardDataStackView android:id="@+id/cardDataStackView" />
-```
-
-* TextView for Voucher Card Type:
-  This is a copy we show when the card is VOUCHER type, you must set it below CVV field. You must
-  use it with its defined android id:
-
-```XML 
-
-<TextView android:id="@+id/textView_voucher_copy" android:visibility="gone" />
-```
-
-* TextFieldItemView for card holder's name:
-  This is where the user can enter the credit card holder's name. You must use it with its defined
-  android id:
-
-```XML 
-
-<com.yuno.payments.features.base.ui.views.TextFieldItemView android:id="@+id/textField_name" />
-```
-
-* SpinnerFieldItemView for identification document type:
-  This is where the user can choose the type of identification document the credit card holder
-  holds. You must use it with its defined android id:
-
-```XML 
-
-<com.yuno.payments.features.base.ui.views.SpinnerFieldItemView
-    android:id="@+id/spinner_document_type" />
-```
-
-* TextFieldItemView for identification document number:
-  This is where the user can enter the credit card holder's identification document number. You must
-  use it with its defined android id:
-
-```XML 
-
-<com.yuno.payments.features.base.ui.views.TextFieldItemView
-    android:id="@+id/textField_user_document" />
-```
-
-* PhoneInformationView for customer's phone number:
-  This is where the user can enter his phone number if needed. You must use it with its defined
-  android id and it have to have GONE visibility:
-
-```XML 
-
-<com.yuno.payments.features.base.ui.views.PhoneInformationView
-    android:id="@+id/layout_phone_information" android:visibility="gone" />
-```
-
-* Installments:
-  This is the component to show the spinner of card installments. You must use it with its defined
-  android id, it must have GONE visibility and you must add ShimmerFrameLayout dependency: "
-  implementation 'com.facebook.shimmer:shimmer:0.5.0'"
-
-```XML 
-
-<LinearLayout android:id="@+id/container_installments" android:orientation="vertical">
-
-    <com.yuno.payments.features.base.ui.views.SpinnerFieldItemView
-        android:id="@+id/spinner_installments" android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:visibility="gone"
-        app:spinner_title="@string/payment.form_installments" />
-
-    <com.facebook.shimmer.ShimmerFrameLayout android:id="@+id/shimmer_installments"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:foregroundGravity="center" android:visibility="gone">
-
-        <include layout="@layout/shimmer_component_field" />
-    </com.facebook.shimmer.ShimmerFrameLayout>
-
-</LinearLayout>
-```
-
-* TextFieldItemView for customer's address :
-  This is where the user can enter his address if needed. You must use it with its defined
-  android id and it have to have GONE visibility:
-
-```XML 
-
-<com.yuno.payments.features.base.ui.views.TextFieldItemView
-    android:id="@+id/textField_address" android:visibility="gone" />
-```
-
-* TextFieldItemView for customer's state :
-  This is where the user can enter his state if needed. You must use it with its defined
-  android id and it have to have GONE visibility:
-
-```XML 
-
-<com.yuno.payments.features.base.ui.views.TextFieldItemView
-    android:id="@+id/textField_state" android:visibility="gone"/>
-```
-
-* TextFieldItemView for customer's city :
-  This is where the user can enter his city if needed. You must use it with its defined
-  android id and it have to have GONE visibility:
-
-```XML 
-
-<com.yuno.payments.features.base.ui.views.TextFieldItemView
-    android:id="@+id/textField_city" android:visibility="gone"/>
-```
-
-* TextFieldItemView for customer's zip code :
-  This is where the user can enter his zip code if needed. You must use it with its defined
-  android id and it have to have GONE visibility:
-
-```XML 
-
-<com.yuno.payments.features.base.ui.views.TextFieldItemView
-    android:id="@+id/textField_zip_code" android:visibility="gone"/>
-```
-
-* SpinnerFieldItemView for customer's country :
-  This is where the user can enter his country if needed. You must use it with its defined
-  android id and it have to have GONE visibility:
-
-```XML 
-
-<com.yuno.payments.features.base.ui.views.SpinnerFieldItemView
-    android:id="@+id/spinner_country" android:visibility="gone"/>
-```
-
-* SpinnerFieldItemView for customer's gender:
-  This is where the user can enter his gender if needed. You must use it with its defined
-  android id and it have to have GONE visibility:
-
-```XML 
-
-<com.yuno.payments.features.base.ui.views.SpinnerFieldItemView
-    android:id="@+id/spinner_gender" android:visibility="gone"/>
-```
-
-* Yuno's TextView:
-  This is a text to show that the form is verifed by Yuno. You must use it with its defined android
-  id:
-
-```XML 
-
-<TextView android:id="@+id/textView_secure_payment" />
-```
-
-* CustomYunoSwitch:
-  This is a switch component to let the user choose if the card is gonna be used as credit or debit.
-  You must use it with its defined android id and it must have GONE visibility:
-
-```XML 
-
-<com.yuno.payments.features.base.ui.views.CustomYunoSwitch android:id="@+id/switch_cardType"
-    android:visibility="gone" />
-```
-
-* CustomYunoSwitch tooltip:
-  This is a tooltip to show how the switch works. You must use it with its defined android id and it
-  must have GONE visibility, as a recommendation this component should be placed next to the switch:
-
-```XML 
-
-<ImageView android:id="@+id/switch_tooltip" android:src="@drawable/ic_thin_info"
-    android:visibility="gone" />
-```
-
-* AppCompatCheckBox for save card:
-  This is where the user can choose whether to save the credit card for future purchases. You must
-  use it with its defined android id:
-
-```XML 
-
-<androidx.appcompat.widget.AppCompatCheckBox android:id="@+id/checkBox_save_card" />
-```
-
-* Button for validate card form and continue with the payment process:
-  This is the component used to submit the form and send the credit card information to Yuno. You
-  must use it with its defined android id:
-
-```XML 
-
-<Button android:id="@+id/button_complete_form" />
-```
