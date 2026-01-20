@@ -106,10 +106,10 @@ class CheckoutCompleteActivity : AppCompatActivity() {
         }
     }
 
-    private fun onPaymentStateChange(paymentState: String?) {
+    private fun onPaymentStateChange(paymentState: String?, secondParam: String?) {
         paymentState?.let {
             restartView()
-            Log.e("Payment State", it)
+            Log.e("Payment State", "State: $it, Second param: $secondParam")
         }
     }
 
