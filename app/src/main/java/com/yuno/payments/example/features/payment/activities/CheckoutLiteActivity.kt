@@ -130,10 +130,15 @@ class CheckoutLiteActivity : AppCompatActivity() {
         }
     }
 
-    private fun onPaymentStateChange(paymentState: String?, secondParam: String?) {
+    /**
+     * Callback that receives the payment state changes from Yuno SDK.
+     * @param paymentState The main payment state (SUCCEEDED, FAIL, PROCESSING, REJECT, INTERNAL_ERROR, CANCELED)
+     * @param paymentSubState Additional payment sub-state information providing more details about the payment status
+     */
+    private fun onPaymentStateChange(paymentState: String?, paymentSubState: String?) {
         paymentState?.let {
             updateView(paymentState)
-            Log.d("CheckoutLite", "Payment state: $paymentState, Second param: $secondParam")
+            Log.d("CheckoutLite", "Payment State: $paymentState, Payment Sub-State: $paymentSubState")
         }
     }
 
