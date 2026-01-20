@@ -130,9 +130,10 @@ class CheckoutLiteActivity : AppCompatActivity() {
         }
     }
 
-    private fun onPaymentStateChange(paymentState: String?) {
+    private fun onPaymentStateChange(paymentState: String?, secondParam: String?) {
         paymentState?.let {
             updateView(paymentState)
+            Log.d("CheckoutLite", "Payment state: $paymentState, Second param: $secondParam")
         }
     }
 

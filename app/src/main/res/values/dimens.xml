@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Radius dimensions -->
+    <dimen name="yuno_radius_xsmall">4dp</dimen>
+    
+    <!-- Font dimensions -->
+    <dimen name="yuno_font_h1_super">32sp</dimen>
+    <dimen name="yuno_font_caption2">12sp</dimen>
+</resources>
