@@ -43,6 +43,12 @@
                     android:scheme="yuno" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.yuno.payments.example.features.enrollment.activities.EnrollmentRenderActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.yuno.payments.example.features.payment.activities.PaymentRenderActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

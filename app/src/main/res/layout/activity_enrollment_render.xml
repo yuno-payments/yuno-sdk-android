@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".features.enrollment.activities.EnrollmentRenderActivity">
+
+    <TextView
+        android:id="@+id/textView_title"
+        style="@style/TextH2.NeutralB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enrollment Render Mode"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.yuno.payments.example.ui.views.CustomEditText
+        android:id="@+id/editText_customer_session"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:hint="Customer Session"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_title" />
+
+    <com.yuno.payments.example.ui.views.CustomEditText
+        android:id="@+id/editText_country_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Country Code"
+        android:maxLength="2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editText_customer_session" />
+
+    <Button
+        android:id="@+id/button_start_enrollment"
+        style="@style/Button.Normal.NeutralB"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Start Enrollment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editText_country_code" />
+
+    <!-- Container for the enrollment fragment -->
+    <FrameLayout
+        android:id="@+id/enrollment_fragment_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintBottom_toTopOf="@id/button_submit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_start_enrollment" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/enrollment_fragment_container"
+        app:layout_constraintEnd_toEndOf="@id/enrollment_fragment_container"
+        app:layout_constraintStart_toStartOf="@id/enrollment_fragment_container"
+        app:layout_constraintTop_toTopOf="@id/enrollment_fragment_container"
+        tools:visibility="visible" />
+
+    <Button
+        android:id="@+id/button_submit"
+        style="@style/Button.Normal.NeutralB"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Submit Enrollment"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

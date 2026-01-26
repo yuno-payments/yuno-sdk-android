@@ -40,6 +40,15 @@
             android:text="Start Enrollment Lite"
             android:textAllCaps="false" />
 
+        <Button
+            android:id="@+id/button_enrollment_render"
+            style="@style/Button.Normal.NeutralB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/yuno_spacing_standard"
+            android:text="Start Enrollment Render"
+            android:textAllCaps="false" />
+
         <TextView
             android:id="@+id/textView_title_payment"
             style="@style/TextH2.NeutralB"
@@ -55,6 +64,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/yuno_spacing_standard"
             android:text="Start Payment Lite"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/button_payment_render"
+            style="@style/Button.Normal.NeutralB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/yuno_spacing_standard"
+            android:text="Start Payment Render"
             android:textAllCaps="false" />
 
         <Button

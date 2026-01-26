@@ -35,12 +35,12 @@
 
     <style name="Button.Normal.NeutralB">
         <item name="android:background">@drawable/button_neutralb_style</item>
-        <item name="android:textColor">@color/button_text_color</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
     <style name="Button.Small.NeutralB" parent="Button.Small">
         <item name="android:background">@drawable/button_neutralb_style</item>
-        <item name="android:textColor">@color/button_text_color</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
 </resources>

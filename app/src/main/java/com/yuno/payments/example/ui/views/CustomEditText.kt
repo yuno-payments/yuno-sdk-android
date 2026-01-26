@@ -57,15 +57,15 @@ class CustomEditText @JvmOverloads constructor(
     private fun setEditTextState(state: EditTextState) {
         when (state) {
             EditTextState.ERROR -> {
-                setBackgroundResource(com.yuno.payments.R.drawable.bg_edit_text)
+                setBackgroundResource(com.yuno.payments.example.R.drawable.edittext_stroke_black)
                 setCursorColor(this.context, com.yuno.payments.R.color.neutral_b)
             }
             EditTextState.FOCUS -> {
-                setBackgroundResource(com.yuno.payments.R.drawable.bg_edit_text)
+                setBackgroundResource(com.yuno.payments.example.R.drawable.edittext_stroke_black)
                 setCursorColor(this.context, com.yuno.payments.R.color.primary_1)
             }
             EditTextState.NORMAL -> {
-                setBackgroundResource(com.yuno.payments.R.drawable.bg_edit_text)
+                setBackgroundResource(com.yuno.payments.example.R.drawable.edittext_stroke_black)
                 setCursorColor(this.context, com.yuno.payments.R.color.neutral_b)
             }
         }
