@@ -206,6 +206,121 @@ fun AppCompatActivity.enrollmentStatus(
 )
 ````
 
+### Enrollment Render Mode (Advanced Integration)
+
+For developers requiring advanced UI control, the SDK supports **Render Mode** integration. This mode provides fragment-based UI components that you can integrate into custom layouts, offering more flexibility while maintaining SDK functionality.
+
+#### Setup
+
+**Step 1:** Call `startEnrollment()` in your activity's `onCreate()` method. This initializes the enrollment flow and injects necessary dependencies:
+
+```kotlin
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_enrollment)
+    
+    // IMPORTANT: Must be called before startEnrollmentRender
+    startEnrollment()
+    
+    initViews()
+    initListeners()
+}
+```
+
+**Step 2:** Implement `YunoEnrollmentRenderListener` in your activity:
+
+```kotlin
+class EnrollmentActivity : AppCompatActivity(), YunoEnrollmentRenderListener {
+    
+    private lateinit var fragmentController: YunoEnrollmentFragmentController
+    
+    private fun startEnrollmentFlow() {
+        fragmentController = startEnrollmentRender(
+            customerSession = "customer_session_id",
+            countryCode = "CO",
+            coroutineScope = lifecycleScope,
+            listener = this
+        )
+    }
+    
+    // Implement listener methods below
+}
+```
+
+#### Listener Methods
+
+**showView() - Display the enrollment form:**
+
+```kotlin
+override fun showView(fragment: Fragment, needSubmit: Boolean) {
+    // Insert the SDK fragment into your layout
+    supportFragmentManager.beginTransaction()
+        .replace(R.id.enrollment_fragment_container, fragment)
+        .commit()
+    
+    // Show/hide custom submit button based on needSubmit
+    if (needSubmit) {
+        customSubmitButton.visibility = View.VISIBLE
+        customSubmitButton.setOnClickListener {
+            fragmentController.submitForm()
+        }
+    }
+}
+```
+
+**returnStatus() - Handle enrollment completion:**
+
+```kotlin
+override fun returnStatus(resultCode: Int, paymentStatus: String) {
+    when (paymentStatus) {
+        "SUCCEEDED" -> {
+            // Payment method enrolled successfully
+            // Remove fragment and show success message
+        }
+        "FAIL" -> {
+            // Enrollment failed
+            // Show error and allow retry
+        }
+        "CANCELED" -> {
+            // User canceled enrollment
+        }
+    }
+}
+```
+
+**loadingListener() - Handle loading states:**
+
+```kotlin
+override fun loadingListener(isLoading: Boolean) {
+    progressBar.isVisible = isLoading
+    if (needsSubmit) {
+        customSubmitButton.isEnabled = !isLoading
+    }
+}
+```
+
+#### Key Benefits
+
+- **Custom UI Integration**: Embed enrollment components in your existing layouts
+- **Fragment Compatibility**: Works with both XML and Jetpack Compose
+- **Flow Control**: Manage form submission manually with custom buttons
+
+#### Layout Example
+
+```xml
+<FrameLayout
+    android:id="@+id/enrollment_fragment_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+
+<Button
+    android:id="@+id/custom_submit_button"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Submit Enrollment"
+    android:visibility="gone" />
+```
+
 ### Checkout
 
 To start a new payment process, you need to call the following method on the onCreate method of
@@ -406,3 +521,217 @@ continuePayment(
 
 To show your own payment status screens, you should send `false` in the `showPaymentStatus`
 parameter and then get the payment state by callback.
+
+### Payment Render Mode (Advanced Integration)
+
+For developers requiring advanced UI control, the SDK supports **Payment Render Mode**. This mode provides fragment-based UI components that you can integrate into custom layouts, offering complete control over the payment flow presentation.
+
+#### Setup
+
+**Step 1:** Call `startCheckout()` in your activity's `onCreate()` method. This initializes the payment flow and injects necessary dependencies:
+
+```kotlin
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_payment)
+    
+    // IMPORTANT: Must be called before startPaymentRender
+    startCheckout()
+    
+    initViews()
+    initListeners()
+}
+```
+
+**Step 2:** Update the checkout session and country before starting the render:
+
+```kotlin
+private fun startPaymentFlow() {
+    // Update session configuration
+    updateCheckoutSession(
+        checkoutSession = "checkout_session_id",
+        countryCode = "CO"
+    )
+    
+    // Start payment render
+    fragmentController = startPaymentRender(
+        checkoutSession = "checkout_session_id",
+        countryCode = "CO",
+        coroutineScope = lifecycleScope,
+        paymentSelected = PaymentSelected(
+            vaultedToken = null,
+            paymentMethodType = "CARD"
+        ),
+        listener = this
+    )
+}
+```
+
+**Step 3:** Implement `YunoPaymentRenderListener` in your activity:
+
+```kotlin
+class PaymentActivity : AppCompatActivity(), YunoPaymentRenderListener {
+    
+    private lateinit var fragmentController: YunoPaymentFragmentController
+    
+    // Implement listener methods below
+}
+```
+
+#### Listener Methods
+
+**showView() - Display the payment form:**
+
+```kotlin
+override fun showView(fragment: Fragment) {
+    // Insert the SDK fragment into your layout
+    supportFragmentManager.beginTransaction()
+        .replace(R.id.payment_fragment_container, fragment)
+        .commit()
+    
+    // Hide configuration fields and show submit button
+    configurationContainer.visibility = View.GONE
+    customSubmitButton.visibility = View.VISIBLE
+    customSubmitButton.setOnClickListener {
+        fragmentController.submitForm()
+    }
+}
+```
+
+**returnOneTimeToken() - Receive the OTT after form submission:**
+
+```kotlin
+override fun returnOneTimeToken(oneTimeToken: String, additionalData: OneTimeTokenModel?) {
+    // Remove the SDK form fragment
+    supportFragmentManager.findFragmentById(R.id.payment_fragment_container)?.let {
+        supportFragmentManager.beginTransaction().remove(it).commit()
+    }
+    
+    // Display the OTT (e.g., in a TextView for testing/debugging)
+    ottTextView.text = "One-Time Token: $oneTimeToken"
+    ottTextView.visibility = View.VISIBLE
+    
+    // Show continue button
+    continuePaymentButton.visibility = View.VISIBLE
+    
+    // Here you would call your backend to create the payment with this OTT
+    // After creating the payment, user clicks "Continue Payment"
+}
+```
+
+**continuePayment() - Continue with payment after backend creation:**
+
+```kotlin
+continuePaymentButton.setOnClickListener {
+    if (::fragmentController.isInitialized) {
+        // This handles 3DS, redirects, and other payment method requirements
+        fragmentController.continuePayment()
+    }
+}
+```
+
+**returnStatus() - Handle payment completion:**
+
+```kotlin
+override fun returnStatus(resultCode: Int, paymentStatus: String, paymentSubStatus: String?) {
+    when (paymentStatus) {
+        "SUCCEEDED" -> {
+            // Payment completed successfully
+            // Remove fragment and show success
+        }
+        "FAIL" -> {
+            // Payment failed
+            // Show error and allow retry
+        }
+        "PROCESSING" -> {
+            // Payment is being processed
+            // Show processing message, can include paymentSubStatus for details
+        }
+        "REJECT" -> {
+            // Payment rejected
+        }
+        "CANCELED" -> {
+            // User canceled payment
+        }
+    }
+}
+```
+
+**loadingListener() - Handle loading states:**
+
+```kotlin
+override fun loadingListener(isLoading: Boolean) {
+    progressBar.isVisible = isLoading
+}
+```
+
+#### Payment Flow Steps
+
+1. **User fills form**: SDK fragment displays payment form
+2. **Submit form**: Custom button calls `fragmentController.submitForm()`
+3. **Receive OTT**: SDK calls `returnOneTimeToken()` with the token
+4. **Remove form**: Remove SDK fragment, display OTT
+5. **Create payment**: Call your backend with the OTT
+6. **Continue**: User clicks continue, call `fragmentController.continuePayment()`
+7. **Complete**: SDK handles 3DS/redirects and calls `returnStatus()` with final result
+
+#### Key Benefits
+
+- **Custom UI Integration**: Embed payment components in your existing layouts
+- **Complete Control**: Manage when to show/hide form, display OTT, continue payment
+- **Fragment Compatibility**: Works with both XML and Jetpack Compose
+- **Flow Control**: Manually control form submission and payment continuation
+
+#### Layout Example
+
+```xml
+<!-- Configuration inputs (hidden after form loads) -->
+<LinearLayout
+    android:id="@+id/configuration_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    
+    <EditText
+        android:id="@+id/checkout_session_input"
+        android:hint="Checkout Session" />
+    
+    <Button
+        android:id="@+id/start_payment_button"
+        android:text="Start Payment" />
+</LinearLayout>
+
+<!-- SDK payment form container -->
+<FrameLayout
+    android:id="@+id/payment_fragment_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+
+<!-- Custom submit button (shown below form) -->
+<Button
+    android:id="@+id/submit_button"
+    android:text="Submit Payment"
+    android:visibility="gone" />
+
+<!-- OTT display (shown after submission) -->
+<TextView
+    android:id="@+id/ott_text_view"
+    android:text="One-Time Token: "
+    android:clickable="true"
+    android:visibility="gone" />
+
+<!-- Continue button (shown after OTT) -->
+<Button
+    android:id="@+id/continue_payment_button"
+    android:text="Continue Payment"
+    android:visibility="gone" />
+```
+
+#### Best Practices
+
+- Always call `startCheckout()` in `onCreate()` before using render functions
+- Call `updateCheckoutSession()` before `startPaymentRender()`
+- Remove the SDK fragment after receiving the OTT for cleaner UI
+- Create the payment in your backend after receiving the OTT
+- Call `continuePayment()` after payment creation for 3DS/redirect handling
+- Handle all payment states in `returnStatus()` (SUCCEEDED, FAIL, PROCESSING, etc.)
