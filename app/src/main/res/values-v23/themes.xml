@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.YunoPaymentsSDK" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/neutral_b</item>
+        <item name="colorOnPrimary">@color/neutral_w</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/neutral_b</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/neutral_b</item>
+        <!-- Make status bar icons dark so they're visible on white/light backgrounds -->
+        <item name="android:windowLightStatusBar">true</item>
+        <!-- Customize your theme here. -->
+    </style>
+</resources>

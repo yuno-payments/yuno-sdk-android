@@ -160,6 +160,15 @@ In addition, you need to update your manifest to use your application:
 <application android:name=".CustomApplication"></application>
 ```
 
+## ProGuard / R8
+
+If your project has `minifyEnabled true`, add the following rules to your `proguard-rules.pro` file to avoid issues with the Yuno SDK:
+
+```proguard
+-keep class com.yuno.** { *; }
+-dontwarn com.yuno.**
+```
+
 ## Functions
 
 ### Enroll a new payment method
