@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -26,7 +25,7 @@ class CheckoutCompleteActivity : AppCompatActivity() {
 
     private lateinit var checkoutSessionEditText: CustomEditText
     private lateinit var countryCodeEditText: CustomEditText
-    private lateinit var paymentMethodListContainer: ScrollView
+    private lateinit var composePaymentList: ComposeView
     private lateinit var textViewToken: TextView
     private lateinit var clipboardManager: ClipboardManager
     private var dynamicPaymentMethods = false
@@ -49,6 +48,7 @@ class CheckoutCompleteActivity : AppCompatActivity() {
     private fun initViews() {
         checkoutSessionEditText = findViewById(R.id.editText_checkoutSession)
         countryCodeEditText = findViewById(R.id.editText_countryCode)
+        composePaymentList = findViewById(R.id.compose_paymentListContainer)
         textViewToken = findViewById(R.id.textView_token)
         checkoutSessionEditText.setText(BuildConfig.YUNO_TEST_CHECKOUT_SESSION)
         countryCodeEditText.setText(BuildConfig.YUNO_TEST_COUNTRY_CODE)
@@ -84,17 +84,14 @@ class CheckoutCompleteActivity : AppCompatActivity() {
             countryCodeEditText.text.toString(),
         )
 
-        val composeView = findViewById<ComposeView>(R.id.compose_paymentListContainer)
-
-        composeView.setContent {
-
+        composePaymentList.visibility = View.VISIBLE
+        composePaymentList.setContent {
             PaymentMethodListViewComponent(
-                this,
-                onPaymentSelected = {
-                    findViewById<Button>(R.id.button_pay).isEnabled = it
+                activity = this,
+                onPaymentSelected = { isSelected ->
+                    findViewById<Button>(R.id.button_pay).isEnabled = isSelected
                 },
-
-                )
+            )
         }
     }
 
@@ -119,7 +116,7 @@ class CheckoutCompleteActivity : AppCompatActivity() {
     }
 
     private fun updateView(token: String?) {
-        paymentMethodListContainer.visibility = View.GONE
+        composePaymentList.visibility = View.GONE
         checkoutSessionEditText.visibility = View.GONE
         countryCodeEditText.visibility = View.GONE
         findViewById<Button>(R.id.button_setCheckoutSession).visibility = View.GONE
@@ -129,7 +126,7 @@ class CheckoutCompleteActivity : AppCompatActivity() {
     }
 
     private fun restartView() {
-        paymentMethodListContainer.visibility = View.VISIBLE
+        composePaymentList.visibility = View.VISIBLE
         checkoutSessionEditText.visibility = View.VISIBLE
         countryCodeEditText.visibility = View.VISIBLE
         findViewById<Button>(R.id.button_setCheckoutSession).visibility = View.VISIBLE

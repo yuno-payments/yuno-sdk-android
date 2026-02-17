@@ -22,8 +22,7 @@
         </activity>
         <activity
             android:name="com.yuno.payments.example.features.payment.activities.CheckoutCompleteActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Transparent" />
+            android:exported="false" />
         <activity
             android:name="com.yuno.payments.example.features.payment.activities.CheckoutLiteActivity"
             android:exported="false" />

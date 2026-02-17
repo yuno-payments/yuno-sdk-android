@@ -19,3 +19,11 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# ---------------------------------------------------------
+# Recommended: If you have minifyEnabled true, add these
+# rules to avoid issues with the Yuno SDK:
+#
+# -keep class com.yuno.** { *; }
+# -dontwarn com.yuno.**
+# ---------------------------------------------------------
