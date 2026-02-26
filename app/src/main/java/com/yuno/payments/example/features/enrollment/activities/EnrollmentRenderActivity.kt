@@ -93,21 +93,36 @@ class EnrollmentRenderActivity : AppCompatActivity(), YunoEnrollmentRenderListen
     override fun returnStatus(resultCode: Int, paymentStatus: String) {
         // Called when the enrollment flow reaches a terminal state (SUCCEEDED, FAIL, etc.).
         Log.d("EnrollmentRender", "Status: $paymentStatus, Code: $resultCode")
-        supportFragmentManager.findFragmentById(R.id.enrollment_fragment_container)?.let {
-            supportFragmentManager.beginTransaction().remove(it).commit()
-        }
-        viewModel.onStatusResult(paymentStatus)
         when (paymentStatus) {
             "SUCCEEDED" -> {
+                removeEnrollmentFragment()
+                viewModel.onStatusResult(paymentStatus)
                 Toast.makeText(this, "Payment method enrolled successfully!", Toast.LENGTH_LONG).show()
                 Handler(Looper.getMainLooper()).postDelayed({ finish() }, 2000)
             }
             "CANCELED" -> {
+                removeEnrollmentFragment()
+                viewModel.onStatusResult(paymentStatus)
                 Toast.makeText(this, "Enrollment canceled", Toast.LENGTH_SHORT).show()
                 finish()
             }
-            "FAIL" -> Toast.makeText(this, "Enrollment failed. Please try again.", Toast.LENGTH_LONG).show()
-            else -> Log.w("EnrollmentRender", "Unhandled enrollment status: $paymentStatus")
+            "FAIL" -> {
+                removeEnrollmentFragment()
+                viewModel.onStatusResult(paymentStatus)
+                Toast.makeText(this, "Enrollment failed. Please try again.", Toast.LENGTH_LONG).show()
+            }
+            else -> {
+                // Unknown/unhandled status — clean up and reset so the user is not stuck.
+                Log.w("EnrollmentRender", "Unhandled enrollment status: $paymentStatus")
+                removeEnrollmentFragment()
+                viewModel.onReset()
+            }
+        }
+    }
+
+    private fun removeEnrollmentFragment() {
+        supportFragmentManager.findFragmentById(R.id.enrollment_fragment_container)?.let {
+            supportFragmentManager.beginTransaction().remove(it).commit()
         }
     }
 
