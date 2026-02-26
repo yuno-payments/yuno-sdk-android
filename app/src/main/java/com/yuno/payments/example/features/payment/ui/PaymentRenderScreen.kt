@@ -74,7 +74,7 @@ fun PaymentRenderScreen(
                         is PaymentRenderUiState.Config -> {
                             Column(
                                 modifier = Modifier
-                                    .fillMaxWidth()
+                                    .fillMaxSize()
                                     .background(MaterialTheme.colorScheme.background)
                                     .padding(horizontal = 20.dp)
                                     .verticalScroll(rememberScrollState()),

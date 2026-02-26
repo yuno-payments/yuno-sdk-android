@@ -56,11 +56,16 @@ class EnrollmentRenderViewModel : ViewModel() {
 
     fun onLoading(isLoading: Boolean) {
         if (isLoading) {
-            preLoadingState = _uiState.value
+            // Only save preLoadingState if we're not already Loading.
+            // If the SDK calls loadingListener(true) twice, we don't want to overwrite
+            // preLoadingState with Loading itself (which would cause an unrecoverable stuck state).
+            if (_uiState.value !is EnrollmentRenderUiState.Loading) {
+                preLoadingState = _uiState.value
+            }
             _uiState.value = EnrollmentRenderUiState.Loading
         } else if (_uiState.value is EnrollmentRenderUiState.Loading) {
             // Only restore preLoadingState if we're still in Loading.
-            // If a terminal state (StatusResult) was set while loading was active,
+            // If a terminal state (StatusResult) arrived while loading was active,
             // it already replaced Loading — don't overwrite it.
             _uiState.value = preLoadingState
         }
