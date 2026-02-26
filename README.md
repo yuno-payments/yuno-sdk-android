@@ -1,14 +1,41 @@
-# yuno-sdk-android
+# Yuno SDK Android - Example App
 
-## Android SDK Requirements
+![Kotlin](https://img.shields.io/badge/Kotlin-1.8.0-blue?logo=kotlin)
+![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-1.5.4-green?logo=jetpackcompose)
+![Min SDK](https://img.shields.io/badge/Min%20SDK-21-yellow)
+![Target SDK](https://img.shields.io/badge/Target%20SDK-35-brightgreen)
+![Yuno SDK](https://img.shields.io/badge/Yuno%20SDK-2.9.4-purple)
 
-In order to use the Yuno Android SDK, you need to meet the following requirements:
+An Android example app that demonstrates the integration of the **Yuno Payments SDK**, including enrollment, checkout, payment flows, and render mode (advanced integration).
 
-- Yuno Android SDK needs your minSdkVersion to be of 21 or above.
-- Your project must have Java 8 enabled and use AndroidX instead of older support libraries.
-- The android-gradle-plugin version must be 4.0.0 or above.
-- The Proguard version must be 6.2.2 or above.
-- The kotlin-gradle-plugin version must be 1.4.0 or above.
+---
+
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Adding the SDK to the project](#adding-the-sdk-to-the-project)
+  - [Initialize Yuno](#initialize-yuno)
+  - [Card Form Types](#card-form-types)
+  - [Available Languages](#available-languages)
+  - [Styles](#styles)
+- [ProGuard / R8](#proguard--r8)
+- [Functions](#functions)
+  - [Enroll a new payment method](#enroll-a-new-payment-method)
+  - [Enrollment Render Mode (Advanced)](#enrollment-render-mode-advanced-integration)
+  - [Checkout](#checkout)
+  - [Payment Render Mode (Advanced)](#payment-render-mode-advanced-integration)
+
+---
+
+## Requirements
+
+| Requirement | Minimum version |
+|---|---|
+| `minSdkVersion` | 21 |
+| Java | 17 |
+| Android Gradle Plugin | 8.0.0 |
+| Kotlin Gradle Plugin | 1.8.0 |
+| AndroidX | Required |
 
 ## Adding the SDK to the project
 
@@ -95,7 +122,7 @@ enum class CardFormType {
 | `ONE_STEP` | Displays all card input fields (card number, expiry date, CVV, cardholder name, etc.) on a single screen. This is the default option and provides a traditional form experience. |
 | `STEP_BY_STEP` | Presents the card input fields in a progressive, step-by-step manner. Each field or group of related fields is shown sequentially, providing a more guided user experience. |
 
-Available Languages
+### Available Languages
 
 The following languages are supported:
 
@@ -162,12 +189,34 @@ In addition, you need to update your manifest to use your application:
 
 ## ProGuard / R8
 
-If your project has `minifyEnabled true`, add the following rules to your `proguard-rules.pro` file to avoid issues with the Yuno SDK:
+If your project has `minifyEnabled = true`, add these rules to your `proguard-rules.pro`:
 
 ```proguard
+# Preserve generic type signatures and annotations
+-keepattributes Signature
+-keepattributes *Annotation*
+
+# Yuno SDK
 -keep class com.yuno.** { *; }
 -dontwarn com.yuno.**
+
+# Gson — R8 full mode compatibility
+-keep class com.google.gson.** { *; }
+-keep,allowobfuscation,allowshrinking,allowoptimization class * extends com.google.gson.reflect.TypeToken
+-dontwarn com.google.gson.**
+
+# Retrofit — R8 full mode compatibility
+-keep,allowobfuscation,allowshrinking interface retrofit2.Call
+-keep,allowobfuscation,allowshrinking class retrofit2.Response
+-keep,allowobfuscation,allowshrinking class kotlin.coroutines.Continuation
+-dontwarn retrofit2.**
+
+# OkHttp + Okio — Suppress warnings
+-dontwarn okhttp3.**
+-dontwarn okio.**
 ```
+
+> **Why are these rules necessary?** AGP 8.x+ enables R8 full mode by default, which aggressively strips generic type signatures. Without `-keepattributes Signature`, Gson's `TypeToken<T>` fails at runtime with `java.lang.Class cannot be cast to java.lang.reflect.ParameterizedType`.
 
 ## Functions
 
@@ -227,10 +276,10 @@ For developers requiring advanced UI control, the SDK supports **Render Mode** i
 override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_enrollment)
-    
+
     // IMPORTANT: Must be called before startEnrollmentRender
     startEnrollment()
-    
+
     initViews()
     initListeners()
 }
@@ -240,9 +289,9 @@ override fun onCreate(savedInstanceState: Bundle?) {
 
 ```kotlin
 class EnrollmentActivity : AppCompatActivity(), YunoEnrollmentRenderListener {
-    
+
     private lateinit var fragmentController: YunoEnrollmentFragmentController
-    
+
     private fun startEnrollmentFlow() {
         fragmentController = startEnrollmentRender(
             customerSession = "customer_session_id",
@@ -251,7 +300,7 @@ class EnrollmentActivity : AppCompatActivity(), YunoEnrollmentRenderListener {
             listener = this
         )
     }
-    
+
     // Implement listener methods below
 }
 ```
@@ -266,7 +315,7 @@ override fun showView(fragment: Fragment, needSubmit: Boolean) {
     supportFragmentManager.beginTransaction()
         .replace(R.id.enrollment_fragment_container, fragment)
         .commit()
-    
+
     // Show/hide custom submit button based on needSubmit
     if (needSubmit) {
         customSubmitButton.visibility = View.VISIBLE
@@ -341,7 +390,7 @@ startCheckout(
 countryCode: "country_code_iso",
 callbackOTT: (String?) -> Unit,
 callbackPaymentState: ((String?, String?) -> Unit)?,
-merchantSessionId: String? = null //Optional - Default null 
+merchantSessionId: String? = null //Optional - Default null
 )
 ```
 
@@ -353,7 +402,7 @@ back. This function is mandatory.
 #### Callback Payment State
 
 The `callbackPaymentState` parameter is a function that returns the current payment process state and sub-state. Sending
-this function is not mandatory if you do not need the result. 
+this function is not mandatory if you do not need the result.
 
 The callback receives two parameters:
 - **paymentState** (String?): The main payment state
@@ -543,10 +592,10 @@ For developers requiring advanced UI control, the SDK supports **Payment Render 
 override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_payment)
-    
+
     // IMPORTANT: Must be called before startPaymentRender
     startCheckout()
-    
+
     initViews()
     initListeners()
 }
@@ -561,7 +610,7 @@ private fun startPaymentFlow() {
         checkoutSession = "checkout_session_id",
         countryCode = "CO"
     )
-    
+
     // Start payment render
     fragmentController = startPaymentRender(
         checkoutSession = "checkout_session_id",
@@ -580,9 +629,9 @@ private fun startPaymentFlow() {
 
 ```kotlin
 class PaymentActivity : AppCompatActivity(), YunoPaymentRenderListener {
-    
+
     private lateinit var fragmentController: YunoPaymentFragmentController
-    
+
     // Implement listener methods below
 }
 ```
@@ -597,7 +646,7 @@ override fun showView(fragment: Fragment) {
     supportFragmentManager.beginTransaction()
         .replace(R.id.payment_fragment_container, fragment)
         .commit()
-    
+
     // Hide configuration fields and show submit button
     configurationContainer.visibility = View.GONE
     customSubmitButton.visibility = View.VISIBLE
@@ -615,14 +664,14 @@ override fun returnOneTimeToken(oneTimeToken: String, additionalData: OneTimeTok
     supportFragmentManager.findFragmentById(R.id.payment_fragment_container)?.let {
         supportFragmentManager.beginTransaction().remove(it).commit()
     }
-    
+
     // Display the OTT (e.g., in a TextView for testing/debugging)
     ottTextView.text = "One-Time Token: $oneTimeToken"
     ottTextView.visibility = View.VISIBLE
-    
+
     // Show continue button
     continuePaymentButton.visibility = View.VISIBLE
-    
+
     // Here you would call your backend to create the payment with this OTT
     // After creating the payment, user clicks "Continue Payment"
 }
@@ -700,11 +749,11 @@ override fun loadingListener(isLoading: Boolean) {
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-    
+
     <EditText
         android:id="@+id/checkout_session_input"
         android:hint="Checkout Session" />
-    
+
     <Button
         android:id="@+id/start_payment_button"
         android:text="Start Payment" />
