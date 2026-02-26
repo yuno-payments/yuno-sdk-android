@@ -20,10 +20,42 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
-# ---------------------------------------------------------
-# Recommended: If you have minifyEnabled true, add these
-# rules to avoid issues with the Yuno SDK:
-#
-# -keep class com.yuno.** { *; }
-# -dontwarn com.yuno.**
-# ---------------------------------------------------------
+# --------- Auto-generated suppress warnings ----------
+-dontwarn com.google.android.gms.ads.identifier.AdvertisingIdClient$Info
+-dontwarn com.google.android.gms.ads.identifier.AdvertisingIdClient
+-dontwarn com.google.android.gms.location.FusedLocationProviderClient
+-dontwarn com.google.android.gms.location.LocationServices
+-dontwarn kotlinx.android.parcel.Parcelize
+-dontwarn kotlinx.parcelize.Parcelize
+-dontwarn org.bouncycastle.jsse.BCSSLParameters
+-dontwarn org.bouncycastle.jsse.BCSSLSocket
+-dontwarn org.bouncycastle.jsse.provider.BouncyCastleJsseProvider
+-dontwarn org.conscrypt.Conscrypt$Version
+-dontwarn org.conscrypt.Conscrypt
+-dontwarn org.conscrypt.ConscryptHostnameVerifier
+-dontwarn org.openjsse.javax.net.ssl.SSLParameters
+-dontwarn org.openjsse.javax.net.ssl.SSLSocket
+-dontwarn org.openjsse.net.ssl.OpenJSSE
+
+# --------- Preserve generic type signatures and annotations ----------
+-keepattributes Signature
+-keepattributes *Annotation*
+
+# --------- Yuno SDK ----------
+-keep class com.yuno.** { *; }
+-dontwarn com.yuno.**
+
+# --------- Gson — R8 full mode compatibility ----------
+-keep class com.google.gson.** { *; }
+-keep,allowobfuscation,allowshrinking,allowoptimization class * extends com.google.gson.reflect.TypeToken
+-dontwarn com.google.gson.**
+
+# --------- Retrofit — R8 full mode compatibility ----------
+-keep,allowobfuscation,allowshrinking interface retrofit2.Call
+-keep,allowobfuscation,allowshrinking class retrofit2.Response
+-keep,allowobfuscation,allowshrinking class kotlin.coroutines.Continuation
+-dontwarn retrofit2.**
+
+# --------- OkHttp + Okio — Suppress warnings ----------
+-dontwarn okhttp3.**
+-dontwarn okio.**
