@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import com.yuno.payments.example.R
 import com.yuno.payments.example.features.payment.ui.PaymentRenderScreen
 import com.yuno.payments.example.features.payment.viewmodel.PaymentRenderViewModel
+import com.yuno.payments.example.ui.theme.YunoTheme
 import com.yuno.payments.features.payment.models.OneTimeTokenModel
 import com.yuno.presentation.core.components.PaymentSelected
 import com.yuno.sdk.payments.render.YunoPaymentFragmentController
@@ -51,32 +52,34 @@ class PaymentRenderActivity : AppCompatActivity(), YunoPaymentRenderListener {
 
         setContent {
             val uiState by viewModel.uiState.collectAsState()
-            PaymentRenderScreen(
-                uiState = uiState,
-                checkoutSession = viewModel.checkoutSession,
-                countryCode = viewModel.countryCode,
-                paymentMethod = viewModel.paymentMethod,
-                showErrors = viewModel.showErrors,
-                onCheckoutSessionChange = viewModel::onCheckoutSessionChange,
-                onCountryCodeChange = viewModel::onCountryCodeChange,
-                onPaymentMethodChange = viewModel::onPaymentMethodChange,
-                onStartPayment = {
-                    if (viewModel.validateAndStart()) {
-                        startPaymentRenderFlow()
-                    }
-                },
-                onSubmitPayment = {
-                    if (::fragmentController.isInitialized) {
-                        fragmentController.submitForm()
-                    }
-                },
-                onContinuePayment = {
-                    if (::fragmentController.isInitialized) {
-                        fragmentController.continuePayment()
-                    }
-                },
-                onReset = viewModel::onReset,
-            )
+            YunoTheme {
+                PaymentRenderScreen(
+                    uiState = uiState,
+                    checkoutSession = viewModel.checkoutSession,
+                    countryCode = viewModel.countryCode,
+                    paymentMethod = viewModel.paymentMethod,
+                    showErrors = viewModel.showErrors,
+                    onCheckoutSessionChange = viewModel::onCheckoutSessionChange,
+                    onCountryCodeChange = viewModel::onCountryCodeChange,
+                    onPaymentMethodChange = viewModel::onPaymentMethodChange,
+                    onStartPayment = {
+                        if (viewModel.validateAndStart()) {
+                            startPaymentRenderFlow()
+                        }
+                    },
+                    onSubmitPayment = {
+                        if (::fragmentController.isInitialized) {
+                            fragmentController.submitForm()
+                        }
+                    },
+                    onContinuePayment = {
+                        if (::fragmentController.isInitialized) {
+                            fragmentController.continuePayment()
+                        }
+                    },
+                    onReset = viewModel::onReset,
+                )
+            }
         }
     }
 

@@ -30,8 +30,6 @@ import com.yuno.payments.example.ui.components.StatusCard
 import com.yuno.payments.example.ui.components.YunoButton
 import com.yuno.payments.example.ui.components.YunoTextField
 import com.yuno.payments.example.ui.components.YunoTonalButton
-import com.yuno.payments.example.ui.theme.YunoTheme
-
 @Composable
 fun PaymentRenderScreen(
     uiState: PaymentRenderUiState,
@@ -47,8 +45,7 @@ fun PaymentRenderScreen(
     onContinuePayment: () -> Unit,
     onReset: () -> Unit,
 ) {
-    YunoTheme {
-        Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize()) {
             Box(
                 modifier = Modifier
                     .weight(1f)
@@ -194,5 +191,4 @@ fun PaymentRenderScreen(
                 }
             }
         }
-    }
 }

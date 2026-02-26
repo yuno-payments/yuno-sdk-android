@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import com.yuno.payments.example.R
 import com.yuno.payments.example.features.enrollment.ui.EnrollmentRenderScreen
 import com.yuno.payments.example.features.enrollment.viewmodel.EnrollmentRenderViewModel
+import com.yuno.payments.example.ui.theme.YunoTheme
 import com.yuno.sdk.enrollment.render.YunoEnrollmentFragmentController
 import com.yuno.sdk.enrollment.render.YunoEnrollmentRenderListener
 import com.yuno.sdk.enrollment.render.startEnrollmentRender
@@ -40,25 +41,27 @@ class EnrollmentRenderActivity : AppCompatActivity(), YunoEnrollmentRenderListen
 
         setContent {
             val uiState by viewModel.uiState.collectAsState()
-            EnrollmentRenderScreen(
-                uiState = uiState,
-                customerSession = viewModel.customerSession,
-                countryCode = viewModel.countryCode,
-                showErrors = viewModel.showErrors,
-                onCustomerSessionChange = viewModel::onCustomerSessionChange,
-                onCountryCodeChange = viewModel::onCountryCodeChange,
-                onStartEnrollment = {
-                    if (viewModel.validateAndStart()) {
-                        startEnrollmentRenderFlow()
-                    }
-                },
-                onSubmit = {
-                    if (::fragmentController.isInitialized) {
-                        fragmentController.submitForm()
-                    }
-                },
-                onReset = viewModel::onReset,
-            )
+            YunoTheme {
+                EnrollmentRenderScreen(
+                    uiState = uiState,
+                    customerSession = viewModel.customerSession,
+                    countryCode = viewModel.countryCode,
+                    showErrors = viewModel.showErrors,
+                    onCustomerSessionChange = viewModel::onCustomerSessionChange,
+                    onCountryCodeChange = viewModel::onCountryCodeChange,
+                    onStartEnrollment = {
+                        if (viewModel.validateAndStart()) {
+                            startEnrollmentRenderFlow()
+                        }
+                    },
+                    onSubmit = {
+                        if (::fragmentController.isInitialized) {
+                            fragmentController.submitForm()
+                        }
+                    },
+                    onReset = viewModel::onReset,
+                )
+            }
         }
     }
 

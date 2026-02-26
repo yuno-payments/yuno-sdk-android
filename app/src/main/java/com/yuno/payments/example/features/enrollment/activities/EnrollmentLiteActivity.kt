@@ -34,12 +34,14 @@ class EnrollmentLiteActivity : ComponentActivity() {
         // extract the customerSession from the URL and start enrollment immediately.
         // This enables external apps/links to trigger enrollment directly.
         intent.data?.let { uri ->
-            val uriString = uri.toString()
-            if (uriString.contains("yuno://www.y.uno/enrollment")) {
-                startEnrollment(
-                    customerSession = uriString.substringAfter("yuno://www.y.uno/enrollment?customerSession="),
-                    countryCode = BuildConfig.YUNO_TEST_COUNTRY_CODE.uppercase(),
-                )
+            if (uri.scheme == "yuno" && uri.host == "www.y.uno" && uri.path == "/enrollment") {
+                val customerSession = uri.getQueryParameter("customerSession")
+                if (!customerSession.isNullOrBlank()) {
+                    startEnrollment(
+                        customerSession = customerSession,
+                        countryCode = BuildConfig.YUNO_TEST_COUNTRY_CODE.uppercase(),
+                    )
+                }
             }
         }
 

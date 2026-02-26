@@ -28,8 +28,6 @@ import com.yuno.payments.example.features.enrollment.viewmodel.EnrollmentRenderU
 import com.yuno.payments.example.ui.components.StatusCard
 import com.yuno.payments.example.ui.components.YunoButton
 import com.yuno.payments.example.ui.components.YunoTextField
-import com.yuno.payments.example.ui.theme.YunoTheme
-
 @Composable
 fun EnrollmentRenderScreen(
     uiState: EnrollmentRenderUiState,
@@ -42,8 +40,7 @@ fun EnrollmentRenderScreen(
     onSubmit: () -> Unit,
     onReset: () -> Unit,
 ) {
-    YunoTheme {
-        Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize()) {
             Box(
                 modifier = Modifier
                     .weight(1f)
@@ -159,5 +156,4 @@ fun EnrollmentRenderScreen(
                 }
             }
         }
-    }
 }
