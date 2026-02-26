@@ -60,6 +60,10 @@ class PaymentRenderViewModel : ViewModel() {
     }
 
     fun onLoading(isLoading: Boolean) {
+        // NOTE: This logic is not thread-safe in the general case, but it is safe here because
+        // the Yuno SDK always invokes its listener callbacks on the main thread. All calls to
+        // onLoading(), onOttReceived(), and onStatusResult() therefore happen sequentially with
+        // no concurrent access to _uiState or preLoadingState.
         if (isLoading) {
             // Only save preLoadingState if we're not already Loading.
             // If the SDK calls loadingListener(true) twice, we don't want to overwrite
