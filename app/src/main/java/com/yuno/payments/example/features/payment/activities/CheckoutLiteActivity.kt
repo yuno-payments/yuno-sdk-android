@@ -74,7 +74,19 @@ class CheckoutLiteActivity : ComponentActivity() {
                             },
                         )
                     },
-                    onContinuePayment = { continuePayment() },
+                    onContinuePayment = {
+                        // IMPORTANT: pass callbackPaymentState so the SDK can notify the final
+                        // payment status after the backend processes the OTT. Without this,
+                        // the UI stays stuck on the OTT result screen with no way to proceed.
+                        continuePayment(
+                            callbackPaymentState = { paymentState, paymentSubState ->
+                                paymentState?.let {
+                                    Log.d("CheckoutLite", "Payment State: $it, Sub-State: $paymentSubState")
+                                    viewModel.onPaymentStateReceived()
+                                }
+                            },
+                        )
+                    },
                 )
             }
         }
