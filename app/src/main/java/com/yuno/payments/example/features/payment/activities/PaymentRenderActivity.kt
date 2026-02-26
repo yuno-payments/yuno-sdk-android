@@ -162,7 +162,13 @@ class PaymentRenderActivity : AppCompatActivity(), YunoPaymentRenderListener {
                           else "Payment is being processed"
                 Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
             }
-            else -> Log.w("PaymentRender", "Unhandled payment status: $paymentStatus")
+            else -> {
+                // Unknown/unhandled status (e.g. INTERNAL_ERROR) — clean up the fragment
+                // and reset to Config so the user is not stuck with a non-interactive screen.
+                Log.w("PaymentRender", "Unhandled payment status: $paymentStatus")
+                removePaymentFragment()
+                viewModel.onReset()
+            }
         }
     }
 

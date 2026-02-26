@@ -35,10 +35,13 @@ class CheckoutLiteActivity : ComponentActivity() {
         startCheckout(
             checkoutSession = BuildConfig.YUNO_TEST_CHECKOUT_SESSION,
             countryCode = BuildConfig.YUNO_TEST_COUNTRY_CODE.uppercase(),
+            // callbackPaymentState fires after continuePayment() resolves the final status.
+            // This is a payment status string ("SUCCEEDED", "FAIL", etc.) — NOT a token.
+            // Reset the flow so the user can start a new payment.
             callbackPaymentState = { paymentState, paymentSubState ->
                 paymentState?.let {
-                    viewModel.onPaymentResult(it)
                     Log.d("CheckoutLite", "Payment State: $it, Sub-State: $paymentSubState")
+                    viewModel.onPaymentStateReceived()
                 }
             },
         )
@@ -65,8 +68,8 @@ class CheckoutLiteActivity : ComponentActivity() {
                             // Use this token to create a payment on your backend.
                             callbackOTT = { token ->
                                 token?.let {
-                                    viewModel.onPaymentResult(it)
                                     Log.d("CheckoutLite", "OTT received: $it")
+                                    viewModel.onOttReceived(it)
                                 }
                             },
                         )

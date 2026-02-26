@@ -56,8 +56,17 @@ class CheckoutLiteViewModel : ViewModel() {
         _vaultedToken.value = value
     }
 
-    fun onPaymentResult(token: String) {
+    /** Called when the SDK returns a one-time token via callbackOTT. */
+    fun onOttReceived(token: String) {
         _uiState.value = CheckoutLiteUiState.OttResult(token)
+    }
+
+    /**
+     * Called when the SDK reports a payment status via callbackPaymentState (e.g. "SUCCEEDED",
+     * "FAIL"). This is NOT a token — reset the flow so the user can start a new payment.
+     */
+    fun onPaymentStateReceived() {
+        _uiState.value = CheckoutLiteUiState.Config
     }
 
     fun onReset() {
