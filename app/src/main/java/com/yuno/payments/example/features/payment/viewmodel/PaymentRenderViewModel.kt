@@ -63,7 +63,10 @@ class PaymentRenderViewModel : ViewModel() {
         if (isLoading) {
             preLoadingState = _uiState.value
             _uiState.value = PaymentRenderUiState.Loading
-        } else {
+        } else if (_uiState.value is PaymentRenderUiState.Loading) {
+            // Only restore preLoadingState if we're still in Loading.
+            // If a terminal state (OttReceived, StatusResult) was set while loading was
+            // active, it already replaced Loading — don't overwrite it.
             _uiState.value = preLoadingState
         }
     }

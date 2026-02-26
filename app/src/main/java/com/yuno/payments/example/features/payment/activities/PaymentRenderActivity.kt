@@ -129,32 +129,46 @@ class PaymentRenderActivity : AppCompatActivity(), YunoPaymentRenderListener {
     }
 
     override fun returnStatus(resultCode: Int, paymentStatus: String, paymentSubStatus: String?) {
-        // Called when the payment flow reaches a terminal state (SUCCEEDED, FAIL, REJECT, etc.).
         Log.d("PaymentRender", "Status: $paymentStatus, Sub: $paymentSubStatus, Code: $resultCode")
-        supportFragmentManager.findFragmentById(R.id.payment_fragment_container)?.let {
-            supportFragmentManager.beginTransaction().remove(it).commit()
-        }
-        viewModel.onStatusResult(paymentStatus)
         when (paymentStatus) {
             "SUCCEEDED" -> {
+                removePaymentFragment()
+                viewModel.onStatusResult(paymentStatus)
                 Toast.makeText(this, "Payment completed successfully!", Toast.LENGTH_LONG).show()
                 Handler(Looper.getMainLooper()).postDelayed({ finish() }, 2000)
             }
             "CANCELED" -> {
+                removePaymentFragment()
+                viewModel.onStatusResult(paymentStatus)
                 Toast.makeText(this, "Payment canceled", Toast.LENGTH_SHORT).show()
                 finish()
             }
-            "FAIL" -> Toast.makeText(this, "Payment failed. Please try again.", Toast.LENGTH_LONG).show()
-            "REJECT" -> Toast.makeText(this, "Payment rejected", Toast.LENGTH_LONG).show()
+            "FAIL" -> {
+                removePaymentFragment()
+                viewModel.onStatusResult(paymentStatus)
+                Toast.makeText(this, "Payment failed. Please try again.", Toast.LENGTH_LONG).show()
+            }
+            "REJECT" -> {
+                removePaymentFragment()
+                viewModel.onStatusResult(paymentStatus)
+                Toast.makeText(this, "Payment rejected", Toast.LENGTH_LONG).show()
+            }
             "PROCESSING" -> {
-                val msg = if (paymentSubStatus != null) {
-                    "Payment is being processed — $paymentSubStatus"
-                } else {
-                    "Payment is being processed"
-                }
+                // PROCESSING is not a terminal status — the SDK fragment may still be active
+                // (e.g., waiting for a 3DS redirect or async confirmation). Keep the fragment
+                // alive; the SDK will call returnStatus again with a terminal status or call
+                // returnOneTimeToken() when the flow completes.
+                val msg = if (paymentSubStatus != null) "Payment is being processed — $paymentSubStatus"
+                          else "Payment is being processed"
                 Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
             }
             else -> Log.w("PaymentRender", "Unhandled payment status: $paymentStatus")
+        }
+    }
+
+    private fun removePaymentFragment() {
+        supportFragmentManager.findFragmentById(R.id.payment_fragment_container)?.let {
+            supportFragmentManager.beginTransaction().remove(it).commit()
         }
     }
 
