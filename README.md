@@ -4,7 +4,7 @@
 ![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-1.5.4-green?logo=jetpackcompose)
 ![Min SDK](https://img.shields.io/badge/Min%20SDK-21-yellow)
 ![Target SDK](https://img.shields.io/badge/Target%20SDK-35-brightgreen)
-![Yuno SDK](https://img.shields.io/badge/Yuno%20SDK-2.9.4-purple)
+![Yuno SDK](https://img.shields.io/badge/Yuno%20SDK-2.11.0-purple)
 
 An Android example app that demonstrates the integration of the **Yuno Payments SDK**, including enrollment, checkout, payment flows, and render mode (advanced integration).
 
@@ -15,7 +15,6 @@ An Android example app that demonstrates the integration of the **Yuno Payments 
 - [Requirements](#requirements)
 - [Adding the SDK to the project](#adding-the-sdk-to-the-project)
   - [Initialize Yuno](#initialize-yuno)
-  - [Card Form Types](#card-form-types)
   - [Available Languages](#available-languages)
   - [Styles](#styles)
 - [ProGuard / R8](#proguard--r8)
@@ -88,7 +87,6 @@ Please use the YunoConfig data class presented as follows:
 
 ```kotlin
 data class YunoConfig(
-    val cardFlow: CardFormType = CardFormType.ONE_STEP,
     val saveCardEnabled: Boolean = false,
     val cardFormDeployed: Boolean = false,
     val language: YunoLanguage? = null,
@@ -100,27 +98,12 @@ The following table describes each customization option:
 
 | Customization option | Description |
 |---------------------|-------------|
-| `cardFlow` | This optional configuration defines Payment and Enrollment Card flow. By default, the `CardFormType.ONE_STEP` option is used. See Card Form Types below for more information. |
 | `saveCardEnabled` | Enables the Save card checkbox on card flows. |
 | `cardFormDeployed` | This is only for SDK FULL. Choose if show card form deployed on payment methods list (TRUE) or if show normal card form in another screen (FALSE). |
 | `language` | Defines the language to be used in the payment forms. You can set it to one of the available language options (see Available Languages below). If you send null or don't send it, Yuno SDK will take device language. |
 | `styles` | Enables SDK-wide UI customization. Use it to define global visual styles like font family and button appearance (color, padding, radius, typography) through a `YunoStyles` object. For more information, see the Styles section below. |
 
-### Card Form Types
-
-The `cardFlow` parameter accepts the following `CardFormType` values:
-
-```kotlin
-enum class CardFormType {
-    ONE_STEP,      // Single-page card form with all fields visible at once
-    STEP_BY_STEP   // Multi-step card form with fields shown progressively
-}
-```
-
-| Card Form Type | Description |
-|----------------|-------------|
-| `ONE_STEP` | Displays all card input fields (card number, expiry date, CVV, cardholder name, etc.) on a single screen. This is the default option and provides a traditional form experience. |
-| `STEP_BY_STEP` | Presents the card input fields in a progressive, step-by-step manner. Each field or group of related fields is shown sequentially, providing a more guided user experience. |
+> **Since 2.11.0:** The `cardFlow` parameter (`CardFormType`) has been removed from `YunoConfig`. Card form configuration is now managed through the Checkout Builder.
 
 ### Available Languages
 
