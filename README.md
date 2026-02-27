@@ -421,15 +421,56 @@ const val PAYMENT_STATE_STATE_CANCELED_BY_USER = "CANCELED"
 
 #### Show Payment Methods
 
-When implementing the Full SDK version, you need to add the following view on your layout to show
-the available payment methods:
+When implementing the Full SDK version, you need to display the available payment methods list.
+The SDK provides two options depending on your UI approach:
+
+###### XML Layout
+
+Add the following view to your layout file:
 
 ```XML
-
 <com.yuno.payments.features.payment.ui.views.PaymentMethodListView
-    android:id="@+id/list_payment_methods" android:layout_width="match_parent"
+    android:id="@+id/list_payment_methods"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content" />
 ```
+
+###### Jetpack Compose
+
+Use `PaymentMethodListViewComponent` to display the payment methods list in a Compose screen:
+
+```Kotlin
+PaymentMethodListViewComponent(
+    activity = activity,
+    onPaymentSelected = { isSelected, paymentSelected ->
+        // isSelected: true when the user picks a method, false when deselected
+        // paymentSelected: contains the chosen method details (available since SDK 2.10.2)
+    },
+)
+```
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `activity` | `Activity` | The host Activity. Must be an `AppCompatActivity` instance. |
+| `onPaymentSelected` | `(Boolean, PaymentSelected?) -> Unit` | Callback fired when the user selects or deselects a payment method. |
+
+The `onPaymentSelected` callback provides:
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `isSelected` | `Boolean` | `true` when a payment method is selected, `false` when deselected. Use this to enable/disable your Pay button. |
+| `paymentSelected` | `PaymentSelected?` | The selected payment method details. Pass this directly to `startPaymentLite()` if using the Lite flow. |
+
+`PaymentSelected` fields:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `paymentMethodType` | `String` | The payment method type identifier (e.g. `"CARD"`, `"BANCOLOMBIA_TRANSFER"`). |
+| `vaultedToken` | `String?` | A vaulted token for previously saved payment methods. `null` for new methods. |
+
+> **Note:** `PaymentMethodListViewComponent` must not be placed inside a `verticalScroll` container.
+> Give it a bounded height (e.g. `Modifier.weight(1f)`) to avoid a runtime crash if the component
+> uses a scrollable layout internally.
 
 #### Start Payment
 
