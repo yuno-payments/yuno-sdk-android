@@ -6,9 +6,11 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -44,10 +46,9 @@ fun CheckoutCompleteScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(20.dp)
-            .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+            .padding(horizontal = 20.dp),
     ) {
+        Spacer(modifier = Modifier.height(20.dp))
         Text(
             text = "Checkout Complete",
             style = MaterialTheme.typography.headlineMedium,
@@ -64,10 +65,16 @@ fun CheckoutCompleteScreen(
             transitionSpec = { fadeIn() togetherWith fadeOut() },
             contentKey = { it::class },
             label = "checkout-complete-state",
+            modifier = Modifier.weight(1f),
         ) { state ->
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                when (state) {
-                    is CheckoutCompleteUiState.Config -> {
+            when (state) {
+                is CheckoutCompleteUiState.Config -> {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .verticalScroll(rememberScrollState()),
+                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                    ) {
                         Text(
                             text = "Configure your checkout session",
                             style = MaterialTheme.typography.bodyMedium,
@@ -92,8 +99,18 @@ fun CheckoutCompleteScreen(
                             enabled = checkoutSession.isNotBlank() && countryCode.isNotBlank(),
                         )
                     }
+                }
 
-                    is CheckoutCompleteUiState.PaymentList -> {
+                is CheckoutCompleteUiState.PaymentList -> {
+                    // IMPORTANT: PaymentMethodListViewComponent may use a RecyclerView or
+                    // LazyColumn internally. It must NOT be placed inside a verticalScroll
+                    // Column, which would give it infinite height and cause a crash. Instead,
+                    // the outer Column has no scroll and the component gets Modifier.weight(1f)
+                    // so it fills the remaining bounded vertical space.
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                    ) {
                         Text(
                             text = "Select a payment method",
                             style = MaterialTheme.typography.bodyMedium,
@@ -116,20 +133,29 @@ fun CheckoutCompleteScreen(
                                 viewModel.onSetCheckoutSession()
                             },
                         )
-                        PaymentMethodListViewComponent(
-                            activity = activity,
-                            onPaymentSelected = { isSelected ->
-                                viewModel.onPaymentSelectionChanged(isSelected)
-                            },
-                        )
+                        Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
+                            PaymentMethodListViewComponent(
+                                activity = activity,
+                                onPaymentSelected = { isSelected ->
+                                    viewModel.onPaymentSelectionChanged(isSelected)
+                                },
+                            )
+                        }
                         YunoButton(
                             text = "Pay",
                             onClick = onStartPayment,
                             enabled = state.isPayEnabled,
                         )
                     }
+                }
 
-                    is CheckoutCompleteUiState.OttResult -> {
+                is CheckoutCompleteUiState.OttResult -> {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .verticalScroll(rememberScrollState()),
+                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                    ) {
                         OttResultPanel(token = state.token)
                         YunoTonalButton(
                             text = "Continue",
@@ -139,5 +165,6 @@ fun CheckoutCompleteScreen(
                 }
             }
         }
+        Spacer(modifier = Modifier.height(20.dp))
     }
 }
