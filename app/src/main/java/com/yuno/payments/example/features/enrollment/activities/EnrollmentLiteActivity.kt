@@ -2,8 +2,8 @@ package com.yuno.payments.example.features.enrollment.activities
 
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
 import com.yuno.payments.example.BuildConfig
 import com.yuno.payments.example.features.enrollment.ui.EnrollmentLiteScreen
 import com.yuno.payments.example.ui.theme.YunoTheme
@@ -21,7 +21,7 @@ import com.yuno.sdk.enrollment.startEnrollment
  * SDK constraint: initEnrollment() MUST be called in onCreate() to register lifecycle
  * observers before the enrollment flow can start.
  */
-class EnrollmentLiteActivity : ComponentActivity() {
+class EnrollmentLiteActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

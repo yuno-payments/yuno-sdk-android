@@ -81,6 +81,7 @@ class EnrollmentRenderViewModel : ViewModel() {
 
     fun onReset() {
         showErrors = false
+        preLoadingState = EnrollmentRenderUiState.Config
         _uiState.value = EnrollmentRenderUiState.Config
     }
 }

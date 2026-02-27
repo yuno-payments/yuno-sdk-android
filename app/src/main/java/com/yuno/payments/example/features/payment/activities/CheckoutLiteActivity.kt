@@ -2,9 +2,9 @@ package com.yuno.payments.example.features.payment.activities
 
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import com.yuno.payments.example.BuildConfig
 import com.yuno.payments.example.features.payment.ui.CheckoutLiteScreen
 import com.yuno.payments.example.features.payment.viewmodel.CheckoutLiteViewModel
@@ -22,7 +22,7 @@ import com.yuno.sdk.payments.updateCheckoutSession
  * SDK constraint: startCheckout() MUST be called in onCreate() before any other SDK calls.
  * It initializes internal SDK state; calling it later (e.g., on button press) will crash.
  */
-class CheckoutLiteActivity : ComponentActivity() {
+class CheckoutLiteActivity : AppCompatActivity() {
 
     private val viewModel: CheckoutLiteViewModel by viewModels()
 

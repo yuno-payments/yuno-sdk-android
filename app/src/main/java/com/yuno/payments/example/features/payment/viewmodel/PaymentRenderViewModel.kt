@@ -86,6 +86,7 @@ class PaymentRenderViewModel : ViewModel() {
 
     fun onReset() {
         showErrors = false
+        preLoadingState = PaymentRenderUiState.Config
         _uiState.value = PaymentRenderUiState.Config
     }
 }
