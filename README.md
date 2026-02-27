@@ -103,7 +103,7 @@ The following table describes each customization option:
 | `language` | Defines the language to be used in the payment forms. You can set it to one of the available language options (see Available Languages below). If you send null or don't send it, Yuno SDK will take device language. |
 | `styles` | Enables SDK-wide UI customization. Use it to define global visual styles like font family and button appearance (color, padding, radius, typography) through a `YunoStyles` object. For more information, see the Styles section below. |
 
-> **Note:** Starting from SDK version 2.11.0, the `cardFlow` parameter (`CardFormType`) has been removed from `YunoConfig`. Card form configuration is now managed through the Checkout Builder.
+> **Since 2.11.0:** The `cardFlow` parameter (`CardFormType`) has been removed from `YunoConfig`. Card form configuration is now managed through the Checkout Builder.
 
 ### Available Languages
 
