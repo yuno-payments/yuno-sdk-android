@@ -136,7 +136,7 @@ fun CheckoutCompleteScreen(
                         Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
                             PaymentMethodListViewComponent(
                                 activity = activity,
-                                onPaymentSelected = { isSelected ->
+                                onPaymentSelected = { isSelected, _ ->
                                     viewModel.onPaymentSelectionChanged(isSelected)
                                 },
                             )
