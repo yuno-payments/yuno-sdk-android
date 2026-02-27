@@ -421,23 +421,8 @@ const val PAYMENT_STATE_STATE_CANCELED_BY_USER = "CANCELED"
 
 #### Show Payment Methods
 
-When implementing the Full SDK version, you need to display the available payment methods list.
-The SDK provides two options depending on your UI approach:
-
-###### XML Layout
-
-Add the following view to your layout file:
-
-```XML
-<com.yuno.payments.features.payment.ui.views.PaymentMethodListView
-    android:id="@+id/list_payment_methods"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
-```
-
-###### Jetpack Compose
-
-Use `PaymentMethodListViewComponent` to display the payment methods list in a Compose screen:
+When implementing the Full SDK version, use `PaymentMethodListViewComponent` to display the
+available payment methods list in your Compose screen:
 
 ```Kotlin
 PaymentMethodListViewComponent(
