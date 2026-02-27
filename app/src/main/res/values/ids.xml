@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="payment_fragment_container" type="id"/>
+    <item name="enrollment_fragment_container" type="id"/>
+</resources>

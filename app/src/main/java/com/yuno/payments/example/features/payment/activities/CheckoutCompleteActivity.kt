@@ -1,136 +1,88 @@
 package com.yuno.payments.example.features.payment.activities
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
+import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.ui.platform.ComposeView
-import androidx.constraintlayout.widget.ConstraintLayout
-import com.yuno.payments.example.BuildConfig
-import com.yuno.payments.example.R
-import com.yuno.payments.example.ui.views.CustomEditText
-import com.yuno.presentation.core.components.PaymentMethodListViewComponent
+import com.yuno.payments.example.features.payment.ui.CheckoutCompleteScreen
+import com.yuno.payments.example.features.payment.viewmodel.CheckoutCompleteViewModel
+import com.yuno.payments.example.ui.theme.YunoTheme
 import com.yuno.sdk.payments.continuePayment
 import com.yuno.sdk.payments.startCheckout
 import com.yuno.sdk.payments.startPayment
 import com.yuno.sdk.payments.updateCheckoutSession
 
+/**
+ * Checkout Complete — demonstrates the full payment flow where the SDK provides
+ * its own payment method list (PaymentMethodListViewComponent) and handles
+ * the payment form UI via startPayment().
+ *
+ * Extends AppCompatActivity (not ComponentActivity) for consistency with the other
+ * SDK-integrated activities and to avoid potential runtime crashes if PaymentMethodListViewComponent
+ * internally uses supportFragmentManager or casts the Activity to AppCompatActivity.
+ *
+ * Flow: startCheckout() -> updateCheckoutSession() -> user selects method -> startPayment()
+ *       -> OTT received -> create payment on backend -> continuePayment()
+ *
+ * SDK constraint: startCheckout() MUST be called in onCreate() before any other SDK calls.
+ * Note: checkout session and country are NOT passed to startCheckout() here because the user
+ * enters them in the UI. The session is provided later via updateCheckoutSession().
+ * (Contrast with CheckoutLiteActivity, which pre-fills from BuildConfig for quick demo purposes.)
+ */
 class CheckoutCompleteActivity : AppCompatActivity() {
 
-    private lateinit var checkoutSessionEditText: CustomEditText
-    private lateinit var countryCodeEditText: CustomEditText
-    private lateinit var composePaymentList: ComposeView
-    private lateinit var textViewToken: TextView
-    private lateinit var clipboardManager: ClipboardManager
-    private var dynamicPaymentMethods = false
+    private val viewModel: CheckoutCompleteViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_checkout_complete)
 
+        // CRITICAL: startCheckout() must be called in onCreate() before setContent or any UI.
+        // It registers lifecycle observers and initializes SDK internals. Calling it later
+        // (e.g., on a button click) causes "Object not injected" crashes.
+        // No checkout session is passed here — the user enters it in the UI, then it is
+        // applied via updateCheckoutSession(). startCheckout() only needs a session to pre-load
+        // payment methods; since this flow defers that to user input, passing no session is valid.
         startCheckout(
-            callbackPaymentState = this::onPaymentStateChange,
-        )
-        initViews()
-        initListeners()
-        clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        if (intent.hasExtra("dynamicPaymentMethods")) {
-            dynamicPaymentMethods = intent.getBooleanExtra("dynamicPaymentMethods", false)
-        }
-    }
-
-    private fun initViews() {
-        checkoutSessionEditText = findViewById(R.id.editText_checkoutSession)
-        countryCodeEditText = findViewById(R.id.editText_countryCode)
-        composePaymentList = findViewById(R.id.compose_paymentListContainer)
-        textViewToken = findViewById(R.id.textView_token)
-        checkoutSessionEditText.setText(BuildConfig.YUNO_TEST_CHECKOUT_SESSION)
-        countryCodeEditText.setText(BuildConfig.YUNO_TEST_COUNTRY_CODE)
-    }
-
-    private fun initListeners() {
-        findViewById<Button>(R.id.button_pay)
-            .setOnClickListener {
-                startPayment(callbackOTT = this::onTokenUpdated)
-            }
-
-        findViewById<Button>(R.id.button_continue)
-            .setOnClickListener {
-                continuePayment(callbackPaymentState = this::onPaymentStateChange)
-            }
-
-        findViewById<Button>(R.id.button_setCheckoutSession)
-            .setOnClickListener { updateYunoList() }
-
-        findViewById<Button>(R.id.button_copy)
-            .setOnClickListener { copyToken() }
-    }
-
-    private fun copyToken() {
-        val tokenCopied: ClipData = ClipData.newPlainText("Token", textViewToken.text.toString())
-        clipboardManager.setPrimaryClip(tokenCopied)
-        Toast.makeText(this, "token copied", Toast.LENGTH_SHORT).show()
-    }
-
-    private fun updateYunoList() {
-        updateCheckoutSession(
-            checkoutSessionEditText.text.toString(),
-            countryCodeEditText.text.toString(),
+            callbackPaymentState = { paymentState, paymentSubState ->
+                paymentState?.let {
+                    viewModel.onPaymentStateChange(it)
+                    Log.d("CheckoutComplete", "State: $it, Sub-State: $paymentSubState")
+                }
+            },
         )
 
-        composePaymentList.visibility = View.VISIBLE
-        composePaymentList.setContent {
-            PaymentMethodListViewComponent(
-                activity = this,
-                onPaymentSelected = { isSelected ->
-                    findViewById<Button>(R.id.button_pay).isEnabled = isSelected
-                },
-            )
+        setContent {
+            YunoTheme {
+                CheckoutCompleteScreen(
+                    viewModel = viewModel,
+                    onUpdateCheckoutSession = { session, country ->
+                        updateCheckoutSession(session, country)
+                    },
+                    onStartPayment = {
+                        startPayment(
+                            callbackOTT = { token ->
+                                token?.let {
+                                    viewModel.onTokenUpdated(it)
+                                    Log.d("CheckoutComplete", "OTT received: $it")
+                                }
+                            },
+                        )
+                    },
+                    // continuePayment() tells the SDK to finalize payment after the merchant
+                    // creates it on the backend using the OTT.
+                    onContinuePayment = {
+                        continuePayment(
+                            callbackPaymentState = { paymentState, paymentSubState ->
+                                paymentState?.let {
+                                    viewModel.onPaymentStateChange(it)
+                                    Log.d("CheckoutComplete", "State: $it, Sub-State: $paymentSubState")
+                                }
+                            },
+                        )
+                    },
+                )
+            }
         }
-    }
-
-
-    private fun onTokenUpdated(token: String?) {
-        token?.let {
-            updateView(token)
-            Log.e("Payment flow", "success ---> token: $token")
-        }
-    }
-
-    /**
-     * Callback that receives the payment state changes from Yuno SDK.
-     * @param paymentState The main payment state (SUCCEEDED, FAIL, PROCESSING, REJECT, INTERNAL_ERROR, CANCELED)
-     * @param paymentSubState Additional payment sub-state information providing more details about the payment status
-     */
-    private fun onPaymentStateChange(paymentState: String?, paymentSubState: String?) {
-        paymentState?.let {
-            restartView()
-            Log.e("Payment State", "State: $it, Payment Sub-State: $paymentSubState")
-        }
-    }
-
-    private fun updateView(token: String?) {
-        composePaymentList.visibility = View.GONE
-        checkoutSessionEditText.visibility = View.GONE
-        countryCodeEditText.visibility = View.GONE
-        findViewById<Button>(R.id.button_setCheckoutSession).visibility = View.GONE
-        findViewById<Button>(R.id.button_pay).isEnabled = false
-        textViewToken.text = token.orEmpty()
-        findViewById<ConstraintLayout>(R.id.layout_checkout_continue).visibility = View.VISIBLE
-    }
-
-    private fun restartView() {
-        composePaymentList.visibility = View.VISIBLE
-        checkoutSessionEditText.visibility = View.VISIBLE
-        countryCodeEditText.visibility = View.VISIBLE
-        findViewById<Button>(R.id.button_setCheckoutSession).visibility = View.VISIBLE
-        textViewToken.text = ""
-        findViewById<ConstraintLayout>(R.id.layout_checkout_continue).visibility = View.GONE
     }
 }

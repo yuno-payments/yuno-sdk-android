@@ -2,65 +2,68 @@ package com.yuno.payments.example.features.enrollment.activities
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import com.yuno.payments.example.BuildConfig
-import com.yuno.payments.example.R
-import com.yuno.payments.example.ui.views.CustomEditText
+import com.yuno.payments.example.features.enrollment.ui.EnrollmentLiteScreen
+import com.yuno.payments.example.ui.theme.YunoTheme
 import com.yuno.sdk.enrollment.initEnrollment
 import com.yuno.sdk.enrollment.startEnrollment
 
-
+/**
+ * Enrollment Lite — demonstrates the simplest enrollment flow where the SDK manages
+ * the enrollment UI and the merchant just calls initEnrollment() + startEnrollment().
+ *
+ * This Activity also supports deep link enrollment via the URI scheme:
+ *   yuno://www.y.uno/enrollment?customerSession=XXX
+ * (Declared in AndroidManifest.xml as an intent filter.)
+ *
+ * SDK constraint: initEnrollment() MUST be called in onCreate() to register lifecycle
+ * observers before the enrollment flow can start.
+ */
 class EnrollmentLiteActivity : AppCompatActivity() {
-
-    private lateinit var editTextCustomerSession: CustomEditText
-    private lateinit var editTextCountryCode: CustomEditText
-    private lateinit var button: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_enrollment_lite)
-        initViews()
+
+        // CRITICAL: initEnrollment() must be called in onCreate() before startEnrollment().
+        // It registers lifecycle observers and initializes SDK internals.
         initEnrollment(::onEnrollmentStateChange)
-        intent.data?.let {
-            if (it.toString().contains("yuno://www.y.uno/enrollment")) {
-                startEnrollment(
-                    customerSession = getCustomerSession(it.toString()),
-                    countryCode = editTextCountryCode.text.toString().uppercase(),
+
+        // Deep link handling: if this Activity was launched via the yuno:// URI scheme,
+        // extract the customerSession from the URL and start enrollment immediately.
+        // This enables external apps/links to trigger enrollment directly.
+        intent.data?.let { uri ->
+            if (uri.scheme == "yuno" && uri.host == "www.y.uno" && uri.path == "/enrollment") {
+                val customerSession = uri.getQueryParameter("customerSession")
+                if (!customerSession.isNullOrBlank()) {
+                    startEnrollment(
+                        customerSession = customerSession,
+                        countryCode = BuildConfig.YUNO_TEST_COUNTRY_CODE.uppercase(),
+                    )
+                }
+            }
+        }
+
+        setContent {
+            YunoTheme {
+                EnrollmentLiteScreen(
+                    initialCustomerSession = BuildConfig.YUNO_TEST_CUSTOMER_SESSION,
+                    initialCountryCode = BuildConfig.YUNO_TEST_COUNTRY_CODE,
+                    onStartEnrollment = { customerSession, countryCode ->
+                        startEnrollment(
+                            customerSession = customerSession,
+                            countryCode = countryCode,
+                        )
+                    },
                 )
             }
         }
     }
 
-    private fun getCustomerSession(uri: String): String {
-        return uri.substringAfter("yuno://www.y.uno/enrollment?customerSession=")
-    }
-
-    private fun initViews() {
-        editTextCustomerSession = findViewById(R.id.editText_customer)
-        editTextCountryCode = findViewById(R.id.editText_code)
-        editTextCustomerSession.setText(BuildConfig.YUNO_TEST_CUSTOMER_SESSION)
-        editTextCountryCode.setText(BuildConfig.YUNO_TEST_COUNTRY_CODE)
-        button = findViewById(R.id.button_add_payment)
-        initListeners()
-    }
-
-    private fun initListeners() {
-        button.setOnClickListener { startEnrollment() }
-    }
-
-    private fun startEnrollment() {
-        if (editTextCustomerSession.isValid && editTextCountryCode.isValid) {
-            startEnrollment(
-                customerSession = editTextCustomerSession.text.toString(),
-                countryCode = editTextCountryCode.text.toString().uppercase()
-            )
-        }
-    }
-
     private fun onEnrollmentStateChange(enrollmentState: String?) {
         enrollmentState?.let {
-            Log.e("Enrollment State", it)
+            Log.d("EnrollmentLite", "Enrollment state: $it")
         }
     }
 }
