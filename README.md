@@ -4,7 +4,7 @@
 ![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-1.5.4-green?logo=jetpackcompose)
 ![Min SDK](https://img.shields.io/badge/Min%20SDK-21-yellow)
 ![Target SDK](https://img.shields.io/badge/Target%20SDK-35-brightgreen)
-![Yuno SDK](https://img.shields.io/badge/Yuno%20SDK-2.12.0-purple)
+![Yuno SDK](https://img.shields.io/badge/Yuno%20SDK-2.13.3-purple)
 
 An Android example app that demonstrates the integration of the **Yuno Payments SDK**, including enrollment, checkout, payment flows, and render mode (advanced integration).
 
@@ -128,7 +128,11 @@ enum class YunoLanguage {
     FILIPINO,               // fil - Filipino
     VIETNAMESE,             // vi - Vietnamese
     CHINESE_SIMPLIFIED,     // zh-CN - Chinese (Simplified, China)
-    CHINESE_TRADITIONAL     // zh-TW - Chinese (Traditional, Taiwan)
+    CHINESE_TRADITIONAL,    // zh-TW - Chinese (Traditional, Taiwan)
+    HINDI,                  // hi - Hindi
+    BENGALI,                // bn - Bengali
+    MALAYALAM,              // ml - Malayalam
+    URDU                    // ur - Urdu
 }
 ```
 
