@@ -22,7 +22,7 @@ An Android example app that demonstrates the integration of the **Yuno Payments 
   - [Enroll a new payment method](#enroll-a-new-payment-method)
   - [Enrollment Render Mode (Advanced)](#enrollment-render-mode-advanced-integration)
   - [Checkout](#checkout)
-  - [Headless (Advanced)](#headless-advanced-integration)
+  - [Headless](#headless)
   - [Payment Render Mode (Advanced)](#payment-render-mode-advanced-integration)
 
 ---
@@ -594,7 +594,7 @@ continuePayment(
 To show your own payment status screens, you should send `false` in the `showPaymentStatus`
 parameter and then get the payment state by callback.
 
-### Headless (Advanced Integration)
+### Headless
 
 The Headless integration gives you full control over the payment UI. You render your own forms, the SDK tokenizes the card data into a One-Time Token (OTT), you create the payment in your backend, and the SDK resumes any pending action (such as a 3DS challenge) for you.
 
