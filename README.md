@@ -22,6 +22,7 @@ An Android example app that demonstrates the integration of the **Yuno Payments 
   - [Enroll a new payment method](#enroll-a-new-payment-method)
   - [Enrollment Render Mode (Advanced)](#enrollment-render-mode-advanced-integration)
   - [Checkout](#checkout)
+  - [Headless (Advanced)](#headless-advanced-integration)
   - [Payment Render Mode (Advanced)](#payment-render-mode-advanced-integration)
 
 ---
@@ -592,6 +593,107 @@ continuePayment(
 
 To show your own payment status screens, you should send `false` in the `showPaymentStatus`
 parameter and then get the payment state by callback.
+
+### Headless (Advanced Integration)
+
+The Headless integration gives you full control over the payment UI. You render your own forms, the SDK tokenizes the card data into a One-Time Token (OTT), you create the payment in your backend, and the SDK resumes any pending action (such as a 3DS challenge) for you.
+
+#### Create the API client
+
+```kotlin
+val apiClient = Yuno.apiClientPayment(
+    checkoutSession = "checkout_session",
+    countryCode = "country_code_iso", //Optional - Default ""
+    context = context,
+)
+```
+
+#### Generate the One-Time Token
+
+Collect the card data with your own UI and pass it to `generateToken` to obtain the OTT.
+
+```kotlin
+suspend fun ApiClientPayment.generateToken(
+    collectedData: TokenCollectedData,
+    context: Context,
+): Map<String, Any?>
+```
+
+`TokenCollectedData` describes the data sent for tokenization:
+
+```kotlin
+data class TokenCollectedData(
+    val checkoutSession: String? = null,
+    val customerSession: String? = null,
+    val paymentMethod: PaymentMethod,
+)
+
+data class PaymentMethod(
+    val type: String, //Required - The payment method type (e.g., "CARD")
+    val vaultedToken: String? = null,
+    val card: CardData? = null,
+    val customer: Customer? = null,
+)
+```
+
+Call it from a coroutine. The returned map contains the OTT under the `token` key (or an `error` key on failure):
+
+```kotlin
+lifecycleScope.launch {
+    val result = apiClient.generateToken(tokenCollectedData, context)
+    val ott = result["token"] as? String
+    // Send the OTT to your backend to create the payment via POST /payments
+}
+```
+
+#### Continue the payment (if required)
+
+If the create_payment response returns `sdk_action_required = true` (for example, a 3DS challenge), call `continueCardPayment`. The SDK executes the pending action internally — including rendering the 3DS challenge — waits for the result, and delivers the final payment state to your callback.
+
+```kotlin
+fun ApiClientPayment.continueCardPayment(
+    activity: ComponentActivity,
+    showPaymentStatus: Boolean = true, //Optional - Default true
+    callbackPaymentState: ((String?, String?) -> Unit)? = null, //Optional - Default null
+)
+```
+
+| Parameter | Description |
+|-----------|-------------|
+| `activity` | The `ComponentActivity` the SDK uses to present the pending action. |
+| `showPaymentStatus` | A boolean that specifies whether the payment status should be displayed within the Yuno interface. Send `false` to use your own status UI and rely only on the callback. Default is `true`. |
+| `callbackPaymentState` | A function that returns the final payment state and sub-state once the flow completes. Uses the same payment states described in the [Callback Payment State](#callback-payment-state) section. |
+
+```kotlin
+Yuno.apiClientPayment(
+    checkoutSession = "checkout_session",
+    countryCode = "country_code_iso",
+    context = this,
+).continueCardPayment(
+    activity = this,
+    showPaymentStatus = false,
+) { paymentState, paymentSubState ->
+    when (paymentState) {
+        "SUCCEEDED" -> { }
+        "PROCESSING" -> { }
+        "REJECT", "FAIL" -> { }
+        "CANCELED_BY_USER" -> { }
+        "INTERNAL_ERROR" -> { }
+        else -> { }
+    }
+}
+```
+
+> **Note:** `continueCardPayment` supports `CARD` payments only.
+
+#### Headless Flow Steps
+
+1. **Create the API client**: call `Yuno.apiClientPayment()` with the checkout session
+2. **Collect card data**: render your own payment form
+3. **Generate the OTT**: call `generateToken()` and read the `token` key
+4. **Create payment**: call your backend with the OTT via `POST /payments`
+5. **Continue**: if `sdk_action_required` is `true`, call `continueCardPayment()`
+6. **Complete**: handle the final state in `callbackPaymentState`
 
 ### Payment Render Mode (Advanced Integration)
 
