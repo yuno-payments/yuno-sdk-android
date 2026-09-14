@@ -19,6 +19,8 @@ import com.yuno.payments.example.ui.theme.YunoTheme
 import com.yuno.sdk.enrollment.render.YunoEnrollmentFragmentController
 import com.yuno.sdk.enrollment.render.YunoEnrollmentRenderListener
 import com.yuno.sdk.enrollment.render.startEnrollmentRender
+import com.yuno.payments.features.payment.models.StatusMessage
+import com.yuno.payments.example.extensions.toLogString
 
 /**
  * Enrollment Render — demonstrates rendering the SDK enrollment form directly inside
@@ -93,9 +95,11 @@ class EnrollmentRenderActivity : AppCompatActivity(), YunoEnrollmentRenderListen
         Log.d("EnrollmentRender", "Enrollment fragment loaded, needSubmit: $needSubmit")
     }
 
-    override fun returnStatus(resultCode: Int, paymentStatus: String) {
+    override fun returnStatus(resultCode: Int, paymentStatus: String, message: StatusMessage?) {
         // Called when the enrollment flow reaches a terminal state (SUCCEEDED, FAIL, etc.).
-        Log.d("EnrollmentRender", "Status: $paymentStatus, Code: $resultCode")
+        // SDK 2.22.0+: `message` is non-null only on FAIL / INTERNAL_ERROR and tells you whether
+        // the backend rejected the enrollment or the SDK failed, with its code and reason.
+        Log.d("EnrollmentRender", "Status: $paymentStatus, Code: $resultCode, Message: ${message.toLogString()}")
         when (paymentStatus) {
             "SUCCEEDED" -> {
                 removeEnrollmentFragment()

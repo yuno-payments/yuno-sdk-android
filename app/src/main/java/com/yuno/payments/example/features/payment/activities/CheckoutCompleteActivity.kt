@@ -12,6 +12,7 @@ import com.yuno.sdk.payments.continuePayment
 import com.yuno.sdk.payments.startCheckout
 import com.yuno.sdk.payments.startPayment
 import com.yuno.sdk.payments.updateCheckoutSession
+import com.yuno.payments.example.extensions.toLogString
 
 /**
  * Checkout Complete — demonstrates the full payment flow where the SDK provides
@@ -44,10 +45,10 @@ class CheckoutCompleteActivity : AppCompatActivity() {
         // applied via updateCheckoutSession(). startCheckout() only needs a session to pre-load
         // payment methods; since this flow defers that to user input, passing no session is valid.
         startCheckout(
-            callbackPaymentState = { paymentState, paymentSubState ->
+            callbackPaymentState = { paymentState, paymentSubState, statusMessage ->
                 paymentState?.let {
                     viewModel.onPaymentStateChange(it)
-                    Log.d("CheckoutComplete", "State: $it, Sub-State: $paymentSubState")
+                    Log.d("CheckoutComplete", "State: $it, Sub-State: $paymentSubState, Message: ${statusMessage.toLogString()}")
                 }
             },
         )
@@ -73,10 +74,10 @@ class CheckoutCompleteActivity : AppCompatActivity() {
                     // creates it on the backend using the OTT.
                     onContinuePayment = {
                         continuePayment(
-                            callbackPaymentState = { paymentState, paymentSubState ->
+                            callbackPaymentState = { paymentState, paymentSubState, statusMessage ->
                                 paymentState?.let {
                                     viewModel.onPaymentStateChange(it)
-                                    Log.d("CheckoutComplete", "State: $it, Sub-State: $paymentSubState")
+                                    Log.d("CheckoutComplete", "State: $it, Sub-State: $paymentSubState, Message: ${statusMessage.toLogString()}")
                                 }
                             },
                         )

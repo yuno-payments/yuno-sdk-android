@@ -9,6 +9,8 @@ import com.yuno.payments.example.features.enrollment.ui.EnrollmentLiteScreen
 import com.yuno.payments.example.ui.theme.YunoTheme
 import com.yuno.sdk.enrollment.initEnrollment
 import com.yuno.sdk.enrollment.startEnrollment
+import com.yuno.payments.features.payment.models.StatusMessage
+import com.yuno.payments.example.extensions.toLogString
 
 /**
  * Enrollment Lite — demonstrates the simplest enrollment flow where the SDK manages
@@ -61,9 +63,11 @@ class EnrollmentLiteActivity : AppCompatActivity() {
         }
     }
 
-    private fun onEnrollmentStateChange(enrollmentState: String?) {
+    // SDK 2.22.0+: the callback also receives a StatusMessage? — non-null only on FAIL /
+    // INTERNAL_ERROR, with source (backend vs SDK), code and reason.
+    private fun onEnrollmentStateChange(enrollmentState: String?, message: StatusMessage?) {
         enrollmentState?.let {
-            Log.d("EnrollmentLite", "Enrollment state: $it")
+            Log.d("EnrollmentLite", "Enrollment state: $it, Message: ${message.toLogString()}")
         }
     }
 }
