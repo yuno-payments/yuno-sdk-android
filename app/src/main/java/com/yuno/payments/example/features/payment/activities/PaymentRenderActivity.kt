@@ -23,6 +23,8 @@ import com.yuno.sdk.payments.render.YunoPaymentRenderListener
 import com.yuno.sdk.payments.render.startPaymentRender
 import com.yuno.sdk.payments.startCheckout
 import com.yuno.sdk.payments.updateCheckoutSession
+import com.yuno.payments.features.payment.models.StatusMessage
+import com.yuno.payments.example.extensions.toLogString
 
 /**
  * Payment Render — demonstrates rendering the SDK payment form directly inside
@@ -131,8 +133,15 @@ class PaymentRenderActivity : AppCompatActivity(), YunoPaymentRenderListener {
         ).show()
     }
 
-    override fun returnStatus(resultCode: Int, paymentStatus: String, paymentSubStatus: String?) {
-        Log.d("PaymentRender", "Status: $paymentStatus, Sub: $paymentSubStatus, Code: $resultCode")
+    override fun returnStatus(
+        resultCode: Int,
+        paymentStatus: String,
+        paymentSubStatus: String?,
+        message: StatusMessage?,
+    ) {
+        // SDK 2.22.0+: `message` is non-null only on FAIL / INTERNAL_ERROR and tells you whether
+        // the backend rejected the payment or the SDK failed, with its code and reason.
+        Log.d("PaymentRender", "Status: $paymentStatus, Sub: $paymentSubStatus, Code: $resultCode, Message: ${message.toLogString()}")
         when (paymentStatus) {
             "SUCCEEDED" -> {
                 removePaymentFragment()

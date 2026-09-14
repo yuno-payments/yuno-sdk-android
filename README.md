@@ -4,7 +4,7 @@
 ![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-1.5.4-green?logo=jetpackcompose)
 ![Min SDK](https://img.shields.io/badge/Min%20SDK-21-yellow)
 ![Target SDK](https://img.shields.io/badge/Target%20SDK-35-brightgreen)
-![Yuno SDK](https://img.shields.io/badge/Yuno%20SDK-2.21.0-purple)
+![Yuno SDK](https://img.shields.io/badge/Yuno%20SDK-2.22.0-purple)
 
 An Android example app that demonstrates the integration of the **Yuno Payments SDK**, including enrollment, checkout, payment flows, and render mode (advanced integration).
 
@@ -215,7 +215,7 @@ activity, this because we use it to register the contract to give you the final 
 
 ````Kotlin
 fun ComponentActivity.initEnrollment(
-    callbackEnrollmentState: ((String?) -> Unit)? = null, //Default null | To register this callback is a must to call ```initEnrollment``` method on the onCreate method of activity.
+    callbackEnrollmentState: ((String?, StatusMessage?) -> Unit)? = null, //Default null | To register this callback is a must to call ```initEnrollment``` method on the onCreate method of activity.
 )
 ````
 
@@ -226,7 +226,7 @@ fun Activity.startEnrollment(
     customerSession: String,
     countryCode: String,
     showEnrollmentStatus: Boolean = true, //Optional - Default true
-    callbackEnrollmentState: ((String?) -> Unit)? = null, //Optional - You can send again another callback that is gonna override the one you sent on initEnrollment function.
+    callbackEnrollmentState: ((String?, StatusMessage?) -> Unit)? = null, //Optional - You can send again another callback that is gonna override the one you sent on initEnrollment function.
 )
 ````
 
@@ -248,7 +248,7 @@ fun AppCompatActivity.enrollmentStatus(
     customerSession: String,
     countryCode: String,
     showEnrollmentStatus: Boolean = false, //Optional - Default false
-    callbackEnrollmentState: ((String?) -> Unit)? = null, //Optional - You can send again another callback that is gonna override the one you sent on initEnrollment function.
+    callbackEnrollmentState: ((String?, StatusMessage?) -> Unit)? = null, //Optional - You can send again another callback that is gonna override the one you sent on initEnrollment function.
 )
 ````
 
@@ -317,14 +317,15 @@ override fun showView(fragment: Fragment, needSubmit: Boolean) {
 **returnStatus() - Handle enrollment completion:**
 
 ```kotlin
-override fun returnStatus(resultCode: Int, paymentStatus: String) {
+override fun returnStatus(resultCode: Int, paymentStatus: String, message: StatusMessage?) {
     when (paymentStatus) {
         "SUCCEEDED" -> {
             // Payment method enrolled successfully
             // Remove fragment and show success message
         }
         "FAIL" -> {
-            // Enrollment failed
+            // Enrollment failed — message?.source tells you if it was the backend or the SDK,
+            // message?.code / message?.reason give the detail
             // Show error and allow retry
         }
         "CANCELED" -> {
@@ -377,7 +378,7 @@ startCheckout(
     checkoutSession: "checkout_session",
 countryCode: "country_code_iso",
 callbackOTT: (String?) -> Unit,
-callbackPaymentState: ((String?, String?) -> Unit)?,
+callbackPaymentState: ((String?, String?, StatusMessage?) -> Unit)?,
 merchantSessionId: String? = null //Optional - Default null
 )
 ```
@@ -392,9 +393,33 @@ back. This function is mandatory.
 The `callbackPaymentState` parameter is a function that returns the current payment process state and sub-state. Sending
 this function is not mandatory if you do not need the result.
 
-The callback receives two parameters:
+The callback receives three parameters:
 - **paymentState** (String?): The main payment state
 - **paymentSubState** (String?): Additional sub-state information providing more details about the payment status
+- **statusMessage** (StatusMessage?): Structured error detail, available since SDK 2.22.0. It is non-null only on `FAIL` and `INTERNAL_ERROR` outcomes and always null on success, drop-off and user cancellation. See [Status Message](#status-message) below.
+
+#### Status Message
+
+> **Breaking change in 2.22.0:** `callbackPaymentState`, `callbackEnrollmentState` and the render listeners' `returnStatus` now receive an extra `StatusMessage?` parameter. Add it to your lambdas and overrides and recompile against 2.22.0. Reading the message is optional.
+
+`StatusMessage` lets you tell a backend rejection apart from an SDK failure and read its code and reason:
+
+| Property | Description |
+|----------|-------------|
+| `source` | Where the error came from: `StatusMessage.SOURCE_BACKEND` or `StatusMessage.SOURCE_SDK`. |
+| `code` | Error code (for example the backend rejection code). |
+| `reason` | Human-readable reason for the failure. |
+| `raw` | Raw message as received, useful for logging. |
+| `context` | Extra context about where in the flow the error happened. |
+
+```kotlin
+callbackPaymentState = { paymentState, paymentSubState, statusMessage ->
+    if (paymentState == "FAIL" || paymentState == "INTERNAL_ERROR") {
+        val origin = if (statusMessage?.source == StatusMessage.SOURCE_BACKEND) "backend" else "sdk"
+        Log.e("Checkout", "Payment failed ($origin): ${statusMessage?.code} - ${statusMessage?.reason}")
+    }
+}
+```
 
 The possible payment states are:
 
@@ -587,7 +612,7 @@ following method:
 ```Kotlin
 continuePayment(
     showPaymentStatus: Boolean, //Optional - Default true
-    callbackPaymentState:((String?, String?) -> Unit)?, //Optional - Default null
+    callbackPaymentState: ((String?, String?, StatusMessage?) -> Unit)?, //Optional - Default null
 )
 ```
 
@@ -654,7 +679,7 @@ If the create_payment response returns `sdk_action_required = true` (for example
 fun ApiClientPayment.continueCardPayment(
     activity: ComponentActivity,
     showPaymentStatus: Boolean = true, //Optional - Default true
-    callbackPaymentState: ((String?, String?) -> Unit)? = null, //Optional - Default null
+    callbackPaymentState: ((String?, String?, StatusMessage?) -> Unit)? = null, //Optional - Default null
 )
 ```
 
@@ -662,7 +687,7 @@ fun ApiClientPayment.continueCardPayment(
 |-----------|-------------|
 | `activity` | The `ComponentActivity` the SDK uses to present the pending action. |
 | `showPaymentStatus` | A boolean that specifies whether the payment status should be displayed within the Yuno interface. Send `false` to use your own status UI and rely only on the callback. Default is `true`. |
-| `callbackPaymentState` | A function that returns the final payment state and sub-state once the flow completes. Uses the same payment states described in the [Callback Payment State](#callback-payment-state) section. |
+| `callbackPaymentState` | A function that returns the final payment state, sub-state and `StatusMessage?` once the flow completes. Uses the same payment states described in the [Callback Payment State](#callback-payment-state) section. |
 
 ```kotlin
 Yuno.apiClientPayment(
@@ -672,7 +697,7 @@ Yuno.apiClientPayment(
 ).continueCardPayment(
     activity = this,
     showPaymentStatus = false,
-) { paymentState, paymentSubState ->
+) { paymentState, paymentSubState, statusMessage ->
     when (paymentState) {
         "SUCCEEDED" -> { }
         "PROCESSING" -> { }
@@ -806,14 +831,20 @@ continuePaymentButton.setOnClickListener {
 **returnStatus() - Handle payment completion:**
 
 ```kotlin
-override fun returnStatus(resultCode: Int, paymentStatus: String, paymentSubStatus: String?) {
+override fun returnStatus(
+    resultCode: Int,
+    paymentStatus: String,
+    paymentSubStatus: String?,
+    message: StatusMessage?,
+) {
     when (paymentStatus) {
         "SUCCEEDED" -> {
             // Payment completed successfully
             // Remove fragment and show success
         }
         "FAIL" -> {
-            // Payment failed
+            // Payment failed — message?.source tells you if it was the backend or the SDK,
+            // message?.code / message?.reason give the detail
             // Show error and allow retry
         }
         "PROCESSING" -> {

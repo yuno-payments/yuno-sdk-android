@@ -14,6 +14,7 @@ import com.yuno.sdk.payments.continuePayment
 import com.yuno.sdk.payments.startCheckout
 import com.yuno.sdk.payments.startPaymentLite
 import com.yuno.sdk.payments.updateCheckoutSession
+import com.yuno.payments.example.extensions.toLogString
 
 /**
  * Checkout Lite — demonstrates the "lite" payment flow where the merchant controls
@@ -38,9 +39,9 @@ class CheckoutLiteActivity : AppCompatActivity() {
             // callbackPaymentState fires after continuePayment() resolves the final status.
             // This is a payment status string ("SUCCEEDED", "FAIL", etc.) — NOT a token.
             // Reset the flow so the user can start a new payment.
-            callbackPaymentState = { paymentState, paymentSubState ->
+            callbackPaymentState = { paymentState, paymentSubState, statusMessage ->
                 paymentState?.let {
-                    Log.d("CheckoutLite", "Payment State: $it, Sub-State: $paymentSubState")
+                    Log.d("CheckoutLite", "Payment State: $it, Sub-State: $paymentSubState, Message: ${statusMessage.toLogString()}")
                     viewModel.onPaymentStateReceived()
                 }
             },
@@ -79,9 +80,9 @@ class CheckoutLiteActivity : AppCompatActivity() {
                         // payment status after the backend processes the OTT. Without this,
                         // the UI stays stuck on the OTT result screen with no way to proceed.
                         continuePayment(
-                            callbackPaymentState = { paymentState, paymentSubState ->
+                            callbackPaymentState = { paymentState, paymentSubState, statusMessage ->
                                 paymentState?.let {
-                                    Log.d("CheckoutLite", "Payment State: $it, Sub-State: $paymentSubState")
+                                    Log.d("CheckoutLite", "Payment State: $it, Sub-State: $paymentSubState, Message: ${statusMessage.toLogString()}")
                                     viewModel.onPaymentStateReceived()
                                 }
                             },
