@@ -2,9 +2,9 @@
 
 ![Kotlin](https://img.shields.io/badge/Kotlin-1.8.0-blue?logo=kotlin)
 ![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-1.5.4-green?logo=jetpackcompose)
-![Min SDK](https://img.shields.io/badge/Min%20SDK-21-yellow)
+![Min SDK](https://img.shields.io/badge/Min%20SDK-23-yellow)
 ![Target SDK](https://img.shields.io/badge/Target%20SDK-35-brightgreen)
-![Yuno SDK](https://img.shields.io/badge/Yuno%20SDK-2.23.0-purple)
+![Yuno SDK](https://img.shields.io/badge/Yuno%20SDK-2.24.0-purple)
 
 An Android example app that demonstrates the integration of the **Yuno Payments SDK**, including enrollment, checkout, payment flows, and render mode (advanced integration).
 
@@ -31,7 +31,7 @@ An Android example app that demonstrates the integration of the **Yuno Payments 
 
 | Requirement | Minimum version |
 |---|---|
-| `minSdkVersion` | 21 |
+| `minSdkVersion` | 23 |
 | Java | 17 |
 | Android Gradle Plugin | 8.0.0 |
 | Kotlin Gradle Plugin | 1.8.0 |

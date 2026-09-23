@@ -94,4 +94,4 @@ sequenceDiagram
 ## Infrastructure
 - **Distribution:** JFrog Artifactory (`yunopayments.jfrog.io`)
 - **CI/CD:** GitHub (yuno-payments/yuno-sdk-android)
-- **Min Android version:** API 21 (Android 5.0 Lollipop)
+- **Min Android version:** API 23 (Android 6.0 Marshmallow)
