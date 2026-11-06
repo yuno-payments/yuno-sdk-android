@@ -39,7 +39,7 @@ Requirements to build: JDK 17 and an Android SDK with platform 35, located throu
 - **Instrumented tests** (device or emulator required): live in `app/src/androidTest/java/com/yuno/payments/example/`, run with `AndroidJUnitRunner`.
   - All: `./gradlew connectedAndroidTest`
   - Single class: `./gradlew :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.yuno.payments.example.ExampleInstrumentedTest`
-- **What CI runs:** this repository contains no CI pipeline definition. Before opening a PR, run `./gradlew build` locally (it runs assemble, unit tests and lint) and, when you changed UI or SDK wiring, `./gradlew connectedAndroidTest` on an emulator. Report in the PR what you ran.
+- **What CI runs:** every PR head is checked by a Bitrise app that posts the `ci/bitrise/38f6d3044457e072/pr` status. Its pipeline is configured in the Bitrise dashboard, not in this tree (there is no pipeline file in the repository). Before opening a PR, also run `./gradlew build` locally (it runs assemble, unit tests and lint) and, when you changed UI or SDK wiring, `./gradlew connectedAndroidTest` on an emulator. Report in the PR what you ran.
 - **Test rules:**
   - Put new logic (ViewModel state transitions, validation, formatting helpers) where it can be unit tested on the JVM, and add the test with the change.
   - A bug fix comes with a regression test that fails without the fix.
@@ -134,9 +134,9 @@ This app demonstrates 5 integration patterns:
 ## SDK and Security Rules
 
 - **Public API stability:** this repo is the reference integration merchants copy. Keep calls aligned with the public SDK API of the pinned version; never rely on SDK internals, reflection or undocumented parameters.
-- **Binary compatibility:** an SDK version bump is its own PR (`Project | Update SDK Version to X.Y.Z`). Adapt every call site to signature changes and update `README.md`, `CHANGELOG.md` and the version in this file in the same PR.
+- **Binary compatibility:** an SDK version bump is its own PR (`Project | Update SDK Version to X.Y.Z`). Adapt every call site to signature changes and update the version in `app/build.gradle`, `README.md` and this file in the same PR. `CHANGELOG.md` is unmaintained (it stops at 1.17.0); do not update it in bump PRs.
 - **No PAN/CVV in logs:** never log, print, persist, copy to clipboard or put in analytics card numbers, CVV/CVC, expiry dates or full tokens. Log only `StatusMessage` via `toLogString()` and status strings.
-- **Card data only through the secure path:** card data is captured by the SDK UI (Lite, Complete, Render) or, in headless mode, passed directly to `ApiClientPayment.generateToken()`. The app never stores or transmits raw card data itself.
+- **Card data only through the secure path:** card data is captured by the SDK UI (Lite, Complete, Render) or, in headless mode, passed directly to the SDK's headless API (documented in `README.md`; this app implements no headless flow). The app never stores or transmits raw card data itself.
 - **Credentials:** never commit API keys, sessions or JFrog credentials. They go in the git-ignored `local.properties` (see below).
 - **Dependencies:** pin exact versions in `app/build.gradle`; justify any new dependency in the PR.
 
