@@ -11,7 +11,7 @@ This file is the single source of instructions for engineers and coding agents (
 - **Architecture:** MVVM (Activity + ViewModel + Compose Screen)
 - **Build System:** Gradle wrapper 8.10, Android Gradle Plugin 8.4.0 (Groovy DSL)
 - **Modules:** a single Gradle module, `:app` (see `settings.gradle`)
-- **SDK Version:** `com.yuno.payments:android-sdk:2.28.0` (pinned in `app/build.gradle`)
+- **SDK Version:** `com.yuno.payments:android-sdk:2.29.0` (pinned in `app/build.gradle`)
 - **SDK artifact repository:** `https://yunopayments.jfrog.io/artifactory/snapshots-libs-release` (declared in `settings.gradle`)
 
 Requirements to build: JDK 17 and an Android SDK with platform 35, located through `ANDROID_HOME` or `sdk.dir` in `local.properties`.
